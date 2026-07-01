@@ -1,6 +1,7 @@
 package com.hathway.pocketgoals.presentation.ui.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -9,252 +10,241 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.rounded.AirplanemodeActive
-import androidx.compose.material.icons.rounded.VideogameAsset
+import androidx.compose.material.icons.rounded.DirectionsCar
+import androidx.compose.material.icons.rounded.Home
+import androidx.compose.material.icons.rounded.Security
+import androidx.compose.material.icons.rounded.Work
 import androidx.compose.material3.*
-import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.hathway.pocketgoals.domain.Goal
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GoalsScreen() {
-    var selectedTab by remember { mutableIntStateOf(0) }
-    val tabs = listOf("All", "Active", "Completed", "Paused")
-
     val mockGoals = remember {
         listOf(
             Goal(
                 id = "1",
-                name = "Gaming PC",
-                targetAmount = 15000.0,
-                savedAmount = 3500.0,
-                deadline = "30 Dec 2027",
-                icon = Icons.Rounded.VideogameAsset,
-                color = Color(0xFF0F766E)
+                name = "Foreign Job Fund",
+                targetAmount = 6000000.0,
+                savedAmount = 23000.0,
+                deadline = "2025-12-31",
+                icon = Icons.Rounded.Work,
+                color = Color(0xFF64748B)
             ),
             Goal(
                 id = "2",
-                name = "Japan Trip 2027",
-                targetAmount = 12000.0,
-                savedAmount = 7800.0,
-                deadline = "15 Jul 2026",
+                name = "Home Renovation",
+                targetAmount = 1000000.0,
+                savedAmount = 4000.0,
+                deadline = "2025-12-31",
+                icon = Icons.Rounded.Home,
+                color = Color(0xFFF97316)
+            ),
+            Goal(
+                id = "3",
+                name = "Vacation Trip",
+                targetAmount = 1800000.0,
+                savedAmount = 7500.0,
+                deadline = "2025-12-31",
                 icon = Icons.Rounded.AirplanemodeActive,
-                color = Color(0xFF6366F1)
+                color = Color(0xFF3B82F6)
+            ),
+            Goal(
+                id = "4",
+                name = "Emergency Fund",
+                targetAmount = 80000.0,
+                savedAmount = 10000.0,
+                deadline = "2025-12-31",
+                icon = Icons.Rounded.Security,
+                color = Color(0xFFEF4444)
+            ),
+            Goal(
+                id = "5",
+                name = "New Car",
+                targetAmount = 500000.0,
+                savedAmount = 120000.0,
+                deadline = "2025-12-31",
+                icon = Icons.Rounded.DirectionsCar,
+                color = Color(0xFF0EA5E9)
             )
         )
     }
 
     Scaffold(
         topBar = {
-            Column(modifier = Modifier.background(Color.White)) {
-                TopAppBar(
-                    title = {
-                        Text(
-                            "My Goals",
-                            fontWeight = FontWeight.Bold,
-                            style = MaterialTheme.typography.titleLarge
-                        )
-                    },
-                    actions = {
-                        IconButton(onClick = { /* Add Goal */ }) {
-                            Icon(Icons.Default.Add, contentDescription = "Add Goal")
-                        }
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.White)
-                )
-                
-                TabRow(
-                    selectedTabIndex = selectedTab,
-                    containerColor = Color.White,
-                    contentColor = Color(0xFF0F766E),
-                    divider = {},
-                    indicator = { tabPositions ->
-                        TabRowDefaults.SecondaryIndicator(
-                            Modifier.tabIndicatorOffset(tabPositions[selectedTab]),
-                            color = Color(0xFF0F766E)
-                        )
-                    }
-                ) {
-                    tabs.forEachIndexed { index, title ->
-                        Tab(
-                            selected = selectedTab == index,
-                            onClick = { selectedTab = index },
-                            text = {
-                                Text(
-                                    text = title,
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    fontWeight = if (selectedTab == index) FontWeight.Bold else FontWeight.Medium
-                                )
-                            }
-                        )
-                    }
-                }
-            }
-        }
+            GoalsTopBar()
+        },
+        containerColor = Color.White
     ) { paddingValues ->
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .background(Color(0xFFF8FAFC)),
+                .background(Color.White),
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             items(mockGoals) { goal ->
-                GoalCard(goal = goal)
+                GoalItem(goal = goal)
             }
             item {
-                Spacer(modifier = Modifier.height(80.dp))
+                Spacer(modifier = Modifier.height(100.dp))
             }
         }
     }
 }
 
 @Composable
-fun GoalCard(goal: Goal) {
-    val lightColor = goal.color.copy(alpha = 0.05f)
-    
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(24.dp),
-        colors = CardDefaults.cardColors(containerColor = lightColor),
-        border = androidx.compose.foundation.BorderStroke(1.dp, goal.color.copy(alpha = 0.1f))
+fun GoalsTopBar() {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 8.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        Column(
-            modifier = Modifier.padding(20.dp)
+        Text(
+            text = "Goals",
+            style = MaterialTheme.typography.headlineSmall,
+            fontWeight = FontWeight.Bold
+        )
+        
+        Surface(
+            onClick = { /* Add Goal */ },
+            shape = RoundedCornerShape(8.dp),
+            color = Color(0xFFF0FDF4),
+            modifier = Modifier.height(36.dp)
         ) {
             Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
+                modifier = Modifier.padding(horizontal = 12.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(4.dp)
             ) {
-                Box(
-                    modifier = Modifier
-                        .size(60.dp)
-                        .background(goal.color, CircleShape),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Icon(
-                        imageVector = goal.icon,
-                        contentDescription = null,
-                        tint = Color.White,
-                        modifier = Modifier.size(32.dp)
-                    )
-                }
-                
-                Spacer(modifier = Modifier.width(16.dp))
-                
-                Column(modifier = Modifier.weight(1f)) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            text = goal.name,
-                            style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.Bold
-                        )
-                        Text(
-                            text = "${goal.percentage}%",
-                            style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.Bold,
-                            color = goal.color
-                        )
-                    }
-                    
-                    Spacer(modifier = Modifier.height(8.dp))
-                    
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Column {
-                            Text(
-                                text = "Target",
-                                style = MaterialTheme.typography.labelSmall,
-                                color = Color.Gray
-                            )
-                            Text(
-                                text = "₹ ${goal.targetAmount.toInt()}",
-                                style = MaterialTheme.typography.bodyMedium,
-                                fontWeight = FontWeight.Bold,
-                                color = goal.color
-                            )
-                        }
-                        
-                        Column(horizontalAlignment = Alignment.End) {
-                            Text(
-                                text = "Saved",
-                                style = MaterialTheme.typography.labelSmall,
-                                color = Color.Gray
-                            )
-                            Text(
-                                text = "₹ ${goal.savedAmount.toInt()}",
-                                style = MaterialTheme.typography.bodyMedium,
-                                fontWeight = FontWeight.Bold,
-                                color = goal.color
-                            )
-                        }
-                    }
-                }
-            }
-            
-            Spacer(modifier = Modifier.height(20.dp))
-            
-            LinearProgressIndicator(
-                progress = { goal.progress },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(10.dp)
-                    .clip(CircleShape),
-                color = goal.color,
-                trackColor = goal.color.copy(alpha = 0.1f)
-            )
-            
-            Spacer(modifier = Modifier.height(20.dp))
-            
-            HorizontalDivider(color = goal.color.copy(alpha = 0.1f))
-            
-            Spacer(modifier = Modifier.height(16.dp))
-            
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                GoalStatItem("Need", "₹ ${goal.remainingAmount.toInt()}", goal.color)
-                GoalStatItem("Save", "₹ ${goal.monthlySavingNeeded.toInt()} /mo", goal.color)
-                GoalStatItem("Deadline", goal.deadline, Color.Black, Alignment.End)
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = null,
+                    tint = Color(0xFF16A34A),
+                    modifier = Modifier.size(18.dp)
+                )
+                Text(
+                    text = "Add Goal",
+                    style = MaterialTheme.typography.labelLarge,
+                    color = Color(0xFF16A34A),
+                    fontWeight = FontWeight.SemiBold
+                )
             }
         }
     }
 }
 
 @Composable
-fun GoalStatItem(
-    label: String,
-    value: String,
-    valueColor: Color,
-    horizontalAlignment: Alignment.Horizontal = Alignment.Start
-) {
-    Column(horizontalAlignment = horizontalAlignment) {
-        Text(
-            text = label,
-            style = MaterialTheme.typography.labelSmall,
-            color = Color.Gray
-        )
-        Text(
-            text = value,
-            style = MaterialTheme.typography.bodySmall,
-            fontWeight = FontWeight.Bold,
-            color = valueColor,
-            fontSize = 11.sp
-        )
+fun GoalItem(goal: Goal) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .border(1.dp, Color(0xFFF1F5F9), RoundedCornerShape(16.dp)),
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
+    ) {
+        Row(
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            // Icon
+            Box(
+                modifier = Modifier
+                    .size(56.dp)
+                    .clip(CircleShape)
+                    .background(goal.color.copy(alpha = 0.1f)),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    imageVector = goal.icon,
+                    contentDescription = null,
+                    tint = goal.color,
+                    modifier = Modifier.size(28.dp)
+                )
+            }
+            
+            Spacer(modifier = Modifier.width(16.dp))
+            
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = goal.name,
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold
+                )
+                
+                Spacer(modifier = Modifier.height(4.dp))
+                
+                Text(
+                    text = "₹${formatMockAmount(goal.savedAmount)} / ₹${formatMockAmount(goal.targetAmount)}",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = Color.DarkGray,
+                    fontWeight = FontWeight.Medium
+                )
+                
+                Spacer(modifier = Modifier.height(12.dp))
+                
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    LinearProgressIndicator(
+                        progress = { goal.progress },
+                        modifier = Modifier
+                            .weight(1f)
+                            .height(8.dp)
+                            .clip(CircleShape),
+                        color = Color(0xFF10B981),
+                        trackColor = Color(0xFFE2E8F0)
+                    )
+                    
+                    Text(
+                        text = "${goal.percentage}%",
+                        style = MaterialTheme.typography.labelLarge,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.Black
+                    )
+                }
+            }
+        }
+    }
+}
+
+private fun formatMockAmount(amount: Double): String {
+    // Simple manual formatting to match the Indian system style in the image for the mock
+    val longVal = amount.toLong()
+    return when {
+        longVal >= 100000 -> {
+            val lakhs = longVal / 100000
+            val thousands = (longVal % 100000) / 1000
+            val hundreds = longVal % 1000
+            if (lakhs > 0) {
+                if (thousands > 0) {
+                    "$lakhs,${thousands.toString().padStart(2, '0')},${hundreds.toString().padStart(3, '0')}"
+                } else {
+                    "$lakhs,00,${hundreds.toString().padStart(3, '0')}"
+                }
+            } else {
+                "$longVal"
+            }
+        }
+        longVal >= 1000 -> {
+            val thousands = longVal / 1000
+            val hundreds = longVal % 1000
+            "$thousands,${hundreds.toString().padStart(3, '0')}"
+        }
+        else -> longVal.toString()
     }
 }

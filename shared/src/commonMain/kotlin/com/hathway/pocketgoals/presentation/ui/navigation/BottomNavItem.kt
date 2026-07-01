@@ -10,41 +10,38 @@ import pocketgoals.shared.generated.resources.goals
 import pocketgoals.shared.generated.resources.home
 import pocketgoals.shared.generated.resources.transactions
 
-
 sealed class BottomNavItem(
-    val titleRes: StringResource, // Changes from String to StringResource
+    val titleRes: StringResource,
     val icon: ImageVector,
-    val route: StringResource
+    val route: String
 ) {
     object Home : BottomNavItem(
         titleRes = Res.string.home,
         icon = AppIcons.Home,
-        route = Res.string.home
+        route = "com.hathway.pocketgoals.presentation.ui.navigation.HomeRoute"
     )
 
     object Transactions : BottomNavItem(
         titleRes = Res.string.transactions,
         icon = AppIcons.Transactions,
-        route = Res.string.transactions
+        route = "com.hathway.pocketgoals.presentation.ui.navigation.TransactionsRoute"
     )
 
     object AddExpense : BottomNavItem(
         titleRes = Res.string.add_expense,
         icon = AppIcons.Add,
-        route = Res.string.add_expense
+        route = "com.hathway.pocketgoals.presentation.ui.navigation.AddExpenseRoute"
     )
 
     object Analytics : BottomNavItem(
         titleRes = Res.string.analytics,
         icon = AppIcons.Analytics,
-        route = Res.string.analytics
+        route = "com.hathway.pocketgoals.presentation.ui.navigation.AnalyticsRoute"
     )
 
     object Goals : BottomNavItem(
         titleRes = Res.string.goals,
         icon = AppIcons.Goals,
-        route = Res.string.goals
+        route = "com.hathway.pocketgoals.presentation.ui.navigation.GoalsRoute"
     )
 }
-
-

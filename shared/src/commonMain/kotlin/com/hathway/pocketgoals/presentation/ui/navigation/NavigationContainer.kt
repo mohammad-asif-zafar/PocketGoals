@@ -6,7 +6,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -19,6 +18,12 @@ import com.hathway.pocketgoals.presentation.ui.screens.AnalyticsScreen
 import com.hathway.pocketgoals.presentation.ui.screens.GoalsScreen
 import com.hathway.pocketgoals.presentation.ui.screens.HomeScreen
 import com.hathway.pocketgoals.presentation.ui.screens.TransactionsScreen
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 
 @Composable
 fun NavigationContainer() {
@@ -29,13 +34,11 @@ fun NavigationContainer() {
     val currentDestination = navBackStackEntry?.destination
 
     Scaffold(
-        modifier = Modifier.fillMaxSize(),
-        bottomBar = {
-
+        modifier = Modifier.fillMaxSize(), bottomBar = {
             AppBottomBar(
-                currentRoute = currentDestination as String?, onNavigate = { targetRoute ->
+                currentRoute = currentDestination?.route, onNavigate = { targetRoute ->
                     // Guard structure to prevent redundant destination reloading
-                    if (currentDestination != targetRoute) {
+                    if (currentDestination?.route != targetRoute) {
                         navController.navigate(targetRoute) {
                             // Pops up to the start destination of the graph to
                             // avoid building up a massive stack of destinations
@@ -50,17 +53,42 @@ fun NavigationContainer() {
                         }
                     }
                 })
-        }
-    ) { innerPadding ->
-        // 3. Type-safe NavHost definition using the HomeRoute object class type
+        }) { innerPadding ->
+        // Type-safe NavHost definition using the HomeRoute object class type
         NavHost(
             navController = navController,
             startDestination = HomeRoute,
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
+            modifier = Modifier.fillMaxSize().padding(innerPadding),
+
+            // 1. Animation when opening a new screen (Slides in from the right, fades in)
+            enterTransition = {
+                slideInHorizontally(
+                    initialOffsetX = { fullWidth -> fullWidth }, animationSpec = tween(300)
+                ) + fadeIn(animationSpec = tween(300))
+            },
+
+            // 2. Animation for the screen that is disappearing (Slides out to the left, fades out)
+            exitTransition = {
+                slideOutHorizontally(
+                    targetOffsetX = { fullWidth -> -fullWidth }, animationSpec = tween(300)
+                ) + fadeOut(animationSpec = tween(300))
+            },
+
+            // 3. Animation when returning via system back button (Slides in from the left)
+            popEnterTransition = {
+                slideInHorizontally(
+                    initialOffsetX = { fullWidth -> -fullWidth }, animationSpec = tween(300)
+                ) + fadeIn(animationSpec = tween(300))
+            },
+
+            // 4. Animation for the screen being popped off the stack (Slides out to the right)
+            popExitTransition = {
+                slideOutHorizontally(
+                    targetOffsetX = { fullWidth -> fullWidth }, animationSpec = tween(300)
+                ) + fadeOut(animationSpec = tween(300))
+            }
         ) {
-            // 4. Register destination UI templates using generic type arguments
+            // Register destination UI templates using generic type arguments
             composable<HomeRoute> {
                 HomeScreen()
             }
@@ -68,10 +96,7 @@ fun NavigationContainer() {
                 TransactionsScreen()
             }
             composable<AddExpenseRoute> {
-                AddExpenseScreen(
-                    onBackClick ={},
-                    onViewTransaction = {}
-                )
+                AddExpenseScreen(onBackClick = {}, onViewTransaction = {})
             }
             composable<AnalyticsRoute> {
                 AnalyticsScreen()
