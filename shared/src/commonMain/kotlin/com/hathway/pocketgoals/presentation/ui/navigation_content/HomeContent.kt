@@ -14,9 +14,12 @@ import com.hathway.pocketgoals.presentation.ui.components.home_components.HomeHe
 import com.hathway.pocketgoals.presentation.ui.components.home_components.HomeOverviewSection
 import com.hathway.pocketgoals.presentation.ui.components.home_components.HomeQuickActionsSection
 import com.hathway.pocketgoals.presentation.ui.components.home_components.HomeTopCategoriesSection
+import com.hathway.pocketgoals.presentation.ui.state.HomeUiState
 
 @Composable
-fun HomeContent() {
+fun HomeContent(
+    uiState: HomeUiState, onNotificationClick: () -> Unit, onProfileClick: () -> Unit
+) {
     LazyColumn(
         modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background),
         contentPadding = PaddingValues(16.dp),
@@ -24,13 +27,21 @@ fun HomeContent() {
     ) {
         // Header: Greeting & Profile
         item {
-            HomeHeaderSection(name = "Ahsan")
+            // Bound directly to our streaming ViewModel pipeline state
+            HomeHeaderSection(
+                name = uiState.userName,
+                unreadCount = uiState.unreadNotificationCount,
+                onNotificationClick = onNotificationClick,
+                onProfileClick = onProfileClick
+            )
         }
 
         // Balance Card
         item {
             HomeBalanceCard(
-                totalBalance = "235,000", income = "150,000", expenses = "85,000"
+                totalBalance = uiState.totalBalance,
+                income = uiState.income,
+                expenses = uiState.expenses
             )
         }
 
