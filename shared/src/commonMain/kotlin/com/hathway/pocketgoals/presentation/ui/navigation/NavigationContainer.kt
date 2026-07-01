@@ -24,6 +24,8 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.hathway.pocketgoals.presentation.ui.viewmodel.AnalyticsViewModel
 
 @Composable
 fun NavigationContainer() {
@@ -98,8 +100,11 @@ fun NavigationContainer() {
             composable<AddExpenseRoute> {
                 AddExpenseScreen(onBackClick = {}, onViewTransaction = {})
             }
-            composable<AnalyticsRoute> {
-                AnalyticsScreen()
+            composable<AnalyticsRoute> { backStackEntry ->
+                // Scopes the ViewModel life to this specific navigation entry block
+                val viewModel: AnalyticsViewModel = viewModel(viewModelStoreOwner = backStackEntry)
+
+                AnalyticsScreen(viewModel = viewModel)
             }
             composable<GoalsRoute> {
                 GoalsScreen()

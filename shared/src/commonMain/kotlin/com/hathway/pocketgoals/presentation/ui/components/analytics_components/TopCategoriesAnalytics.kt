@@ -1,12 +1,15 @@
 package com.hathway.pocketgoals.presentation.ui.components.analytics_components
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.Kitchen
@@ -17,34 +20,106 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
 
 @Composable
-fun TopCategoriesAnalytics() {
-    Column(modifier = Modifier.padding(top = 24.dp)) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = "Top Categories",
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold
-            )
-            Text(
-                text = "See All",
-                style = MaterialTheme.typography.bodySmall,
-                color = Color(0xFF10B981),
-                fontWeight = FontWeight.SemiBold
-            )
+fun TopCategoriesAnalyticsList(
+    categories: List<AnalyticsCategoryData>,
+    onSeeAllClick: () -> Unit = {},
+    modifier: Modifier = Modifier
+) {
+    LazyColumn(
+        modifier = modifier,
+        contentPadding = PaddingValues(top = 24.dp, bottom = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(4.dp) // Handles inner cell item spacing elegantly
+    ) {
+        // Sticky/Static Header inside the LazyColumn
+        item {
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "Top Categories",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onBackground
+                )
+                Text(
+                    text = "See All",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = Color(0xFF10B981),
+                    fontWeight = FontWeight.SemiBold,
+                    modifier = Modifier.clickable { onSeeAllClick() })
+            }
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
-
-        AnalyticsCategoryItem("Investment", "₹31,023 (34.47%)", Color(0xFF3B82F6), Icons.Rounded.Work)
-        AnalyticsCategoryItem("Basic Needs", "₹25,029 (27.81%)", Color(0xFF10B981), Icons.Rounded.Home)
-        AnalyticsCategoryItem("Future Pay", "₹13,599 (15.11%)", Color(0xFFF59E0B), Icons.Rounded.Kitchen)
+        // Efficiently scrolls and recycles lists of any scale size
+        items(
+            items = categories,
+            key = { it.name } // Performance boost: helps Compose keep track of reordered items
+        ) { category ->
+            AnalyticsCategoryItem(
+                name = category.name,
+                value = category.value,
+                color = category.color,
+                icon = category.icon
+            )
+        }
     }
 }
+
+@Preview
+@Composable
+fun TopCategoriesAnalyticsListLightPreview() {
+    val sampleData = listOf(
+        AnalyticsCategoryData(
+            "Investment", "₹31,023 (34.47%)", Color(0xFF3B82F6), Icons.Rounded.Work
+        ), AnalyticsCategoryData(
+            "Basic Needs", "₹25,029 (27.81%)", Color(0xFF10B981), Icons.Rounded.Home
+        ), AnalyticsCategoryData(
+            "Future Pay", "₹13,599 (15.11%)", Color(0xFFF59E0B), Icons.Rounded.Kitchen
+        )
+    )
+
+    PocketGoalsTheme(darkTheme = false) {
+        Box(
+            modifier = Modifier.background(MaterialTheme.colorScheme.background)
+                .padding(horizontal = 16.dp)
+        ) {
+            TopCategoriesAnalyticsList(categories = sampleData)
+        }
+    }
+}
+
+@Preview
+@Composable
+fun TopCategoriesAnalyticsListDarkPreview() {
+    val sampleData = listOf(
+        AnalyticsCategoryData(
+            "Investment", "₹31,023 (34.47%)", Color(0xFF3B82F6), Icons.Rounded.Work
+        ), AnalyticsCategoryData(
+            "Basic Needs", "₹25,029 (27.81%)", Color(0xFF10B981), Icons.Rounded.Home
+        ), AnalyticsCategoryData(
+            "Future Pay", "₹13,599 (15.11%)", Color(0xFFF59E0B), Icons.Rounded.Kitchen
+        )
+    )
+
+    PocketGoalsTheme(darkTheme = true) {
+        Box(
+            modifier = Modifier.background(MaterialTheme.colorScheme.background)
+                .padding(horizontal = 16.dp)
+        ) {
+            TopCategoriesAnalyticsList(categories = sampleData)
+        }
+    }
+}
+
+data class AnalyticsCategoryData(
+    val name: String, val value: String, val color: Color, val icon: ImageVector
+)

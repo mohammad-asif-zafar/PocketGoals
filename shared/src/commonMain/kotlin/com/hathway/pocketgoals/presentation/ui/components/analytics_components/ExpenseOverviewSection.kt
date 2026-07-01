@@ -1,6 +1,7 @@
 package com.hathway.pocketgoals.presentation.ui.components.analytics_components
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,7 +20,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
 
 @Composable
 fun ExpenseOverviewSection(totalAmount: String = "₹90,000") {
@@ -28,7 +31,8 @@ fun ExpenseOverviewSection(totalAmount: String = "₹90,000") {
             text = "Expense Overview",
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(vertical = 16.dp)
+            modifier = Modifier.padding(vertical = 16.dp),
+            color = MaterialTheme.colorScheme.onBackground // Adapts header text to theme
         )
 
         Row(
@@ -67,12 +71,13 @@ fun ExpenseOverviewSection(totalAmount: String = "₹90,000") {
                     Text(
                         text = totalAmount,
                         style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onBackground // Dark/Light adaptive amount
                     )
                     Text(
                         text = "Total",
                         style = MaterialTheme.typography.labelSmall,
-                        color = Color.Gray
+                        color = MaterialTheme.colorScheme.onSurfaceVariant // Replaced hardcoded Color.Gray
                     )
                 }
             }
@@ -89,6 +94,26 @@ fun ExpenseOverviewSection(totalAmount: String = "₹90,000") {
                 LegendItem("Buffer", "4.29%", Color(0xFF64748B))
                 LegendItem("Others", "3.71%", Color(0xFF6366F1))
             }
+        }
+    }
+}
+
+@Preview
+@Composable
+fun ExpenseOverviewSectionLightPreview() {
+    PocketGoalsTheme(darkTheme = false) {
+        Box(modifier = Modifier.background(MaterialTheme.colorScheme.background).padding(16.dp)) {
+            ExpenseOverviewSection()
+        }
+    }
+}
+
+@Preview
+@Composable
+fun ExpenseOverviewSectionDarkPreview() {
+    PocketGoalsTheme(darkTheme = true) {
+        Box(modifier = Modifier.background(MaterialTheme.colorScheme.background).padding(16.dp)) {
+            ExpenseOverviewSection()
         }
     }
 }

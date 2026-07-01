@@ -25,7 +25,6 @@ import androidx.compose.ui.unit.dp
 import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
 import androidx.compose.material.icons.filled.ShoppingCart // Example icon for preview
 
-
 @Composable
 fun AnalyticsCategoryItem(name: String, value: String, color: Color, icon: ImageVector) {
     Row(
@@ -51,11 +50,14 @@ fun AnalyticsCategoryItem(name: String, value: String, color: Color, icon: Image
             text = name,
             style = MaterialTheme.typography.bodyMedium,
             fontWeight = FontWeight.SemiBold,
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
+            color = MaterialTheme.colorScheme.onBackground // Flipped to follow theme
         )
 
         Text(
-            text = value, style = MaterialTheme.typography.bodySmall, color = Color.DarkGray
+            text = value,
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant // Replaced hardcoded Color.DarkGray
         )
 
         Spacer(modifier = Modifier.width(8.dp))
@@ -63,12 +65,11 @@ fun AnalyticsCategoryItem(name: String, value: String, color: Color, icon: Image
         Icon(
             imageVector = Icons.AutoMirrored.Rounded.KeyboardArrowRight,
             contentDescription = null,
-            tint = Color.Gray,
+            tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f), // Replaced hardcoded Color.Gray
             modifier = Modifier.size(16.dp)
         )
     }
 }
-
 
 @Preview
 @Composable
