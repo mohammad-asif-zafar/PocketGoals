@@ -1,11 +1,17 @@
 package com.hathway.pocketgoals.presentation.ui.navigation
 
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -13,18 +19,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.hathway.pocketgoals.presentation.ui.components.common_components.AppBottomBar
+import com.hathway.pocketgoals.presentation.ui.navigation_content.GoalsContent
 import com.hathway.pocketgoals.presentation.ui.screens.AddExpenseScreen
 import com.hathway.pocketgoals.presentation.ui.screens.AnalyticsScreen
 import com.hathway.pocketgoals.presentation.ui.screens.GoalsScreen
 import com.hathway.pocketgoals.presentation.ui.screens.HomeScreen
 import com.hathway.pocketgoals.presentation.ui.screens.TransactionsScreen
-import androidx.compose.animation.AnimatedContentTransitionScope
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.hathway.pocketgoals.presentation.ui.viewmodel.AnalyticsViewModel
 
 @Composable
@@ -107,7 +107,7 @@ fun NavigationContainer() {
                 AnalyticsScreen(viewModel = viewModel)
             }
             composable<GoalsRoute> {
-                GoalsScreen()
+                GoalsContent()
             }
         }
     }
