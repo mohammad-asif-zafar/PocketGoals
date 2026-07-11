@@ -1,0 +1,24 @@
+<resources>
+    <string name="btn_skip">Langkau</string>
+    <string name="btn_next">Seterusnya</string>
+    <string name="btn_get_started">Mula Sekarang</string>
+
+    <string name="title_track_expenses">Jejak Perbelanjaan Anda</string>
+    <string name="desc_track_expenses">Jejak pendapatan dan perbelanjaan\nanda dengan mudah di satu tempat.</string>
+
+    <string name="title_save_money">Simpan Lebih Banyak Wang</string>
+    <string name="desc_save_money">Tetapkan bajet, jejak perbelanjaan dan\nsimpan lebih banyak setiap bulan.</string>
+
+    <string name="title_achieve_goals">Capai Matlamat Anda</string>
+    <string name="desc_achieve_goals">Cipta matlamat tersuai dan capai\nimpian kewangan anda.</string>
+    <string name="login_welcome">Selamat Kembali! 👋</string>
+    <string name="login_subtitle">Log masuk untuk terus ke akaun anda</string>
+    <string name="hint_email">E-mel atau Nombor Telefon Bimbit</string>
+    <string name="hint_password">Kata Laluan</string>
+    <string name="btn_forgot_password">Lupa Kata Laluan?</string>
+    <string name="btn_login">Log Masuk</string>
+    <string name="text_or_continue">atau teruskan dengan</string>
+    <string name="text_dont_have_account">Belum mempunyai akaun?</string>
+    <string name="btn_sign_up">Daftar</string>
+
+</resources>

@@ -1,0 +1,24 @@
+<resources>
+    <string name="btn_skip">چھوڑیں</string>
+    <string name="btn_next">آگے</string>
+    <string name="btn_get_started">شروع کریں</string>
+
+    <string name="title_track_expenses">اپنے اخراجات کا سراغ لگائیں</string>
+    <string name="desc_track_expenses">اپنی آمدنی اور اخراجات کا\nایک ہی جگہ آسانی سے سراغ لگائیں۔</string>
+
+    <string name="title_save_money">مزید رقم بچائیں</string>
+    <string name="desc_save_money">بجٹ ترتیب دیں، اخراجات پر نظر رکھیں اور\nہر ماہ زیادہ بچت کریں۔</string>
+
+    <string name="title_achieve_goals">اپنے مقاصد حاصل کریں</string>
+    <string name="desc_achieve_goals">اپنی مرضی کے مطابق اہداف بنائیں اور اپنے\nمالی خوابوں کو پورا کریں۔</string>
+    <string name="login_welcome">خوش آمدید! 👋</string>
+    <string name="login_subtitle">اپنے اکاؤنٹ میں لاگ ان کریں</string>
+    <string name="hint_email">ای میل یا موبائل نمبر</string>
+    <string name="hint_password">پاس ورڈ</string>
+    <string name="btn_forgot_password">پاس ورڈ بھول گئے؟</string>
+    <string name="btn_login">لاگ ان کریں</string>
+    <string name="text_or_continue">یا اس کے ساتھ جاری رکھیں</string>
+    <string name="text_dont_have_account">کیا آپ کا اکاؤنٹ نہیں ہے؟</string>
+    <string name="btn_sign_up">سائن اپ کریں</string>
+
+</resources>

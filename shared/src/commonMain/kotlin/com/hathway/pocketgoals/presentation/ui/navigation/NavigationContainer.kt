@@ -19,7 +19,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.hathway.pocketgoals.presentation.ui.components.common_components.AppBottomBar
-import com.hathway.pocketgoals.presentation.ui.navigation_content.GoalsContent
 import com.hathway.pocketgoals.presentation.ui.screens.*
 import com.hathway.pocketgoals.presentation.ui.viewmodel.AnalyticsViewModel
 import com.hathway.pocketgoals.presentation.ui.viewmodel.GoalsViewModel
@@ -39,61 +38,100 @@ fun NavigationContainer(
     val currentDestination = navBackStackEntry?.destination
 
     Scaffold(
-        modifier = Modifier.fillMaxSize(), bottomBar = {
-            AppBottomBar(
-                currentRoute = currentDestination?.route, onNavigate = { targetRoute ->
-                    // Guard structure to prevent redundant destination reloading
-                    if (currentDestination?.route != targetRoute) {
-                        navController.navigate(targetRoute) {
-                            // Pops up to the start destination of the graph to
-                            // avoid building up a massive stack of destinations
-                            popUpTo(navController.graph.findStartDestination().id) {
-                                saveState = true
+        modifier = Modifier.fillMaxSize(),
+        bottomBar = {
+            // Hide bottom bar on auth and splash screens
+            val hideBottomBar = currentDestination?.route?.contains("Splash") == true ||
+                               currentDestination?.route?.contains("Onboarding") == true ||
+                               currentDestination?.route?.contains("Login") == true ||
+                               currentDestination?.route?.contains("Signup") == true
+            
+            if (!hideBottomBar) {
+                AppBottomBar(
+                    currentRoute = currentDestination?.route,
+                    onNavigate = { targetRoute ->
+                        if (currentDestination?.route != targetRoute) {
+                            navController.navigate(targetRoute) {
+                                popUpTo(navController.graph.findStartDestination().id) {
+                                    saveState = true
+                                }
+                                launchSingleTop = true
+                                restoreState = true
                             }
-                            // Avoids multiple copies of the same destination when
-                            // reselecting the same item
-                            launchSingleTop = true
-                            // Restores state when reselecting a previously selected item
-                            restoreState = true
                         }
                     }
-                })
+                )
+            }
         }) { innerPadding ->
-        // Type-safe NavHost definition using the HomeRoute object class type
         NavHost(
             navController = navController,
-            startDestination = HomeRoute,
+            startDestination = SplashRoute,
             modifier = Modifier.fillMaxSize().padding(innerPadding),
 
-            // 1. Animation when opening a new screen (Slides in from the right, fades in)
             enterTransition = {
                 slideInHorizontally(
                     initialOffsetX = { fullWidth -> fullWidth }, animationSpec = tween(300)
                 ) + fadeIn(animationSpec = tween(300))
             },
-
-            // 2. Animation for the screen that is disappearing (Slides out to the left, fades out)
             exitTransition = {
                 slideOutHorizontally(
                     targetOffsetX = { fullWidth -> -fullWidth }, animationSpec = tween(300)
                 ) + fadeOut(animationSpec = tween(300))
             },
-
-            // 3. Animation when returning via system back button (Slides in from the left)
             popEnterTransition = {
                 slideInHorizontally(
                     initialOffsetX = { fullWidth -> -fullWidth }, animationSpec = tween(300)
                 ) + fadeIn(animationSpec = tween(300))
             },
-
-            // 4. Animation for the screen being popped off the stack (Slides out to the right)
             popExitTransition = {
                 slideOutHorizontally(
                     targetOffsetX = { fullWidth -> fullWidth }, animationSpec = tween(300)
                 ) + fadeOut(animationSpec = tween(300))
             }
         ) {
-            // Register destination UI templates using generic type arguments
+            composable<SplashRoute> {
+                SplashScreen(onSplashFinished = {
+                    navController.navigate(OnboardingRoute) {
+                        popUpTo(SplashRoute) { inclusive = true }
+                    }
+                })
+            }
+            composable<OnboardingRoute> {
+                OnboardingScreen(
+                    onFinished = {
+                        navController.navigate(LoginRoute) {
+                            popUpTo(OnboardingRoute) { inclusive = true }
+                        }
+                    },
+                    onLoginClick = {
+                        navController.navigate(LoginRoute)
+                    }
+                )
+            }
+            composable<LoginRoute> {
+                LoginScreen(
+                    onLoginSuccess = {
+                        navController.navigate(HomeRoute) {
+                            popUpTo(LoginRoute) { inclusive = true }
+                        }
+                    },
+                    onSignupClick = {
+                        navController.navigate(SignupRoute)
+                    }
+                )
+            }
+            composable<SignupRoute> {
+                SignupScreen(
+                    onSignupSuccess = {
+                        navController.navigate(HomeRoute) {
+                            popUpTo(LoginRoute) { inclusive = true }
+                        }
+                    },
+                    onBackClick = {
+                        navController.popBackStack()
+                    }
+                )
+            }
             composable<HomeRoute> {
                 HomeScreen(
                     onProfileNavigation = { navController.navigate(ProfileRoute) },
@@ -122,13 +160,11 @@ fun NavigationContainer(
                 )
             }
             composable<AnalyticsRoute> { backStackEntry ->
-                // Scopes the ViewModel life to this specific navigation entry block
                 val viewModel: AnalyticsViewModel = viewModel(viewModelStoreOwner = backStackEntry)
-
                 AnalyticsScreen(viewModel = viewModel)
             }
             composable<GoalsRoute> {
-                GoalsContent(
+                GoalsScreen(
                     viewModel = goalsViewModel,
                     onAddGoalClick = { navController.navigate(AddGoalRoute) }
                 )

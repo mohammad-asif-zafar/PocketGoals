@@ -1,0 +1,24 @@
+<resources>
+    <string name="btn_skip">تخطي</string>
+    <string name="btn_next">التالي</string>
+    <string name="btn_get_started">ابدأ الآن</string>
+
+    <string name="title_track_expenses">تتبع مصاريفك</string>
+    <string name="desc_track_expenses">تتبع دخلك ومصاريفك\nبسهولة في مكان واحد.</string>
+
+    <string name="title_save_money">وفر المزيد من المال</string>
+    <string name="desc_save_money">حدد الميزانيات، وتتبع الإنفاق\nووفر المزيد كل شهر.</string>
+
+    <string name="title_achieve_goals">حقق أهدافك</string>
+    <string name="desc_achieve_goals">أنشئ أهدافاً مخصصة وحقق\nأحلامك المالية.</string>
+    <string name="login_welcome">مرحباً بعودتك! 👋</string>
+    <string name="login_subtitle">قم بتسجيل الدخول للمتابعة إلى حسابك</string>
+    <string name="hint_email">البريد الإلكتروني أو رقم الهاتف</string>
+    <string name="hint_password">كلمة المرور</string>
+    <string name="btn_forgot_password">هل نسيت كلمة المرور؟</string>
+    <string name="btn_login">تسجيل الدخول</string>
+    <string name="text_or_continue">أو المتابعة باستخدام</string>
+    <string name="text_dont_have_account">ليس لديك حساب؟</string>
+    <string name="btn_sign_up">إنشاء حساب</string>
+
+</resources>

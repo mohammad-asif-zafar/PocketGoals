@@ -1,0 +1,24 @@
+<resources>
+    <string name="btn_skip">छोड़ें</string>
+    <string name="btn_next">आगे बढ़ें</string>
+    <string name="btn_get_started">शुरू करें</string>
+
+    <string name="title_track_expenses">अपने खर्चों को ट्रैक करें</string>
+    <string name="desc_track_expenses">अपनी आय और खर्चों को\nएक ही स्थान पर आसानी से ट्रैक करें।</string>
+
+    <string name="title_save_money">अधिक पैसे बचाएं</string>
+    <string name="desc_save_money">बजट निर्धारित करें, खर्चों को ट्रैक करें और\nहर महीने अधिक बचत करें।</string>
+
+    <string name="title_achieve_goals">अपने लक्ष्यों को प्राप्त करें</string>
+    <string name="desc_achieve_goals">कस्टम लक्ष्य बनाएं और अपने\nवित्तीय सपनों को पूरा करें।</string>
+    <string name="login_welcome">वापसी पर आपका स्वागत है! 👋</string>
+    <string name="login_subtitle">अपने खाते में जारी रखने के लिए लॉगिन करें</string>
+    <string name="hint_email">ईमेल या मोबाइल नंबर</string>
+    <string name="hint_password">पासवर्ड</string>
+    <string name="btn_forgot_password">पासवर्ड भूल गए?</string>
+    <string name="btn_login">लॉगिन करें</string>
+    <string name="text_or_continue">या इसके साथ जारी रखें</string>
+    <string name="text_dont_have_account">खाता नहीं है?</string>
+    <string name="btn_sign_up">साइन अप करें</string>
+
+</resources>

@@ -1,7 +1,29 @@
 <resources>
+    <string name="app_name">PocketGoals</string>
     <string name="home">Home</string>
     <string name="transactions">Transactions</string>
     <string name="add_expense">Add Expense</string>
     <string name="analytics">Analytics</string>
     <string name="goals">Goals</string>
+    <string name="btn_skip">Skip</string>
+    <string name="btn_next">Next</string>
+    <string name="btn_get_started">Get Started</string>
+
+    <string name="title_track_expenses">Track Your Expenses</string>
+    <string name="desc_track_expenses">Easily track your income and\nexpenses in one place.</string>
+
+    <string name="title_save_money">Save More Money</string>
+    <string name="desc_save_money">Set budgets, track spending and\nsave more every month.</string>
+
+    <string name="title_achieve_goals">Achieve Your Goals</string>
+    <string name="desc_achieve_goals">Create custom goals and achieve\nyour financial dreams.</string>
+    <string name="login_welcome">Welcome Back! 👋</string>
+    <string name="login_subtitle">Login to continue to your account</string>
+    <string name="hint_email">Email or Mobile Number</string>
+    <string name="hint_password">Password</string>
+    <string name="btn_forgot_password">Forgot Password?</string>
+    <string name="btn_login">Login</string>
+    <string name="text_or_continue">or continue with</string>
+    <string name="text_dont_have_account">Don\'t have an account?</string>
+    <string name="btn_sign_up">Sign Up</string>
 </resources>
