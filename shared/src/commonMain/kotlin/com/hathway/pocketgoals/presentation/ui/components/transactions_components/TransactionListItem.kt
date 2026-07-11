@@ -41,10 +41,18 @@ fun TransactionListItem(transaction: Transaction, onClick: () -> Unit) {
         }
         Column(horizontalAlignment = Alignment.End) {
             Text(
-                text = "${if (transaction.type == TransactionType.INCOME) "+" else "-"} ₹${transaction.amount.toInt()}",
+                text = when (transaction.type) {
+                    TransactionType.INCOME -> "+ ₹${transaction.amount.toInt()}"
+                    TransactionType.EXPENSE -> "- ₹${transaction.amount.toInt()}"
+                    TransactionType.GOAL_CREATED -> "New Goal"
+                },
                 style = MaterialTheme.typography.bodyLarge,
                 fontWeight = FontWeight.Bold,
-                color = if (transaction.type == TransactionType.INCOME) Color(0xFF10B981) else Color(0xFFEF4444)
+                color = when (transaction.type) {
+                    TransactionType.INCOME -> Color(0xFF10B981)
+                    TransactionType.EXPENSE -> Color(0xFFEF4444)
+                    TransactionType.GOAL_CREATED -> MaterialTheme.colorScheme.primary
+                }
             )
             Text(transaction.paymentMethod, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }

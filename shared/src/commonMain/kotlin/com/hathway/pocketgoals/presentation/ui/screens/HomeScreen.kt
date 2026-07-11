@@ -9,7 +9,13 @@ import com.hathway.pocketgoals.presentation.ui.viewmodel.HomeViewModel
 
 @Composable
 fun HomeScreen(
-    viewModel: HomeViewModel = viewModel(), onProfileNavigation: () -> Unit = {}
+    viewModel: HomeViewModel = viewModel(), onProfileNavigation: () -> Unit = {},
+    onAddExpenseClick: () -> Unit = {},
+    onAddIncomeClick: () -> Unit = {},
+    onTransferClick: () -> Unit = {},
+    onViewReportsClick: () -> Unit = {},
+    onManageClick: () -> Unit = {}
+
 ) {
     // Collect updates safely matching active Compose lifecycles
     val uiState by viewModel.uiState.collectAsState()
@@ -17,6 +23,11 @@ fun HomeScreen(
     HomeContent(
         uiState = uiState,
         onNotificationClick = { viewModel.clearNotifications() },
-        onProfileClick = onProfileNavigation
+        onProfileClick = onProfileNavigation,
+        onAddExpenseClick = { onAddExpenseClick() },
+        onAddIncomeClick = { onAddIncomeClick() },
+        onTransferClick = { onTransferClick() },
+        onViewReportsClick = { onViewReportsClick() },
+        onManageClick = { onManageClick() }
     )
 }

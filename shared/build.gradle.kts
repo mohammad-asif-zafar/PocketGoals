@@ -63,6 +63,8 @@ kotlin {
             // Navigation library automatically supports Type-Safety when serialization is applied
             implementation(libs.kotlinx.serialization.json)
             implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.0")
+            implementation(libs.multiplatform.settings.coroutines)
+            implementation(libs.multiplatform.settings.no.arg)
 
 
         }

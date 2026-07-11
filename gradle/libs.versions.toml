@@ -17,8 +17,12 @@ kotlinxSerializationJson = "1.11.0"
 material3 = "1.11.0-alpha07"
 navigationCompose = "2.9.2"
 navigationComposeVersion = "2.8.0-alpha10"
+multiplatformSettings = "1.2.0"
 
 [libraries]
+multiplatform-settings = { module = "com.russhwolf:multiplatform-settings", version.ref = "multiplatformSettings" }
+multiplatform-settings-no-arg = { module = "com.russhwolf:multiplatform-settings-no-arg", version.ref = "multiplatformSettings" }
+multiplatform-settings-coroutines = { module = "com.russhwolf:multiplatform-settings-coroutines", version.ref = "multiplatformSettings" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-testJunit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 

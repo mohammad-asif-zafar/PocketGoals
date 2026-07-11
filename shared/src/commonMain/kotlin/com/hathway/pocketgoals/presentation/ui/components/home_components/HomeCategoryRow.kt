@@ -40,6 +40,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.hathway.pocketgoals.domain.model.ThemeMode
 import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
 import kotlin.math.roundToInt
 
@@ -106,7 +107,7 @@ fun HomeCategoryCardLightPreview() {
         HomeCategoryData("Entertainment", 15.0, "4,400", Icons.Rounded.ChevronRight, Color(0xFF3B82F6))
     )
 
-    PocketGoalsTheme(darkTheme = false) {
+    PocketGoalsTheme(themeMode = ThemeMode.LIGHT) {
         Box(modifier = Modifier.background(MaterialTheme.colorScheme.background).padding(16.dp)) {
             HomeCategoryCard(title = "Monthly Spending", categories = sampleCategories)
         }
@@ -122,7 +123,7 @@ fun HomeCategoryCardDarkPreview() {
         HomeCategoryData("Entertainment", 15.0, "4,400", Icons.Rounded.Warning, Color(0xFF3B82F6))
     )
 
-    PocketGoalsTheme(darkTheme = true) {
+    PocketGoalsTheme(themeMode = ThemeMode.DARK) {
         Box(modifier = Modifier.background(MaterialTheme.colorScheme.background).padding(16.dp)) {
             HomeCategoryCard(title = "Monthly Spending", categories = sampleCategories)
         }
@@ -214,7 +215,7 @@ fun HomeCategoryRow(
 @Preview
 @Composable
 fun HomeCategoryRowLightPreview() {
-    PocketGoalsTheme(darkTheme = false) {
+    PocketGoalsTheme(themeMode = ThemeMode.LIGHT) {
         Box(modifier = Modifier.background(MaterialTheme.colorScheme.background).padding(16.dp)) {
             HomeCategoryRow(
                 name = "Shopping",

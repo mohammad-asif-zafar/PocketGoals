@@ -30,7 +30,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.hathway.pocketgoals.domain.model.ThemeMode
 import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
+import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 
@@ -43,7 +45,7 @@ fun HomeHeaderSection(
 ) {
     // Multiplatform-safe time calculation
     val greetingMessage = remember {
-        val currentMoment = kotlinx.datetime.Clock.System.now()
+        val currentMoment = Clock.System.now()
         val localDateTime = currentMoment.toLocalDateTime(TimeZone.currentSystemDefault())
         val currentHour = localDateTime.hour // Returns 0..23 representing the hour of the day
 
@@ -134,7 +136,7 @@ fun HomeHeaderSection(
 @Preview
 @Composable
 fun HomeHeaderSectionWithBadgePreview() {
-    PocketGoalsTheme(darkTheme = false) {
+    PocketGoalsTheme(themeMode = ThemeMode.DARK) {
         Box(modifier = Modifier.background(MaterialTheme.colorScheme.background).padding(16.dp)) {
             HomeHeaderSection(
                 name = "Alex",
@@ -148,7 +150,7 @@ fun HomeHeaderSectionWithBadgePreview() {
 @Preview
 @Composable
 fun HomeHeaderSectionWithLargeBadgePreview() {
-    PocketGoalsTheme(darkTheme = false) {
+    PocketGoalsTheme(themeMode = ThemeMode.DARK) {
         Box(modifier = Modifier.background(MaterialTheme.colorScheme.background).padding(16.dp)) {
             HomeHeaderSection(
                 name = "Alex",

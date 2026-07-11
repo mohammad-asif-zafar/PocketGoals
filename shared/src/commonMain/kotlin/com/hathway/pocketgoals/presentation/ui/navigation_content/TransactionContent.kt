@@ -15,9 +15,10 @@ import com.hathway.pocketgoals.presentation.ui.components.transactions_component
 import com.hathway.pocketgoals.presentation.ui.components.transactions_components.TransactionDetailsScreen
 import com.hathway.pocketgoals.presentation.ui.components.transactions_components.TransactionsListScreen
 import com.hathway.pocketgoals.presentation.ui.state.TransactionFlowState
+import com.hathway.pocketgoals.presentation.ui.viewmodel.TransactionsViewModel
 
 @Composable
-fun TransactionContent() {
+fun TransactionContent(viewModel: TransactionsViewModel) {
 
     var flowState by remember { mutableStateOf<TransactionFlowState>(TransactionFlowState.List) }
 
@@ -32,6 +33,7 @@ fun TransactionContent() {
         when (state) {
             is TransactionFlowState.List -> {
                 TransactionsListScreen(
+                    viewModel = viewModel,
                     onTransactionClick = { flowState = TransactionFlowState.Details(it) })
             }
 

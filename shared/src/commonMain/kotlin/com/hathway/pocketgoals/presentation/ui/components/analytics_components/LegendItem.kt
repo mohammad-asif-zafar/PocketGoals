@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.hathway.pocketgoals.domain.model.ThemeMode
 import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
 
 @Composable
@@ -53,7 +54,7 @@ fun LegendItem(label: String, percentage: String, color: Color) {
 @Preview
 @Composable
 fun LegendItemLightPreview() {
-    PocketGoalsTheme(darkTheme = false) {
+    PocketGoalsTheme(themeMode = ThemeMode.LIGHT) {
         Box(modifier = Modifier.background(MaterialTheme.colorScheme.background).padding(16.dp)) {
             LegendItem(
                 label = "Shopping",
@@ -67,7 +68,7 @@ fun LegendItemLightPreview() {
 @Preview
 @Composable
 fun LegendItemDarkPreview() {
-    PocketGoalsTheme(darkTheme = true) {
+    PocketGoalsTheme(themeMode = ThemeMode.DARK) {
         Box(modifier = Modifier.background(MaterialTheme.colorScheme.background).padding(16.dp)) {
             LegendItem(
                 label = "Shopping",

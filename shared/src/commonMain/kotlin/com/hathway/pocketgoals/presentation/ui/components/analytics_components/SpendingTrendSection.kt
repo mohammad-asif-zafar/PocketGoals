@@ -36,6 +36,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
+import com.hathway.pocketgoals.domain.model.ThemeMode
 import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
 
 @Composable
@@ -243,7 +244,7 @@ private fun List<Float>.indexOfMax(): Int? {
 @Preview
 @Composable
 fun SpendingTrendSectionLightPreview() {
-    PocketGoalsTheme(darkTheme = false) {
+    PocketGoalsTheme(themeMode = ThemeMode.LIGHT) {
         Box(
             modifier = Modifier.background(MaterialTheme.colorScheme.background).padding(16.dp)
         ) { SpendingTrendSection() }
@@ -253,7 +254,7 @@ fun SpendingTrendSectionLightPreview() {
 @Preview
 @Composable
 fun SpendingTrendSectionDarkPreview() {
-    PocketGoalsTheme(darkTheme = true) {
+    PocketGoalsTheme(themeMode = ThemeMode.DARK) {
         Box(
             modifier = Modifier.background(MaterialTheme.colorScheme.background).padding(16.dp)
         ) { SpendingTrendSection() }

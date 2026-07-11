@@ -5,5 +5,8 @@ import kotlinx.serialization.Serializable
 @Serializable object HomeRoute
 @Serializable object TransactionsRoute
 @Serializable object AddExpenseRoute
+@Serializable object AddIncomeRoute
 @Serializable object AnalyticsRoute
 @Serializable object GoalsRoute
+@Serializable object AddGoalRoute
+@Serializable object ProfileRoute

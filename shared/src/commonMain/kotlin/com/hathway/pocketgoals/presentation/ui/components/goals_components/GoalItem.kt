@@ -2,6 +2,7 @@ package com.hathway.pocketgoals.presentation.ui.components.goals_components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -31,32 +32,29 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.hathway.pocketgoals.domain.Goal
+import com.hathway.pocketgoals.domain.model.ThemeMode
 import com.hathway.pocketgoals.domain.util.mockAmount.formatMockAmount
 import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
 
 @Composable
-fun GoalItem(goal: Goal, onClick: () -> Unit) {
-    Card(
-        modifier = Modifier.fillMaxWidth()
-            // Dynamic border color using outline variant or a subtle custom combination
-            .border(
-                1.dp,
-                MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f),
-                RoundedCornerShape(16.dp)
-            ), shape = RoundedCornerShape(16.dp),
-        // Dynamic card container color using surface tokens
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
-        ), elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
-    ) {
+fun GoalItem(
+    goal: Goal, onClick: () -> Unit, modifier: Modifier = Modifier
+) {
+    Card(modifier = modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp)).clickable { onClick() }
+        .border(
+            width = 1.dp,
+            color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f),
+            shape = RoundedCornerShape(16.dp)
+        ), shape = RoundedCornerShape(16.dp), colors = CardDefaults.cardColors(
+        containerColor = MaterialTheme.colorScheme.surface
+    ), elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)) {
         Row(
             modifier = Modifier.padding(16.dp).fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // Icon Background
+            // Icon Background frame using dynamic color blend opacity
             Box(
                 modifier = Modifier.size(56.dp).clip(CircleShape)
-                    // Keeps goal's custom color but safely blends it over the current surface
                     .background(goal.color.copy(alpha = 0.15f)), contentAlignment = Alignment.Center
             ) {
                 Icon(
@@ -74,7 +72,6 @@ fun GoalItem(goal: Goal, onClick: () -> Unit) {
                     text = goal.name,
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
-                    // Uses dynamic onSurface text color (Dark color in light mode, Light color in dark mode)
                     color = MaterialTheme.colorScheme.onSurface
                 )
 
@@ -83,7 +80,6 @@ fun GoalItem(goal: Goal, onClick: () -> Unit) {
                 Text(
                     text = "₹${formatMockAmount(goal.savedAmount)} / ₹${formatMockAmount(goal.targetAmount)}",
                     style = MaterialTheme.typography.bodySmall,
-                    // Uses secondary text token instead of hardcoded Color.DarkGray
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     fontWeight = FontWeight.Medium
                 )
@@ -97,9 +93,7 @@ fun GoalItem(goal: Goal, onClick: () -> Unit) {
                     LinearProgressIndicator(
                         progress = { goal.progress },
                         modifier = Modifier.weight(1f).height(8.dp).clip(CircleShape),
-                        // Primary or Tertiary theme color accentuates progress beautifully across light/dark
-                        color = MaterialTheme.colorScheme.primary,
-                        // Track automatically dims/brightens with surface variants
+                        color = goal.color, // Keeps visual theme color match across categories
                         trackColor = MaterialTheme.colorScheme.surfaceVariant
                     )
 
@@ -107,7 +101,6 @@ fun GoalItem(goal: Goal, onClick: () -> Unit) {
                         text = "${goal.percentage}%",
                         style = MaterialTheme.typography.labelLarge,
                         fontWeight = FontWeight.Bold,
-                        // Uses primary/onSurface color text to guarantee visibility contrast
                         color = MaterialTheme.colorScheme.onSurface
                     )
                 }
@@ -116,20 +109,28 @@ fun GoalItem(goal: Goal, onClick: () -> Unit) {
     }
 }
 
+// Stub function to allow direct IDE parsing layout compilation
+private fun formatMockAmount(amount: Double): String {
+    return amount.toInt().toString()
+}
+
+// ==========================================================
+// Theme-Safe Split Previews
+// ==========================================================
+
 @Preview
 @Composable
 fun GoalItemLightPreview() {
     val sampleGoal = Goal(
-        id = "1",
         name = "MacBook Pro",
         targetAmount = 150000.0,
         savedAmount = 90000.0,
         deadline = "2026-12-31",
         icon = Icons.Default.Star,
-        color = Color(0xFF10B981) // Green accent color
+        color = Color(0xFF10B981)
     )
 
-    PocketGoalsTheme(darkTheme = false) {
+    PocketGoalsTheme(themeMode = ThemeMode.LIGHT) {
         Box(
             modifier = Modifier.background(MaterialTheme.colorScheme.background).padding(16.dp)
         ) {
@@ -142,7 +143,6 @@ fun GoalItemLightPreview() {
 @Composable
 fun GoalItemDarkPreview() {
     val sampleGoal = Goal(
-        id = "1",
         name = "MacBook Pro",
         targetAmount = 150000.0,
         savedAmount = 90000.0,
@@ -151,7 +151,7 @@ fun GoalItemDarkPreview() {
         color = Color(0xFF10B981)
     )
 
-    PocketGoalsTheme(darkTheme = true) {
+    PocketGoalsTheme(themeMode = ThemeMode.DARK) {
         Box(
             modifier = Modifier.background(MaterialTheme.colorScheme.background).padding(16.dp)
         ) {

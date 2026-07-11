@@ -18,15 +18,17 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.hathway.pocketgoals.presentation.ui.theme.Primary
 
 @Composable
 fun AddExpenseSuccessStep(
@@ -41,18 +43,23 @@ fun AddExpenseSuccessStep(
         verticalArrangement = Arrangement.Center
     ) {
         Box(
-            modifier = Modifier.size(100.dp).background(Color(0xFFECFDF5), CircleShape),
+            modifier = Modifier.size(100.dp).background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f), CircleShape),
             contentAlignment = Alignment.Center
         ) {
-            Icon(Icons.Rounded.Check, null, tint = Color(0xFF10B981), modifier = Modifier.size(48.dp))
+            Icon(Icons.Rounded.Check, null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(48.dp))
         }
         Spacer(modifier = Modifier.height(24.dp))
-        Text("Expense Added!", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
+        Text(
+            text = "Expense Added!",
+            style = MaterialTheme.typography.headlineSmall,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.primary
+        )
         Spacer(modifier = Modifier.height(12.dp))
         Text(
             text = "₹$amount has been added to\n$categoryName successfully.",
             textAlign = TextAlign.Center,
-            color = Color(0xFF64748B)
+            color = MaterialTheme.colorScheme.onSurfaceVariant
         )
 
         Spacer(modifier = Modifier.height(48.dp))
@@ -61,15 +68,23 @@ fun AddExpenseSuccessStep(
             onClick = onViewExpense,
             modifier = Modifier.fillMaxWidth().height(56.dp),
             shape = RoundedCornerShape(12.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF0F766E))
+            colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.onPrimary
+            )
         ) {
             Text("View Expense", fontWeight = FontWeight.Bold)
         }
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        TextButton(onClick = onAddAnother) {
-            Text("Add Another Expense", color = Color(0xFF0F766E), fontWeight = FontWeight.Bold)
+        OutlinedButton(
+            onClick = onAddAnother,
+            modifier = Modifier.fillMaxWidth().height(56.dp),
+            shape = RoundedCornerShape(12.dp),
+            border = BorderStroke(1.dp, Primary)
+        ) {
+            Text("Add Another Expense", color = Primary, fontWeight = FontWeight.Bold)
         }
     }
 }

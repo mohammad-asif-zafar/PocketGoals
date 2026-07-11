@@ -18,7 +18,12 @@ import com.hathway.pocketgoals.presentation.ui.state.HomeUiState
 
 @Composable
 fun HomeContent(
-    uiState: HomeUiState, onNotificationClick: () -> Unit, onProfileClick: () -> Unit
+    uiState: HomeUiState, onNotificationClick: () -> Unit, onProfileClick: () -> Unit,
+    onAddExpenseClick: () -> Unit = {},
+    onAddIncomeClick: () -> Unit = {},
+    onTransferClick: () -> Unit = {},
+    onViewReportsClick: () -> Unit = {},
+    onManageClick: () -> Unit = {}
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background),
@@ -47,7 +52,12 @@ fun HomeContent(
 
         // Quick Actions
         item {
-            HomeQuickActionsSection()
+            HomeQuickActionsSection(
+                onAddExpenseClick = { onAddExpenseClick() },
+                onAddIncomeClick = { onAddIncomeClick() },
+                onTransferClick = { onTransferClick() },
+                onViewReportsClick = { onViewReportsClick() },
+                onManageClick = { onManageClick() })
         }
 
         // Overview This Month

@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.hathway.pocketgoals.domain.model.ThemeMode
 import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
 
 @Composable
@@ -101,7 +102,7 @@ fun ExpenseOverviewSection(totalAmount: String = "₹90,000") {
 @Preview
 @Composable
 fun ExpenseOverviewSectionLightPreview() {
-    PocketGoalsTheme(darkTheme = false) {
+    PocketGoalsTheme(themeMode = ThemeMode.LIGHT) {
         Box(modifier = Modifier.background(MaterialTheme.colorScheme.background).padding(16.dp)) {
             ExpenseOverviewSection()
         }
@@ -111,7 +112,7 @@ fun ExpenseOverviewSectionLightPreview() {
 @Preview
 @Composable
 fun ExpenseOverviewSectionDarkPreview() {
-    PocketGoalsTheme(darkTheme = true) {
+    PocketGoalsTheme(themeMode = ThemeMode.DARK) {
         Box(modifier = Modifier.background(MaterialTheme.colorScheme.background).padding(16.dp)) {
             ExpenseOverviewSection()
         }

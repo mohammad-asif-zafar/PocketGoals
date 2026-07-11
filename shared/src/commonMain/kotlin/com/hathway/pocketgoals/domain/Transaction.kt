@@ -3,7 +3,7 @@ package com.hathway.pocketgoals.domain
 import androidx.compose.ui.graphics.vector.ImageVector
 
 enum class TransactionType {
-    INCOME, EXPENSE
+    INCOME, EXPENSE, GOAL_CREATED
 }
 
 data class Transaction(

@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.background
 import androidx.compose.ui.tooling.preview.Preview
+import com.hathway.pocketgoals.domain.model.ThemeMode
 import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
 
 @Composable
@@ -76,7 +77,7 @@ fun AnalyticsHeader(
 @Preview
 @Composable
 fun AnalyticsHeaderLightPreview() {
-    PocketGoalsTheme(darkTheme = false) {
+    PocketGoalsTheme(themeMode = ThemeMode.LIGHT) {
         Box(modifier = Modifier.background(MaterialTheme.colorScheme.background).padding(16.dp)) {
             AnalyticsHeader(
                 selectedPeriod = "This Month",
@@ -89,7 +90,7 @@ fun AnalyticsHeaderLightPreview() {
 @Preview
 @Composable
 fun AnalyticsHeaderDarkPreview() {
-    PocketGoalsTheme(darkTheme = true) {
+    PocketGoalsTheme(themeMode = ThemeMode.DARK) {
         Box(modifier = Modifier.background(MaterialTheme.colorScheme.background).padding(16.dp)) {
             AnalyticsHeader(
                 selectedPeriod = "This Month",

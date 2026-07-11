@@ -24,6 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
 import androidx.compose.material.icons.filled.ShoppingCart // Example icon for preview
+import com.hathway.pocketgoals.domain.model.ThemeMode
 
 @Composable
 fun AnalyticsCategoryItem(name: String, value: String, color: Color, icon: ImageVector) {
@@ -74,7 +75,7 @@ fun AnalyticsCategoryItem(name: String, value: String, color: Color, icon: Image
 @Preview
 @Composable
 fun AnalyticsCategoryItemLightPreview() {
-    PocketGoalsTheme(darkTheme = false) {
+    PocketGoalsTheme(themeMode = ThemeMode.LIGHT) {
         Box(modifier = Modifier.background(MaterialTheme.colorScheme.background).padding(16.dp)) {
             AnalyticsCategoryItem(
                 name = "Shopping",
@@ -89,7 +90,7 @@ fun AnalyticsCategoryItemLightPreview() {
 @Preview
 @Composable
 fun AnalyticsCategoryItemDarkPreview() {
-    PocketGoalsTheme(darkTheme = true) {
+    PocketGoalsTheme(themeMode = ThemeMode.DARK) {
         Box(modifier = Modifier.background(MaterialTheme.colorScheme.background).padding(16.dp)) {
             AnalyticsCategoryItem(
                 name = "Shopping",

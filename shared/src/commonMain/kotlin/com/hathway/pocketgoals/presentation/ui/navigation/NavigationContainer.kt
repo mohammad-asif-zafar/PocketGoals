@@ -20,15 +20,18 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.hathway.pocketgoals.presentation.ui.components.common_components.AppBottomBar
 import com.hathway.pocketgoals.presentation.ui.navigation_content.GoalsContent
-import com.hathway.pocketgoals.presentation.ui.screens.AddExpenseScreen
-import com.hathway.pocketgoals.presentation.ui.screens.AnalyticsScreen
-import com.hathway.pocketgoals.presentation.ui.screens.GoalsScreen
-import com.hathway.pocketgoals.presentation.ui.screens.HomeScreen
-import com.hathway.pocketgoals.presentation.ui.screens.TransactionsScreen
+import com.hathway.pocketgoals.presentation.ui.screens.*
 import com.hathway.pocketgoals.presentation.ui.viewmodel.AnalyticsViewModel
+import com.hathway.pocketgoals.presentation.ui.viewmodel.GoalsViewModel
+import com.hathway.pocketgoals.presentation.ui.viewmodel.SettingsViewModel
+import com.hathway.pocketgoals.presentation.ui.viewmodel.TransactionsViewModel
 
 @Composable
-fun NavigationContainer() {
+fun NavigationContainer(
+    settingsViewModel: SettingsViewModel = viewModel(),
+    goalsViewModel: GoalsViewModel = viewModel(),
+    transactionsViewModel: TransactionsViewModel = viewModel()
+) {
     val navController: NavHostController = rememberNavController()
 
     // Tracks the destination instead of the raw string route
@@ -92,13 +95,31 @@ fun NavigationContainer() {
         ) {
             // Register destination UI templates using generic type arguments
             composable<HomeRoute> {
-                HomeScreen()
+                HomeScreen(
+                    onProfileNavigation = { navController.navigate(ProfileRoute) },
+                    onAddExpenseClick = { navController.navigate(AddExpenseRoute) },
+                    onAddIncomeClick = { navController.navigate(AddIncomeRoute) },
+                    onTransferClick = { /* navController.navigate(TransferRoute) */ },
+                    onViewReportsClick = { navController.navigate(AnalyticsRoute) },
+                    onManageClick = { /* Handle manage logic or navigate */ }
+                )
             }
             composable<TransactionsRoute> {
-                TransactionsScreen()
+                TransactionsScreen(viewModel = transactionsViewModel)
             }
             composable<AddExpenseRoute> {
-                AddExpenseScreen(onBackClick = {}, onViewTransaction = {})
+                AddExpenseScreen(
+                    onBackClick = { navController.popBackStack() }, 
+                    onViewTransaction = { navController.popBackStack() },
+                    onSaveTransaction = { transactionsViewModel.addTransaction(it) }
+                )
+            }
+            composable<AddIncomeRoute> {
+                AddIncomeScreen(
+                    onBackClick = { navController.popBackStack() }, 
+                    onViewIncome = { navController.popBackStack() },
+                    onSaveTransaction = { transactionsViewModel.addTransaction(it) }
+                )
             }
             composable<AnalyticsRoute> { backStackEntry ->
                 // Scopes the ViewModel life to this specific navigation entry block
@@ -107,7 +128,24 @@ fun NavigationContainer() {
                 AnalyticsScreen(viewModel = viewModel)
             }
             composable<GoalsRoute> {
-                GoalsContent()
+                GoalsContent(
+                    viewModel = goalsViewModel,
+                    onAddGoalClick = { navController.navigate(AddGoalRoute) }
+                )
+            }
+            composable<AddGoalRoute> {
+                AddGoalScreen(
+                    viewModel = goalsViewModel,
+                    onBackClick = { navController.popBackStack() },
+                    onViewGoal = { navController.popBackStack() },
+                    onSaveTransaction = { transactionsViewModel.addTransaction(it) }
+                )
+            }
+            composable<ProfileRoute> {
+                ProfileScreen(
+                    settingsViewModel = settingsViewModel,
+                    onBackClick = { navController.popBackStack() }
+                )
             }
         }
     }

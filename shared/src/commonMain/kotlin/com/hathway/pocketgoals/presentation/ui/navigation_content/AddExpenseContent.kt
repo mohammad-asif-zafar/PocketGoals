@@ -1,58 +1,119 @@
 package com.hathway.pocketgoals.presentation.ui.navigation_content
 
-import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.togetherWith
+import androidx.compose.animation.*
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import com.hathway.pocketgoals.data.AddExpenseStep
+import com.hathway.pocketgoals.data.CategoryFlowStep
 import com.hathway.pocketgoals.domain.ExpenseCategory
-import com.hathway.pocketgoals.presentation.ui.components.add_expense_components.AddExpenseFormStep
-import com.hathway.pocketgoals.presentation.ui.components.add_expense_components.AddExpenseSuccessStep
-import com.hathway.pocketgoals.presentation.ui.components.add_expense_components.AddExpenseSummaryStep
-import com.hathway.pocketgoals.presentation.ui.components.add_expense_components.AddExpenseTopBar
+import com.hathway.pocketgoals.domain.Transaction
+import com.hathway.pocketgoals.domain.TransactionType
+import com.hathway.pocketgoals.presentation.ui.components.add_expense_components.*
+import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
+import kotlinx.datetime.Instant
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 
 @Composable
 fun AddExpenseContent(
-    onBackClick: () -> Unit, onViewTransaction: () -> Unit
+    onBackClick: () -> Unit,
+    onViewTransaction: () -> Unit,
+    onSaveTransaction: (Transaction) -> Unit
 ) {
-
     var currentStep by remember { mutableStateOf<AddExpenseStep>(AddExpenseStep.Form) }
+    var categoryFlowStep by remember { mutableStateOf<CategoryFlowStep>(CategoryFlowStep.Selection) }
 
     // Form State
     var amount by remember { mutableStateOf("0") }
     var selectedCategory by remember { mutableStateOf<ExpenseCategory?>(null) }
     var selectedMethod by remember { mutableStateOf<String?>(null) }
     var note by remember { mutableStateOf("") }
-    var date by remember { mutableStateOf("15 May 2024") }
+    var selectedDateMillis by remember { mutableStateOf<Long?>(null) }
+
+    val dateText = remember(selectedDateMillis) {
+        if (selectedDateMillis == null) "15 May 2024"
+        else {
+            val instant = Instant.fromEpochMilliseconds(selectedDateMillis!!)
+            val dt = instant.toLocalDateTime(TimeZone.currentSystemDefault())
+            "${dt.dayOfMonth} ${dt.month.name.lowercase().replaceFirstChar { it.uppercase() }} ${dt.year}"
+        }
+    }
 
     val isFormValid = amount != "0" && selectedCategory != null && selectedMethod != null
 
     Scaffold(
         topBar = {
             if (currentStep !is AddExpenseStep.Success) {
+                val title = when (currentStep) {
+                    AddExpenseStep.Form -> "Add Expense"
+                    AddExpenseStep.CategorySelection -> when (categoryFlowStep) {
+                        CategoryFlowStep.Selection -> "Select Category"
+                        CategoryFlowStep.Add -> "Add New Category"
+                        is CategoryFlowStep.Edit -> "Edit Category"
+                        is CategoryFlowStep.Delete -> "Delete Category"
+                    }
+                    AddExpenseStep.AmountInput -> "Enter Amount"
+                    AddExpenseStep.DateSelection -> "Select Date"
+                    AddExpenseStep.MethodSelection -> "Payment Method"
+                    AddExpenseStep.NoteInput -> "Add Note"
+                    AddExpenseStep.Summary -> "Summary"
+                    else -> "Add Expense"
+                }
+
                 AddExpenseTopBar(
-                    title = if (currentStep is AddExpenseStep.Form) "Add Expense" else "Summary",
+                    title = title,
                     onBack = {
-                        if (currentStep is AddExpenseStep.Summary) currentStep = AddExpenseStep.Form
-                        else onBackClick()
-                    })
+                        when (currentStep) {
+                            AddExpenseStep.Form -> onBackClick()
+                            AddExpenseStep.CategorySelection -> {
+                                when (categoryFlowStep) {
+                                    CategoryFlowStep.Selection -> currentStep = AddExpenseStep.Form
+                                    CategoryFlowStep.Add -> categoryFlowStep = CategoryFlowStep.Selection
+                                    is CategoryFlowStep.Edit -> categoryFlowStep = CategoryFlowStep.Selection
+                                    is CategoryFlowStep.Delete -> {
+                                        val cat = (categoryFlowStep as CategoryFlowStep.Delete).category
+                                        categoryFlowStep = CategoryFlowStep.Edit(cat)
+                                    }
+                                }
+                            }
+                            AddExpenseStep.AmountInput, 
+                            AddExpenseStep.DateSelection, 
+                            AddExpenseStep.MethodSelection, 
+                            AddExpenseStep.NoteInput -> currentStep = AddExpenseStep.Form
+                            AddExpenseStep.Summary -> currentStep = AddExpenseStep.Form
+                            else -> onBackClick()
+                        }
+                    },
+                    onDelete = if (currentStep == AddExpenseStep.CategorySelection && categoryFlowStep is CategoryFlowStep.Edit) {
+                        { categoryFlowStep = CategoryFlowStep.Delete((categoryFlowStep as CategoryFlowStep.Edit).category) }
+                    } else null
+                )
             }
-        }, containerColor = Color.White
-    ) { paddingValues ->
+        },
+        containerColor = MaterialTheme.colorScheme.background
+    ) { innerScaffoldPadding ->
         AnimatedContent(
             targetState = currentStep,
-            modifier = Modifier.padding(paddingValues),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerScaffoldPadding),
             transitionSpec = {
-                fadeIn() togetherWith fadeOut()
+                val isForward = targetState != AddExpenseStep.Form
+                val enterTransition = if (isForward) {
+                    slideInHorizontally { it } + fadeIn()
+                } else {
+                    slideInHorizontally { -it } + fadeIn()
+                }
+                val exitTransition = if (isForward) {
+                    slideOutHorizontally { -it } + fadeOut()
+                } else {
+                    slideOutHorizontally { it } + fadeOut()
+                }
+                enterTransition togetherWith exitTransition using SizeTransform(clip = false)
             },
             label = "AddExpenseFlow"
         ) { step ->
@@ -60,27 +121,90 @@ fun AddExpenseContent(
                 is AddExpenseStep.Form -> {
                     AddExpenseFormStep(
                         amount = amount,
-                        onAmountChange = { amount = it },
+                        onAmountClick = { currentStep = AddExpenseStep.AmountInput },
                         category = selectedCategory,
-                        onCategoryClick = { selectedCategory = it },
-                        date = date,
+                        onCategoryClick = { currentStep = AddExpenseStep.CategorySelection },
+                        date = dateText,
+                        onDateClick = { currentStep = AddExpenseStep.DateSelection },
                         method = selectedMethod,
-                        onMethodClick = { selectedMethod = it },
+                        onMethodClick = { currentStep = AddExpenseStep.MethodSelection },
+                        note = note,
+                        onNoteClick = { currentStep = AddExpenseStep.NoteInput },
+                        isNextEnabled = isFormValid,
+                        onNext = { currentStep = AddExpenseStep.Summary }
+                    )
+                }
+
+                is AddExpenseStep.AmountInput -> {
+                    AmountInputStep(
+                        amount = amount,
+                        onAmountChange = { amount = it },
+                        onDone = { currentStep = AddExpenseStep.Form }
+                    )
+                }
+
+                is AddExpenseStep.CategorySelection -> {
+                    CategorySelectionContent(
+                        selectedCategory = selectedCategory,
+                        onCategorySelected = { selectedCategory = it },
+                        onCategoryFinalized = {
+                            selectedCategory = it
+                            currentStep = AddExpenseStep.Form
+                        },
+                        currentStep = categoryFlowStep,
+                        onStepChange = { categoryFlowStep = it }
+                    )
+                }
+
+                is AddExpenseStep.DateSelection -> {
+                    DateSelectionStep(
+                        selectedDateMillis = selectedDateMillis,
+                        onDateSelected = { selectedDateMillis = it },
+                        onDone = { currentStep = AddExpenseStep.Form }
+                    )
+                }
+
+                is AddExpenseStep.MethodSelection -> {
+                    MethodSelectionStep(
+                        selectedMethod = selectedMethod,
+                        onMethodSelected = { selectedMethod = it },
+                        onDone = { currentStep = AddExpenseStep.Form }
+                    )
+                }
+
+                is AddExpenseStep.NoteInput -> {
+                    NoteInputStep(
                         note = note,
                         onNoteChange = { note = it },
-                        isNextEnabled = isFormValid,
-                        onNext = { currentStep = AddExpenseStep.Summary })
+                        onDone = { currentStep = AddExpenseStep.Form }
+                    )
                 }
 
                 is AddExpenseStep.Summary -> {
                     AddExpenseSummaryStep(
                         amount = amount,
                         category = selectedCategory!!,
-                        date = date,
+                        date = dateText,
                         method = selectedMethod!!,
                         note = note,
-                        onSave = { currentStep = AddExpenseStep.Success },
-                        onCancel = { currentStep = AddExpenseStep.Form })
+                        onSave = { 
+                            val transaction = Transaction(
+                                id = kotlinx.datetime.Clock.System.now().toEpochMilliseconds().toString(),
+                                title = selectedCategory!!.name,
+                                amount = amount.toDoubleOrNull() ?: 0.0,
+                                type = TransactionType.EXPENSE,
+                                date = dateText,
+                                time = "12:00 PM",
+                                category = selectedCategory!!.name,
+                                paymentMethod = selectedMethod!!,
+                                note = note,
+                                icon = selectedCategory!!.icon
+                            )
+                            onSaveTransaction(transaction)
+                            currentStep = AddExpenseStep.Success 
+                        },
+                        onCancel = { currentStep = AddExpenseStep.Form }
+                    )
                 }
 
                 is AddExpenseStep.Success -> {
@@ -93,8 +217,10 @@ fun AddExpenseContent(
                             selectedCategory = null
                             selectedMethod = null
                             note = ""
+                            selectedDateMillis = null
                             currentStep = AddExpenseStep.Form
-                        })
+                        }
+                    )
                 }
             }
         }

@@ -15,16 +15,19 @@ import androidx.compose.material.icons.automirrored.rounded.Backspace
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.hathway.pocketgoals.domain.model.ThemeMode
+import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
 
 @Composable
 fun CustomNumberPad(
@@ -35,11 +38,11 @@ fun CustomNumberPad(
 ) {
     Surface(
         modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp),
+        shape = RoundedCornerShape(24.dp),
         shadowElevation = 16.dp,
-        color = Color.White
+        color = MaterialTheme.colorScheme.surface
     ) {
-        Column(modifier = Modifier.padding(24.dp)) {
+        Column(modifier = Modifier.padding(14.dp)) {
             val numbers = listOf(
                 listOf("1", "2", "3"),
                 listOf("4", "5", "6"),
@@ -54,21 +57,27 @@ fun CustomNumberPad(
                 ) {
                     row.forEach { char ->
                         Box(
-                            modifier = Modifier
-                                .size(64.dp)
-                                .clip(RoundedCornerShape(16.dp))
+                            modifier = Modifier.size(64.dp).clip(RoundedCornerShape(16.dp))
                                 .clickable {
                                     when (char) {
                                         "DEL" -> onDelete()
                                         else -> onNumberClick(char)
                                     }
-                                },
-                            contentAlignment = Alignment.Center
+                                }, contentAlignment = Alignment.Center
                         ) {
                             if (char == "DEL") {
-                                Icon(Icons.AutoMirrored.Rounded.Backspace, null)
+                                Icon(
+                                    imageVector = Icons.AutoMirrored.Rounded.Backspace,
+                                    contentDescription = "Delete",
+                                    tint = MaterialTheme.colorScheme.onSurface
+                                )
                             } else {
-                                Text(char, fontSize = 24.sp, fontWeight = FontWeight.SemiBold)
+                                Text(
+                                    text = char,
+                                    fontSize = 24.sp,
+                                    fontWeight = FontWeight.SemiBold,
+                                    color = MaterialTheme.colorScheme.onSurface
+                                )
                             }
                         }
                     }
@@ -79,10 +88,33 @@ fun CustomNumberPad(
                 onClick = onDone,
                 modifier = Modifier.fillMaxWidth().height(56.dp).padding(top = 8.dp),
                 shape = RoundedCornerShape(12.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF0F766E))
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.onPrimary
+                )
             ) {
-                Text("Done", fontWeight = FontWeight.Bold)
+                Text("Next", fontWeight = FontWeight.Bold)
             }
         }
+    }
+}
+
+// ==========================================================
+// Theme-Safe Split Previews
+// ==========================================================
+
+@Preview
+@Composable
+fun CustomNumberPadLightPreview() {
+    PocketGoalsTheme(themeMode = ThemeMode.LIGHT) {
+        CustomNumberPad(onNumberClick = {}, onDelete = {}, onDone = {})
+    }
+}
+
+@Preview
+@Composable
+fun CustomNumberPadDarkPreview() {
+    PocketGoalsTheme(themeMode = ThemeMode.DARK) {
+        CustomNumberPad(onNumberClick = {}, onDelete = {}, onDone = {})
     }
 }
