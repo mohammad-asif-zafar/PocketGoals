@@ -1,6 +1,5 @@
 package com.hathway.pocketgoals.presentation.ui.components.goals_components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -10,10 +9,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.hathway.pocketgoals.domain.model.ThemeMode
-import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
+import org.jetbrains.compose.resources.stringResource
+import pocketgoals.shared.generated.resources.*
 
 @Composable
 fun GoalsTopBar(
@@ -25,7 +23,7 @@ fun GoalsTopBar(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = "Goals",
+            text = stringResource(Res.string.goals),
             style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.onBackground
@@ -44,35 +42,16 @@ fun GoalsTopBar(
             ) {
                 Icon(
                     imageVector = Icons.Default.Add,
-                    contentDescription = "Add Goal",
+                    contentDescription = stringResource(Res.string.add_goal),
                     tint = MaterialTheme.colorScheme.onPrimary,
                     modifier = Modifier.size(20.dp)
                 )
                 Text(
-                    text = "Add Goal",
+                    text = stringResource(Res.string.add_goal),
                     style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.onPrimary,
                     fontWeight = FontWeight.Bold
                 )
-            }
-        }
-    }
-}
-
-@Preview
-@Composable
-fun GoalsTopBarThemePreview() {
-    Column(
-        verticalArrangement = Arrangement.spacedBy(16.dp), modifier = Modifier.padding(8.dp)
-    ) {
-        PocketGoalsTheme(themeMode = ThemeMode.LIGHT) {
-            Box(modifier = Modifier.background(MaterialTheme.colorScheme.background)) {
-                GoalsTopBar(onAddGoalClick = {})
-            }
-        }
-        PocketGoalsTheme(themeMode = ThemeMode.DARK) {
-            Box(modifier = Modifier.background(MaterialTheme.colorScheme.background)) {
-                GoalsTopBar(onAddGoalClick = {})
             }
         }
     }

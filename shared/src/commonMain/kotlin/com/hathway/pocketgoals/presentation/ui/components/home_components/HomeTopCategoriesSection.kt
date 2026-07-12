@@ -19,6 +19,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import org.jetbrains.compose.resources.stringResource
+import pocketgoals.shared.generated.resources.*
 
 @Composable
 fun HomeTopCategoriesSection() {
@@ -29,12 +31,12 @@ fun HomeTopCategoriesSection() {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "Top Categories",
+                text = stringResource(Res.string.top_categories),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold
             )
             Text(
-                text = "See All",
+                text = stringResource(Res.string.see_all),
                 style = MaterialTheme.typography.bodySmall,
                 color = Color(0xFF0F766E),
                 fontWeight = FontWeight.SemiBold
@@ -43,9 +45,9 @@ fun HomeTopCategoriesSection() {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        HomeCategoryRow("Investment", 34.47, "31,029", Icons.AutoMirrored.Rounded.TrendingUp, Color(0xFF3B82F6))
-        HomeCategoryRow("Basic Needs", 27.81, "25,029", Icons.Rounded.Home, Color(0xFF10B981))
-        HomeCategoryRow("Future Pay", 15.11, "13,599", Icons.Rounded.Kitchen, Color(0xFFF59E0B))
-        HomeCategoryRow("Family Support", 9.27, "8,343", Icons.Rounded.Star, Color(0xFF8B5CF6))
+        HomeCategoryRow(stringResource(Res.string.investment), 34.47, "31,029", Icons.AutoMirrored.Rounded.TrendingUp, Color(0xFF3B82F6))
+        HomeCategoryRow(stringResource(Res.string.basic_needs), 27.81, "25,029", Icons.Rounded.Home, Color(0xFF10B981))
+        HomeCategoryRow(stringResource(Res.string.future_pay), 15.11, "13,599", Icons.Rounded.Kitchen, Color(0xFFF59E0B))
+        HomeCategoryRow(stringResource(Res.string.family_support), 9.27, "8,343", Icons.Rounded.Star, Color(0xFF8B5CF6))
     }
 }

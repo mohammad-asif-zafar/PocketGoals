@@ -96,4 +96,22 @@
     <string name="balance_show">Papar baki</string>
     <string name="balance_stats">Statistik</string>
 
+    <string name="add_description">Tambah butiran</string>
+    <string name="description_label">Keterangan</string>
+    <string name="description_placeholder">Tambah sebarang nota tentang matlamat anda</string>
+    <string name="motivation_label">Motivasi</string>
+    <string name="motivation_placeholder">Mengapa matlamat ini penting bagi anda?</string>
+    <string name="cd_toggle_dropdown_menu">Togol Menu Pilihan Dropdown</string>
+    <string name="goal_lbl_choose_icon">Pilih Ikon</string>
+    <string name="goal_lbl_select_icon">Pilih Ikon</string>
+    <string name="goal_lbl_choose_color">Pilih Warna</string>
+    <string name="goal_lbl_name">Nama Matlamat</string>
+    <string name="goal_placeholder_name">cth. Percutian Eropah, Laptop Baru</string>
+    <string name="goal_btn_next">Seterusnya</string>
+
+    <string name="set_target_amount">Tetapkan Jumlah Sasaran</string>
+    <string name="quick_select">Pilihan Pantas</string>
+    <string name="quick_select_other">Lain-lain</string>
+
+    
 </resources>

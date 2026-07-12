@@ -35,24 +35,30 @@ import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
+import org.jetbrains.compose.resources.stringResource
+import pocketgoals.shared.generated.resources.*
 
 @Composable
 fun HomeHeaderSection(
     name: String,
-    unreadCount: Int = 0, // 1. Added unreadCount parameter
+    unreadCount: Int = 0,
     onNotificationClick: () -> Unit = {},
     onProfileClick: () -> Unit = {}
 ) {
+    val morning = stringResource(Res.string.good_morning)
+    val afternoon = stringResource(Res.string.good_afternoon)
+    val evening = stringResource(Res.string.good_evening)
+
     // Multiplatform-safe time calculation
-    val greetingMessage = remember {
+    val greetingMessage = remember(morning, afternoon, evening) {
         val currentMoment = Clock.System.now()
         val localDateTime = currentMoment.toLocalDateTime(TimeZone.currentSystemDefault())
         val currentHour = localDateTime.hour // Returns 0..23 representing the hour of the day
 
         when (currentHour) {
-            in 0..11 -> "Good Morning,"
-            in 12..16 -> "Good Afternoon,"
-            else -> "Good Evening,"
+            in 0..11 -> morning
+            in 12..16 -> afternoon
+            else -> evening
         }
     }
 
@@ -79,34 +85,33 @@ fun HomeHeaderSection(
             // Notification Area
             Box(
                 modifier = Modifier
-                    .size(44.dp) // Expanded slightly to fit larger text badges comfortably
+                    .size(44.dp)
                     .clip(CircleShape)
                     .clickable { onNotificationClick() },
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
                     imageVector = Icons.Rounded.NotificationsNone,
-                    contentDescription = "Notifications",
+                    contentDescription = stringResource(Res.string.notifications),
                     tint = MaterialTheme.colorScheme.onSurface,
                     modifier = Modifier.size(28.dp)
                 )
 
-                // 2. Dynamic Badge Display Logic
                 if (unreadCount > 0) {
                     val badgeText = if (unreadCount > 99) "99+" else unreadCount.toString()
 
                     Text(
                         text = badgeText,
                         color = Color.White,
-                        style = MaterialTheme.typography.labelSmall, // Smallest typography tier
+                        style = MaterialTheme.typography.labelSmall,
                         fontWeight = FontWeight.Bold,
                         textAlign = TextAlign.Center,
                         modifier = Modifier
                             .align(Alignment.TopEnd)
                             .offset(x = (-2).dp, y = 2.dp)
-                            .sizeIn(minWidth = 16.dp, minHeight = 16.dp) // Forces a round circle for single digits
+                            .sizeIn(minWidth = 16.dp, minHeight = 16.dp)
                             .background(Color.Red, CircleShape)
-                            .padding(horizontal = 4.dp, vertical = 1.dp) // Inner text cushioning
+                            .padding(horizontal = 4.dp, vertical = 1.dp)
                     )
                 }
             }
@@ -124,39 +129,10 @@ fun HomeHeaderSection(
             ) {
                 Icon(
                     imageVector = Icons.Rounded.Person,
-                    contentDescription = "Profile",
+                    contentDescription = stringResource(Res.string.profile),
                     tint = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-        }
-    }
-}
-
-
-@Preview
-@Composable
-fun HomeHeaderSectionWithBadgePreview() {
-    PocketGoalsTheme(themeMode = ThemeMode.DARK) {
-        Box(modifier = Modifier.background(MaterialTheme.colorScheme.background).padding(16.dp)) {
-            HomeHeaderSection(
-                name = "Alex",
-                unreadCount = 5, // Testing single digit circle badge
-                onNotificationClick = {}
-            )
-        }
-    }
-}
-
-@Preview
-@Composable
-fun HomeHeaderSectionWithLargeBadgePreview() {
-    PocketGoalsTheme(themeMode = ThemeMode.DARK) {
-        Box(modifier = Modifier.background(MaterialTheme.colorScheme.background).padding(16.dp)) {
-            HomeHeaderSection(
-                name = "Alex",
-                unreadCount = 120, // Testing "99+" capsule shape
-                onNotificationClick = {}
-            )
         }
     }
 }

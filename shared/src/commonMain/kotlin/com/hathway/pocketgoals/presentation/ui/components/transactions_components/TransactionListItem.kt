@@ -21,6 +21,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.hathway.pocketgoals.domain.Transaction
 import com.hathway.pocketgoals.domain.TransactionType
+import org.jetbrains.compose.resources.stringResource
+import pocketgoals.shared.generated.resources.*
 
 @Composable
 fun TransactionListItem(transaction: Transaction, onClick: () -> Unit) {
@@ -44,7 +46,7 @@ fun TransactionListItem(transaction: Transaction, onClick: () -> Unit) {
                 text = when (transaction.type) {
                     TransactionType.INCOME -> "+ ₹${transaction.amount.toInt()}"
                     TransactionType.EXPENSE -> "- ₹${transaction.amount.toInt()}"
-                    TransactionType.GOAL_CREATED -> "New Goal"
+                    TransactionType.GOAL_CREATED -> stringResource(Res.string.goal_created)
                 },
                 style = MaterialTheme.typography.bodyLarge,
                 fontWeight = FontWeight.Bold,

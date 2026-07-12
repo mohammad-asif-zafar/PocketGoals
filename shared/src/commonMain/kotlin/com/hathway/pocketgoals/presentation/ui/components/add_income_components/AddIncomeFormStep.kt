@@ -67,10 +67,7 @@ fun AddIncomeFormStep(
 
     Column(modifier = Modifier.fillMaxSize()) {
         Column(
-            modifier = Modifier
-                .weight(1f)
-                .verticalScroll(scrollState)
-                .padding(horizontal = 24.dp),
+            modifier = Modifier.weight(1f).verticalScroll(scrollState).padding(horizontal = 24.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Spacer(modifier = Modifier.height(24.dp))
@@ -155,8 +152,7 @@ fun AddIncomeFormStep(
                 )
             ) {
                 Text(
-                    text = stringResource(Res.string.btn_next),
-                    fontWeight = FontWeight.Bold
+                    text = stringResource(Res.string.btn_next), fontWeight = FontWeight.Bold
                 )
             }
         }
@@ -167,9 +163,7 @@ fun AddIncomeFormStep(
 // Mock Data Helpers for Component Previews
 // ==========================================================
 data class IncomeTypeMock(
-    val name: String,
-    val icon: ImageVector,
-    val color: Color
+    val name: String, val icon: ImageVector, val color: Color
 )
 
 private val mockIncomeType = IncomeTypeMock(
@@ -199,8 +193,7 @@ private fun AddIncomeFormStepLightPreview() {
                 note = "Monthly payment bonus received",
                 onNoteClick = {},
                 isNextEnabled = true,
-                onNext = {}
-            )
+                onNext = {})
         }
     }
 }
@@ -222,8 +215,7 @@ private fun AddIncomeFormStepDarkPreview() {
                 note = "", // Displays unpopulated notes description
                 onNoteClick = {},
                 isNextEnabled = false, // Disables button to check layout color opacity settings
-                onNext = {}
-            )
+                onNext = {})
         }
     }
 }

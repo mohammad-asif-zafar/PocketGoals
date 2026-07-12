@@ -1,20 +1,51 @@
 package com.hathway.pocketgoals.presentation.ui.components.goals_components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.hathway.pocketgoals.domain.model.ThemeMode
 import com.hathway.pocketgoals.presentation.ui.components.add_expense_components.FormField
 import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
+import org.jetbrains.compose.resources.stringResource
+import pocketgoals.shared.generated.resources.Res
+import pocketgoals.shared.generated.resources.add_description
+import pocketgoals.shared.generated.resources.btn_next
+import pocketgoals.shared.generated.resources.description_label
+import pocketgoals.shared.generated.resources.description_placeholder
+import pocketgoals.shared.generated.resources.motivation_label
+import pocketgoals.shared.generated.resources.motivation_placeholder
 
+@Preview(name = "Light Theme", showBackground = true)
+@Preview(name = "Dark Theme", showBackground = false)
+annotation class ThemePreviews
+
+@Preview(name = "English", locale = "en")
+@Preview(name = "Hindi", locale = "hi")
+@Preview(name = "Urdu", locale = "ur")
+@Preview(name = "Malay", locale = "ms")
+@Preview(name = "Arabic", locale = "ar")
+annotation class LocalePreviews
+
+// --- COMPOSABLE COMPONENT ---
 @Composable
 fun CustomGoalMotivationStep(
     description: String,
@@ -31,33 +62,32 @@ fun CustomGoalMotivationStep(
     val textColor = MaterialTheme.colorScheme.onSurface
 
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
+        modifier = Modifier.fillMaxSize()
+            .background(MaterialTheme.colorScheme.background) // Prevents blank background in dark mode previews
     ) {
-        // 1. Scrollable Content Layer
         Column(
-            modifier = Modifier
-                .weight(1f)
-                .verticalScroll(scrollState)
-                .padding(16.dp)
+            modifier = Modifier.weight(1f).verticalScroll(scrollState).padding(horizontal = 24.dp)
         ) {
+            Spacer(modifier = Modifier.height(24.dp))
             Text(
-                text = "Add Description",
+                text = stringResource(Res.string.add_description),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier.padding(bottom = 16.dp)
             )
 
-            FormField(label = "Description (Optional)") {
+            FormField(label = stringResource(Res.string.description_label)) {
                 OutlinedTextField(
                     value = description,
                     onValueChange = onDescriptionChange,
-                    placeholder = { Text("Add any notes about your goal", color = placeholderColor) },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(120.dp),
+                    placeholder = {
+                        Text(
+                            stringResource(Res.string.description_placeholder),
+                            color = placeholderColor
+                        )
+                    },
+                    modifier = Modifier.fillMaxWidth().height(120.dp),
                     shape = RoundedCornerShape(12.dp),
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedBorderColor = activeBorderColor,
@@ -70,14 +100,17 @@ fun CustomGoalMotivationStep(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            FormField(label = "Motivation (Optional)") {
+            FormField(label = stringResource(Res.string.motivation_label)) {
                 OutlinedTextField(
                     value = motivation,
                     onValueChange = onMotivationChange,
-                    placeholder = { Text("Why is this goal important to you?", color = placeholderColor) },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(120.dp),
+                    placeholder = {
+                        Text(
+                            stringResource(Res.string.motivation_placeholder),
+                            color = placeholderColor
+                        )
+                    },
+                    modifier = Modifier.fillMaxWidth().height(120.dp),
                     shape = RoundedCornerShape(12.dp),
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedBorderColor = activeBorderColor,
@@ -87,55 +120,39 @@ fun CustomGoalMotivationStep(
                     )
                 )
             }
+            Spacer(modifier = Modifier.height(24.dp))
         }
 
-        // 2. Fixed Button Panel
-        Column(modifier = Modifier.padding(16.dp)) {
+        Box(modifier = Modifier.padding(24.dp)) {
             Button(
                 onClick = onNext,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp),
+                modifier = Modifier.fillMaxWidth().height(56.dp),
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = activeBorderColor,
                     contentColor = MaterialTheme.colorScheme.onPrimary
                 )
             ) {
-                Text("Next", fontWeight = FontWeight.Bold)
+                Text(stringResource(Res.string.btn_next), fontWeight = FontWeight.Bold)
             }
         }
     }
 }
 
-// ==========================================================
-// Theme-Safe Split Previews
-// ==========================================================
+// --- PREVIEW IMPLEMENTATIONS ---
 
-@Preview
+@ThemePreviews
+@LocalePreviews
 @Composable
-fun CustomGoalMotivationStepLightPreview() {
-    PocketGoalsTheme(ThemeMode.LIGHT) {
-        CustomGoalMotivationStep(
-            description = "",
-            onDescriptionChange = {},
-            motivation = "",
-            onMotivationChange = {},
-            onNext = {}
-        )
-    }
-}
-
-@Preview
-@Composable
-fun CustomGoalMotivationStepDarkPreview() {
-    PocketGoalsTheme(ThemeMode.DARK) {
-        CustomGoalMotivationStep(
-            description = "Saving up for an annual holiday trip.",
-            onDescriptionChange = {},
-            motivation = "Taking a much-needed break with family.",
-            onMotivationChange = {},
-            onNext = {}
-        )
+fun CustomGoalMotivationStepPreview() {
+    PocketGoalsTheme {
+        Surface {
+            CustomGoalMotivationStep(
+                description = "",
+                onDescriptionChange = {},
+                motivation = "",
+                onMotivationChange = {},
+                onNext = {})
+        }
     }
 }

@@ -166,6 +166,49 @@
     <string name="balance_hide">Hide balance</string>
     <string name="balance_show">Show balance</string>
     <string name="balance_stats">Stats</string>
+    <string name="good_morning">Good Morning,</string>
+    <string name="good_afternoon">Good Afternoon,</string>
+    <string name="good_evening">Good Evening,</string>
+    <string name="recent_activity">Recent Activity</string>
+    <string name="today">Today</string>
+    <string name="this_week">This Week</string>
+    <string name="this_month">This Month</string>
+    <string name="see_all">See All</string>
+    <string name="more_categories">More Categories</string>
+    <string name="choose_icon_label">Choose Icon</string>
+    <string name="choose_color_label">Choose Color</string>
+    <string name="no_goals_title">No Goals Yet!</string>
+    <string name="no_goals_desc">Create your first goal and\nstart saving towards it.</string>
+    <string name="quick_actions">Quick Actions</string>
+    <string name="manage">Manage</string>
+    <string name="add_expense_multi">Add\nExpense</string>
+    <string name="add_income_multi">Add\nIncome</string>
+    <string name="transfer">Transfer</string>
+    <string name="view_reports">View\nReports</string>
+    <string name="overview_this_month">Overview This Month</string>
+    <string name="savings">Savings</string>
+    <string name="top_categories">Top Categories</string>
+    <string name="basic_needs">Basic Needs</string>
+    <string name="future_pay">Future Pay</string>
+    <string name="family_support">Family Support</string>
+    <string name="investment">Investment</string>
+    <string name="add_goal">Add Goal</string>
+    <string name="back">Back</string>
+    <string name="description_placeholder">Add any notes about your goal</string>
+    <string name="motivation_placeholder">Why is this goal important to you?</string>
+    <string name="cd_toggle_dropdown_menu">Toggle Dropdown Options Menu</string>
+    <string name="goal_lbl_choose_icon">Choose Icon</string>
+    <string name="goal_lbl_select_icon">Select Icon</string>
+    <string name="goal_lbl_choose_color">Choose Color</string>
+    <string name="goal_lbl_name">Goal Name</string>
+    <string name="goal_placeholder_name">e.g. Europe Trip, New Laptop</string>
+    <string name="goal_btn_next">Next</string>
 
+    <string name="goal_picker_title">Select Icon Asset</string>
+    <string name="goal_wizard_title">Create Savings Goal</string>
+    <string name="quick_select_other">Other</string>
+
+    <string name="custom_amount_title">Enter Custom Amount</string>
+    <string name="custom_amount_confirm">Confirm Amount</string>
 
 </resources>

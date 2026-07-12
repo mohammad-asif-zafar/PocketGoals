@@ -15,11 +15,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.hathway.pocketgoals.domain.model.ThemeMode
 import com.hathway.pocketgoals.presentation.ui.components.add_expense_components.SummaryItemRow
-import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
+import org.jetbrains.compose.resources.stringResource
+import pocketgoals.shared.generated.resources.*
 
 @Composable
 fun GoalReviewStep(
@@ -41,15 +40,13 @@ fun GoalReviewStep(
     val iconBgAlpha = if (isDark) 0.22f else 0.1f
 
     Column(
-        modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)
+        modifier = Modifier.fillMaxSize()
     ) {
-        // 1. Scrollable Data Columns
         Column(
             modifier = Modifier.weight(1f).verticalScroll(scrollState)
                 .padding(horizontal = 24.dp, vertical = 16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            // Top Accent Icon Preview Badge Frame
             Box(
                 modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center
             ) {
@@ -69,22 +66,21 @@ fun GoalReviewStep(
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            SummaryItemRow(categoryIcon, "Goal Name", goalName, categoryColor)
+            SummaryItemRow(categoryIcon, stringResource(Res.string.goal_name_label), goalName, categoryColor)
             HorizontalDivider(color = dividerColor)
 
-            SummaryItemRow(Icons.Rounded.Category, "Category", categoryName, categoryColor)
+            SummaryItemRow(Icons.Rounded.Category, stringResource(Res.string.category), categoryName, categoryColor)
             HorizontalDivider(color = dividerColor)
 
-            SummaryItemRow(Icons.Rounded.Payments, "Target Amount", "₹ $targetAmount")
+            SummaryItemRow(Icons.Rounded.Payments, stringResource(Res.string.target_amount_label), "₹ $targetAmount")
             HorizontalDivider(color = dividerColor)
 
-            SummaryItemRow(Icons.Rounded.CalendarToday, "Target Date", targetDate)
+            SummaryItemRow(Icons.Rounded.CalendarToday, stringResource(Res.string.target_date_label), targetDate)
             HorizontalDivider(color = dividerColor)
 
-            SummaryItemRow(Icons.Rounded.Schedule, "Duration", duration)
+            SummaryItemRow(Icons.Rounded.Schedule, stringResource(Res.string.duration_label), duration)
         }
 
-        // 2. Bottom Fixed Control Panel Section
         Column(
             modifier = Modifier.padding(24.dp), verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
@@ -97,7 +93,7 @@ fun GoalReviewStep(
                     contentColor = MaterialTheme.colorScheme.onPrimary
                 )
             ) {
-                Text(text = "Create Goal", fontWeight = FontWeight.Bold)
+                Text(text = stringResource(Res.string.create_goal), fontWeight = FontWeight.Bold)
             }
 
             OutlinedButton(
@@ -109,46 +105,8 @@ fun GoalReviewStep(
                 ),
                 border = ButtonDefaults.outlinedButtonBorder.copy(width = 1.dp)
             ) {
-                Text(text = "Back", fontWeight = FontWeight.Bold)
+                Text(text = stringResource(Res.string.back), fontWeight = FontWeight.Bold)
             }
         }
-    }
-}
-
-// ==========================================================
-// Theme-Safe Split Previews
-// ==========================================================
-
-@Preview
-@Composable
-fun GoalReviewStepLightPreview() {
-    PocketGoalsTheme(themeMode = ThemeMode.LIGHT) {
-        GoalReviewStep(
-            goalName = "Europe Summer Trip",
-            categoryName = "Vacation",
-            categoryIcon = Icons.Rounded.Flight,
-            categoryColor = Color(0xFFF97316),
-            targetAmount = "1,80,000",
-            targetDate = "15 June 2027",
-            duration = "12 Months",
-            onConfirm = {},
-            onBack = {})
-    }
-}
-
-@Preview
-@Composable
-fun GoalReviewStepDarkPreview() {
-    PocketGoalsTheme(themeMode = ThemeMode.DARK) {
-        GoalReviewStep(
-            goalName = "Europe Summer Trip",
-            categoryName = "Vacation",
-            categoryIcon = Icons.Rounded.Flight,
-            categoryColor = Color(0xFFA78BFA),
-            targetAmount = "1,80,000",
-            targetDate = "15 June 2027",
-            duration = "12 Months",
-            onConfirm = {},
-            onBack = {})
     }
 }

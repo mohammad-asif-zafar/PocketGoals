@@ -28,7 +28,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.hathway.pocketgoals.presentation.ui.theme.Primary
+import org.jetbrains.compose.resources.stringResource
+import pocketgoals.shared.generated.resources.*
 
 @Composable
 fun AddExpenseSuccessStep(
@@ -50,14 +51,14 @@ fun AddExpenseSuccessStep(
         }
         Spacer(modifier = Modifier.height(24.dp))
         Text(
-            text = "Expense Added!",
+            text = stringResource(Res.string.expense_added),
             style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.primary
         )
         Spacer(modifier = Modifier.height(12.dp))
         Text(
-            text = "₹$amount has been added to\n$categoryName successfully.",
+            text = stringResource(Res.string.expense_added_desc, amount, categoryName),
             textAlign = TextAlign.Center,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
@@ -73,7 +74,7 @@ fun AddExpenseSuccessStep(
                 contentColor = MaterialTheme.colorScheme.onPrimary
             )
         ) {
-            Text("View Expense", fontWeight = FontWeight.Bold)
+            Text(stringResource(Res.string.view_expense), fontWeight = FontWeight.Bold)
         }
 
         Spacer(modifier = Modifier.height(12.dp))
@@ -82,9 +83,9 @@ fun AddExpenseSuccessStep(
             onClick = onAddAnother,
             modifier = Modifier.fillMaxWidth().height(56.dp),
             shape = RoundedCornerShape(12.dp),
-            border = BorderStroke(1.dp, Primary)
+            border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary)
         ) {
-            Text("Add Another Expense", color = Primary, fontWeight = FontWeight.Bold)
+            Text(stringResource(Res.string.add_another_expense), color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold)
         }
     }
 }

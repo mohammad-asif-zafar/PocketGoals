@@ -15,6 +15,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.hathway.pocketgoals.domain.ExpenseCategory
+import org.jetbrains.compose.resources.stringResource
+import pocketgoals.shared.generated.resources.*
 
 @Composable
 fun DeleteCategoryConfirmation(
@@ -46,7 +48,7 @@ fun DeleteCategoryConfirmation(
         Spacer(modifier = Modifier.height(24.dp))
 
         Text(
-            text = "Delete '${category.name}'?",
+            text = stringResource(Res.string.delete_category_confirm, category.name),
             style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold
         )
@@ -54,7 +56,7 @@ fun DeleteCategoryConfirmation(
         Spacer(modifier = Modifier.height(12.dp))
 
         Text(
-            text = "This category and its data will\nbe permanently deleted.",
+            text = stringResource(Res.string.delete_category_desc),
             textAlign = TextAlign.Center,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
@@ -69,7 +71,7 @@ fun DeleteCategoryConfirmation(
             shape = RoundedCornerShape(12.dp),
             colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error)
         ) {
-            Text("Delete Category", fontWeight = FontWeight.Bold, color = Color.White)
+            Text(stringResource(Res.string.confirm_delete), fontWeight = FontWeight.Bold, color = Color.White)
         }
 
         Spacer(modifier = Modifier.height(12.dp))
@@ -81,7 +83,7 @@ fun DeleteCategoryConfirmation(
                 .height(56.dp),
             shape = RoundedCornerShape(12.dp)
         ) {
-            Text("Cancel", fontWeight = FontWeight.Bold)
+            Text(stringResource(Res.string.cancel), fontWeight = FontWeight.Bold)
         }
     }
 }

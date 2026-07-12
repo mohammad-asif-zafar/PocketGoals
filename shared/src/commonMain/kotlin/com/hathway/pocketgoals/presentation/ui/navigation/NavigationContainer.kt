@@ -69,8 +69,6 @@ fun NavigationContainer(
             }
         }
     ) { innerPadding ->
-        // FIX: Removed .padding(innerPadding) from the NavHost container.
-        // This opens up full-bleed edge-to-edge layout space across coordinates.
         NavHost(
             navController = navController,
             startDestination = SplashRoute,
@@ -89,7 +87,6 @@ fun NavigationContainer(
                 slideOutHorizontally(targetOffsetX = { fullWidth -> fullWidth }, animationSpec = tween(300)) + fadeOut(animationSpec = tween(300))
             }
         ) {
-            // --- EDGE-TO-EDGE FULL SCREEN DESTINATIONS ---
             composable<SplashRoute> {
                 SplashScreen(onSplashFinished = {
                     navController.navigate(OnboardingRoute) {
@@ -137,7 +134,6 @@ fun NavigationContainer(
                 )
             }
 
-            // --- MAIN TAB DESTINATIONS (CONSUME THE BOTTOM BAR PADDING) ---
             composable<HomeRoute> {
                 Box(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
                     HomeScreen(
@@ -157,7 +153,6 @@ fun NavigationContainer(
                 }
             }
 
-            // --- INDEPENDENT OVERLAY SUBFLOW SCREEN SCALINGS ---
             composable<AddExpenseRoute> {
                 AddExpenseScreen(
                     onBackClick = { navController.popBackStack() },

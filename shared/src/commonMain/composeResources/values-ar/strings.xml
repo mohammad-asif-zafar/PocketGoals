@@ -95,4 +95,22 @@
     <string name="balance_show">إظهار الرصيد</string>
     <string name="balance_stats">الإحصائيات</string>
 
+    <string name="add_description">إضافة تفاصيل</string>
+    <string name="description_label">الوصف</string>
+    <string name="description_placeholder">أضف أي ملاحظات حول هدفك</string>
+    <string name="motivation_label">الدافع</string>
+    <string name="motivation_placeholder">لماذا هذا الهدف مهم بالنسبة لك؟</string>
+    <string name="cd_toggle_dropdown_menu">تبديل قائمة خيارات القائمة المنسدلة</string>
+    <string name="goal_lbl_choose_icon">اختر أيقونة</string>
+    <string name="goal_lbl_select_icon">تحديد الأيقونة</string>
+    <string name="goal_lbl_choose_color">اختر لوناً</string>
+    <string name="goal_lbl_name">اسم الهدف</string>
+    <string name="goal_placeholder_name">مثال: رحلة أوروبا، كمبيوتر محمول جديد</string>
+    <string name="goal_btn_next">التالي</string>
+
+    <string name="set_target_amount">تحديد المبلغ المستهدف</string>
+    <string name="quick_select">اختيار سريع</string>
+    <string name="quick_select_other">آخر</string>
+
+
 </resources>

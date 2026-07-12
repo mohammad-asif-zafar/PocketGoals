@@ -10,10 +10,11 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import org.jetbrains.compose.resources.stringResource
+import pocketgoals.shared.generated.resources.*
 
 @Composable
 fun GoalSuccessStep(
@@ -44,7 +45,7 @@ fun GoalSuccessStep(
         Spacer(modifier = Modifier.height(24.dp))
 
         Text(
-            text = "Goal Created!",
+            text = stringResource(Res.string.goal_created),
             style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.primary
@@ -53,7 +54,7 @@ fun GoalSuccessStep(
         Spacer(modifier = Modifier.height(12.dp))
 
         Text(
-            text = "Your goal '$goalName' has been\ncreated successfully.",
+            text = stringResource(Res.string.goal_created_desc, goalName),
             textAlign = TextAlign.Center,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
@@ -71,7 +72,7 @@ fun GoalSuccessStep(
                 contentColor = MaterialTheme.colorScheme.onPrimary
             )
         ) {
-            Text("View Goal", fontWeight = FontWeight.Bold)
+            Text(stringResource(Res.string.view_goal), fontWeight = FontWeight.Bold)
         }
     }
 }

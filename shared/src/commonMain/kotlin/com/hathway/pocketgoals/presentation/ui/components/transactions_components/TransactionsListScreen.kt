@@ -31,14 +31,20 @@ import androidx.compose.ui.unit.dp
 import com.hathway.pocketgoals.domain.Transaction
 import com.hathway.pocketgoals.domain.TransactionType
 import com.hathway.pocketgoals.presentation.ui.viewmodel.TransactionsViewModel
+import org.jetbrains.compose.resources.stringResource
+import pocketgoals.shared.generated.resources.*
 
 @Composable
 fun TransactionsListScreen(
     viewModel: TransactionsViewModel,
     onTransactionClick: (Transaction) -> Unit
 ) {
+    val tabAll = stringResource(Res.string.home)
+    val tabIncome = stringResource(Res.string.income)
+    val tabExpense = stringResource(Res.string.expense)
+    
     var selectedTab by remember { mutableIntStateOf(0) }
-    val tabs = listOf("All", "Income", "Expense")
+    val tabs = listOf(tabAll, tabIncome, tabExpense)
     var isSearchActive by remember { mutableStateOf(false) }
     var searchQuery by remember { mutableStateOf("") }
 
@@ -88,7 +94,7 @@ fun TransactionsListScreen(
                 contentPadding = PaddingValues(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                item { SectionHeader("Recent Activity") }
+                item { SectionHeader(stringResource(Res.string.recent_activity)) }
                 items(filteredTransactions) { transaction ->
                     TransactionListItem(transaction = transaction, onClick = { onTransactionClick(transaction) })
                 }

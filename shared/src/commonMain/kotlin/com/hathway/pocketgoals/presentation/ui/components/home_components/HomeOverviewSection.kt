@@ -18,12 +18,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import org.jetbrains.compose.resources.stringResource
+import pocketgoals.shared.generated.resources.*
 
 @Composable
 fun HomeOverviewSection(income: String, expenses: String, savings: String) {
     Column {
         Text(
-            text = "Overview This Month",
+            text = stringResource(Res.string.overview_this_month),
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Bold
         )
@@ -42,11 +44,11 @@ fun HomeOverviewSection(income: String, expenses: String, savings: String) {
                     .padding(16.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                HomeOverviewItem("Income", income, Color(0xFF10B981))
+                HomeOverviewItem(stringResource(Res.string.income), income, Color(0xFF10B981))
                 VerticalDivider(modifier = Modifier.height(40.dp))
-                HomeOverviewItem("Expenses", expenses, Color(0xFFEF4444))
+                HomeOverviewItem(stringResource(Res.string.expense), expenses, Color(0xFFEF4444))
                 VerticalDivider(modifier = Modifier.height(40.dp))
-                HomeOverviewItem("Savings", savings, Color(0xFF3B82F6))
+                HomeOverviewItem(stringResource(Res.string.savings), savings, Color(0xFF3B82F6))
             }
         }
     }

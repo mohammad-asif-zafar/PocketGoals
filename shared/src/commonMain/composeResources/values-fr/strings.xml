@@ -1,0 +1,52 @@
+<resources>
+    <string name="app_name">PocketGoals</string>
+    <string name="home">Accueil</string>
+    <string name="transactions">Transactions</string>
+    <string name="add_expense">Ajouter une Dépense</string>
+    <string name="add_income">Ajouter un Revenu</string>
+    <string name="analytics">Analyses</string>
+    <string name="goals">Objectifs</string>
+    <string name="btn_skip">Passer</string>
+    <string name="btn_next">Suivant</string>
+    <string name="btn_get_started">Commencer</string>
+
+    <string name="title_track_expenses">Suivez vos Dépenses</string>
+    <string name="desc_track_expenses">Suivez facilement vos revenus et\ndépenses en un seul endroit.</string>
+
+    <string name="title_save_money">Économisez plus d\'Argent</string>
+    <string name="desc_save_money">Fixez des budgets, suivez les dépenses et\néconomisez plus chaque mois.</string>
+
+    <string name="title_achieve_goals">Atteignez vos Objectifs</string>
+    <string name="desc_achieve_goals">Créez des objectifs personnalisés et\nréalisez vos rêves financiers.</string>
+    <string name="login_welcome">Bon Retour ! 👋</string>
+    <string name="login_subtitle">Connectez-vous pour continuer sur votre compte</string>
+    <string name="hint_email">Email ou Numéro de Téléphone</string>
+    <string name="hint_password">Mot de Passe</string>
+    <string name="btn_forgot_password">Mot de passe oublié ?</string>
+    <string name="btn_login">Se Connecter</string>
+    <string name="text_or_continue">ou continuer avec</string>
+    <string name="text_dont_have_account">Vous n\'avez pas de compte ?</string>
+    <string name="btn_sign_up">S\'inscrire</string>
+
+    <string name="good_morning">Bonjour,</string>
+    <string name="good_afternoon">Bon après-midi,</string>
+    <string name="good_evening">Bonsoir,</string>
+    <string name="recent_activity">Activité Récente</string>
+    <string name="today">Aujourd\'hui</string>
+    <string name="this_week">Cette semaine</string>
+    <string name="this_month">Ce mois-ci</string>
+    <string name="see_all">Voir tout</string>
+    <string name="more_categories">Plus de Catégories</string>
+
+    <string name="success_title">Revenu Ajouté !</string>
+    <string name="expense_added">Dépense Ajoutée !</string>
+    <string name="goal_created">Objectif Créé !</string>
+
+    <string name="profile">Profil</string>
+    <string name="app_settings">Paramètres de l\'App</string>
+    <string name="app_theme">Thème de l\'App</string>
+    <string name="app_language">Langue de l\'App</string>
+    <string name="notifications">Notifications</string>
+    <string name="logout">Se Déconnecter</string>
+
+</resources>

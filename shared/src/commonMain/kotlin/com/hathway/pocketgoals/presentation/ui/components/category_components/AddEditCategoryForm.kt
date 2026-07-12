@@ -20,6 +20,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.hathway.pocketgoals.domain.ExpenseCategory
 import com.hathway.pocketgoals.presentation.ui.components.add_expense_components.FormField
+import org.jetbrains.compose.resources.stringResource
+import pocketgoals.shared.generated.resources.*
 
 @Composable
 fun AddEditCategoryForm(
@@ -54,7 +56,6 @@ fun AddEditCategoryForm(
         modifier = modifier.fillMaxSize().padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
-        // Icon Preview & Upload
         Box(
             modifier = Modifier.fillMaxWidth(),
             contentAlignment = Alignment.Center
@@ -75,7 +76,7 @@ fun AddEditCategoryForm(
             }
         }
 
-        FormField(label = "Category Name") {
+        FormField(label = stringResource(Res.string.category_name_label)) {
             OutlinedTextField(
                 value = name,
                 onValueChange = { name = it },
@@ -90,7 +91,7 @@ fun AddEditCategoryForm(
             )
         }
 
-        FormField(label = "Icon") {
+        FormField(label = stringResource(Res.string.icon_label)) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -107,13 +108,13 @@ fun AddEditCategoryForm(
                     Icon(selectedIcon, null, tint = selectedColor, modifier = Modifier.size(20.dp))
                 }
                 Spacer(modifier = Modifier.width(12.dp))
-                Text("Select Icon", color = MaterialTheme.colorScheme.onSurface, fontWeight = FontWeight.Medium)
+                Text(stringResource(Res.string.select_category), color = MaterialTheme.colorScheme.onSurface, fontWeight = FontWeight.Medium)
                 Spacer(modifier = Modifier.weight(1f))
                 Icon(Icons.AutoMirrored.Rounded.KeyboardArrowRight, null, tint = MaterialTheme.colorScheme.outline)
             }
         }
 
-        FormField(label = "Color") {
+        FormField(label = stringResource(Res.string.color_label)) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(10.dp)
@@ -148,7 +149,7 @@ fun AddEditCategoryForm(
             shape = RoundedCornerShape(12.dp),
             enabled = name.isNotBlank()
         ) {
-            Text(if (initialCategory == null) "Save Category" else "Update Category", fontWeight = FontWeight.Bold)
+            Text(if (initialCategory == null) stringResource(Res.string.save_category) else stringResource(Res.string.update_category), fontWeight = FontWeight.Bold)
         }
 
         if (onDelete != null) {
@@ -158,7 +159,7 @@ fun AddEditCategoryForm(
             ) {
                 Icon(Icons.Rounded.Delete, null, tint = MaterialTheme.colorScheme.error)
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Delete Category", color = MaterialTheme.colorScheme.error)
+                Text(stringResource(Res.string.delete_category), color = MaterialTheme.colorScheme.error)
             }
         }
     }

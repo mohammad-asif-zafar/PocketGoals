@@ -19,12 +19,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.hathway.pocketgoals.domain.model.ThemeMode
-import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
 import com.hathway.pocketgoals.presentation.ui.theme.Vacation
 import com.hathway.pocketgoals.presentation.ui.theme.Investment
+import org.jetbrains.compose.resources.stringResource
+import pocketgoals.shared.generated.resources.*
 
 @Composable
 fun HomeQuickActionsSection(
@@ -36,19 +35,15 @@ fun HomeQuickActionsSection(
 ) {
     val isDark = isSystemInDarkTheme()
 
-    // 1. Expense: Uses Theme Primary Containers
     val expenseBg = MaterialTheme.colorScheme.primaryContainer
     val expenseIcon = MaterialTheme.colorScheme.primary
 
-    // 2. Income: Uses Investment/Success color system
     val incomeBg = if (isDark) Color(0xFF064E3B) else Color(0xFFECFDF5)
     val incomeIcon = Investment
 
-    // 3. Transfer: Uses Theme Tertiary Containers
     val transferBg = MaterialTheme.colorScheme.tertiaryContainer
     val transferIcon = MaterialTheme.colorScheme.tertiary
 
-    // 4. View Reports: Uses Vacation/Warning color system
     val reportsBg = if (isDark) Color(0xFF7C2D12) else Color(0xFFFFF7ED)
     val reportsIcon = Vacation
 
@@ -59,13 +54,13 @@ fun HomeQuickActionsSection(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "Quick Actions",
+                text = stringResource(Res.string.quick_actions),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onBackground
             )
             Text(
-                text = "Manage",
+                text = stringResource(Res.string.manage),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.primary,
                 fontWeight = FontWeight.SemiBold
@@ -79,49 +74,33 @@ fun HomeQuickActionsSection(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             HomeQuickActionItem(
-                label = "Add\nExpense",
+                label = stringResource(Res.string.add_expense_multi),
                 icon = Icons.Rounded.Add,
                 bgColor = expenseBg,
                 iconColor = expenseIcon,
                 onClick = onAddExpenseClick
             )
             HomeQuickActionItem(
-                label = "Add\nIncome",
+                label = stringResource(Res.string.add_income_multi),
                 icon = Icons.Rounded.AccountBalanceWallet,
                 bgColor = incomeBg,
                 iconColor = incomeIcon,
                 onClick = onAddIncomeClick
             )
             HomeQuickActionItem(
-                label = "Transfer",
+                label = stringResource(Res.string.transfer),
                 icon = Icons.AutoMirrored.Rounded.CompareArrows,
                 bgColor = transferBg,
                 iconColor = transferIcon,
                 onClick = onTransferClick
             )
             HomeQuickActionItem(
-                label = "View\nReports",
+                label = stringResource(Res.string.view_reports),
                 icon = Icons.Rounded.BarChart,
                 bgColor = reportsBg,
                 iconColor = reportsIcon,
                 onClick = onViewReportsClick
             )
         }
-    }
-}
-
-@Preview
-@Composable
-fun HomeQuickActionsSectionLightPreview() {
-    PocketGoalsTheme(themeMode = ThemeMode.LIGHT) {
-        HomeQuickActionsSection()
-    }
-}
-
-@Preview
-@Composable
-fun HomeQuickActionsSectionDarkPreview() {
-    PocketGoalsTheme(themeMode = ThemeMode.DARK) {
-        HomeQuickActionsSection()
     }
 }

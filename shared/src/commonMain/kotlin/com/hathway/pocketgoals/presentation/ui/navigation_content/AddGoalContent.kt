@@ -9,6 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.unit.dp
 import com.hathway.pocketgoals.data.AddGoalStep
 import com.hathway.pocketgoals.domain.Goal
 import com.hathway.pocketgoals.domain.GoalCategory
@@ -42,17 +43,20 @@ fun AddGoalContent(
     var duration by remember { mutableStateOf("1 Year") }
     var description by remember { mutableStateOf("") }
     var motivation by remember { mutableStateOf("") }
-    
+
     // Custom Goal Specific State
     var customIcon by remember { mutableStateOf<ImageVector>(GoalCategory.defaultCategories.first().icon) }
     var customColor by remember { mutableStateOf<Color>(GoalCategory.defaultCategories.first().color) }
 
+    val defaultDate = "15 May 2024"
     val dateText = remember(selectedDateMillis) {
-        if (selectedDateMillis == null) "Select Date"
+        if (selectedDateMillis == null) defaultDate
         else {
             val instant = Instant.fromEpochMilliseconds(selectedDateMillis!!)
             val dt = instant.toLocalDateTime(TimeZone.currentSystemDefault())
-            "${dt.dayOfMonth} ${dt.month.name.lowercase().replaceFirstChar { it.uppercase() }} ${dt.year}"
+            "${dt.dayOfMonth} ${
+                dt.month.name.lowercase().replaceFirstChar { it.uppercase() }
+            } ${dt.year}"
         }
     }
 
@@ -72,40 +76,44 @@ fun AddGoalContent(
                 }
 
                 AddExpenseTopBar(
-                    title = title,
-                    onBack = {
+                    title = title, onBack = {
                         when (currentStep) {
                             AddGoalStep.CategorySelection -> onBackClick()
                             AddGoalStep.GoalDetails -> currentStep = AddGoalStep.CategorySelection
-                            AddGoalStep.CustomGoalDetails -> currentStep = AddGoalStep.CategorySelection
+                            AddGoalStep.CustomGoalDetails -> currentStep =
+                                AddGoalStep.CategorySelection
+
                             AddGoalStep.GoalAmount -> {
                                 if (isCustomFlow) currentStep = AddGoalStep.CustomGoalDetails
                                 else currentStep = AddGoalStep.GoalDetails
                             }
+
                             AddGoalStep.GoalTimeline -> currentStep = AddGoalStep.GoalAmount
                             AddGoalStep.DateSelection -> currentStep = AddGoalStep.GoalTimeline
-                            AddGoalStep.CustomGoalMotivation -> currentStep = AddGoalStep.GoalTimeline
+                            AddGoalStep.CustomGoalMotivation -> currentStep =
+                                AddGoalStep.GoalTimeline
+
                             AddGoalStep.GoalReview -> {
                                 if (isCustomFlow) currentStep = AddGoalStep.CustomGoalMotivation
                                 else currentStep = AddGoalStep.GoalTimeline
                             }
+
                             else -> onBackClick()
                         }
-                    }
-                )
+                    })
             }
-        },
-        containerColor = MaterialTheme.colorScheme.background
+        }, containerColor = MaterialTheme.colorScheme.background
     ) { padding ->
         AnimatedContent(
             targetState = currentStep,
             modifier = Modifier.padding(padding).fillMaxSize(),
             transitionSpec = {
-                val isForward = targetState != AddGoalStep.CategorySelection && 
-                               targetState != AddGoalStep.GoalDetails && 
-                               targetState != AddGoalStep.CustomGoalDetails
-                val enter = if (isForward) slideInHorizontally { it } + fadeIn() else slideInHorizontally { -it } + fadeIn()
-                val exit = if (isForward) slideOutHorizontally { -it } + fadeOut() else slideOutHorizontally { it } + fadeOut()
+                val isForward =
+                    targetState != AddGoalStep.CategorySelection && targetState != AddGoalStep.GoalDetails && targetState != AddGoalStep.CustomGoalDetails
+                val enter =
+                    if (isForward) slideInHorizontally { it } + fadeIn() else slideInHorizontally { -it } + fadeIn()
+                val exit =
+                    if (isForward) slideOutHorizontally { -it } + fadeOut() else slideOutHorizontally { it } + fadeOut()
                 enter togetherWith exit using SizeTransform(clip = false)
             },
             label = "AddGoalFlow"
@@ -125,14 +133,14 @@ fun AddGoalContent(
                         },
                         onCustomGoal = {
                             isCustomFlow = true
-                            selectedCategory = GoalCategory.defaultCategories.find { it.name == "Custom" }
+                            selectedCategory =
+                                GoalCategory.defaultCategories.find { it.name == "Custom" }
                             currentStep = AddGoalStep.CustomGoalDetails
                         },
                         onNext = {
                             if (isCustomFlow) currentStep = AddGoalStep.CustomGoalDetails
                             else currentStep = AddGoalStep.GoalDetails
-                        }
-                    )
+                        })
                 }
 
                 is AddGoalStep.GoalDetails -> {
@@ -143,8 +151,7 @@ fun AddGoalContent(
                         onCategoryClick = { currentStep = AddGoalStep.CategorySelection },
                         description = description,
                         onDescriptionChange = { description = it },
-                        onNext = { currentStep = AddGoalStep.GoalAmount }
-                    )
+                        onNext = { currentStep = AddGoalStep.GoalAmount })
                 }
 
                 is AddGoalStep.CustomGoalDetails -> {
@@ -155,16 +162,18 @@ fun AddGoalContent(
                         onIconSelected = { customIcon = it },
                         selectedColor = customColor,
                         onColorSelected = { customColor = it },
-                        onNext = { currentStep = AddGoalStep.GoalAmount }
-                    )
+                        onNext = { currentStep = AddGoalStep.GoalAmount })
                 }
 
                 is AddGoalStep.GoalAmount -> {
                     GoalAmountStep(
                         amount = targetAmount,
                         onAmountChange = { targetAmount = it },
-                        onNext = { currentStep = AddGoalStep.GoalTimeline }
+                        onNext = { currentStep = AddGoalStep.GoalTimeline },
+                        onOtherClick = {}, // Added handler to cleanly dispatch custom number keypad flows
+                        modifier = Modifier.padding(2.dp)
                     )
+
                 }
 
                 is AddGoalStep.GoalTimeline -> {
@@ -176,16 +185,14 @@ fun AddGoalContent(
                         onNext = {
                             if (isCustomFlow) currentStep = AddGoalStep.CustomGoalMotivation
                             else currentStep = AddGoalStep.GoalReview
-                        }
-                    )
+                        })
                 }
 
                 is AddGoalStep.DateSelection -> {
                     DateSelectionStep(
                         selectedDateMillis = selectedDateMillis,
                         onDateSelected = { selectedDateMillis = it },
-                        onDone = { currentStep = AddGoalStep.GoalTimeline }
-                    )
+                        onDone = { currentStep = AddGoalStep.GoalTimeline })
                 }
 
                 is AddGoalStep.CustomGoalMotivation -> {
@@ -194,32 +201,35 @@ fun AddGoalContent(
                         onDescriptionChange = { description = it },
                         motivation = motivation,
                         onMotivationChange = { motivation = it },
-                        onNext = { currentStep = AddGoalStep.GoalReview }
-                    )
+                        onNext = { currentStep = AddGoalStep.GoalReview })
                 }
 
                 is AddGoalStep.GoalReview -> {
                     GoalReviewStep(
                         goalName = goalName,
                         categoryName = if (isCustomFlow) "Custom" else selectedCategory?.name ?: "",
-                        categoryIcon = if (isCustomFlow) customIcon else selectedCategory?.icon ?: GoalCategory.defaultCategories.first().icon,
-                        categoryColor = if (isCustomFlow) customColor else selectedCategory?.color ?: GoalCategory.defaultCategories.first().color,
+                        categoryIcon = if (isCustomFlow) customIcon else selectedCategory?.icon
+                            ?: GoalCategory.defaultCategories.first().icon,
+                        categoryColor = if (isCustomFlow) customColor else selectedCategory?.color
+                            ?: GoalCategory.defaultCategories.first().color,
                         targetAmount = targetAmount,
                         targetDate = dateText,
                         duration = duration,
-                        onConfirm = { 
+                        onConfirm = {
                             val now = Clock.System.now()
                             val newGoal = Goal(
                                 id = now.toEpochMilliseconds().toString(),
                                 name = goalName,
-                                icon = if (isCustomFlow) customIcon else selectedCategory?.icon ?: GoalCategory.defaultCategories.first().icon,
-                                color = if (isCustomFlow) customColor else selectedCategory?.color ?: GoalCategory.defaultCategories.first().color,
+                                icon = if (isCustomFlow) customIcon else selectedCategory?.icon
+                                    ?: GoalCategory.defaultCategories.first().icon,
+                                color = if (isCustomFlow) customColor else selectedCategory?.color
+                                    ?: GoalCategory.defaultCategories.first().color,
                                 targetAmount = targetAmount.toDoubleOrNull() ?: 0.0,
                                 savedAmount = 0.0,
                                 deadline = dateText
                             )
                             onSaveGoal(newGoal)
-                            
+
                             // Activity Log
                             val transaction = Transaction(
                                 id = (now.toEpochMilliseconds() + 1).toString(),
@@ -234,19 +244,17 @@ fun AddGoalContent(
                             )
                             onSaveTransaction(transaction)
 
-                            currentStep = AddGoalStep.GoalSuccess 
+                            currentStep = AddGoalStep.GoalSuccess
                         },
                         onBack = {
                             if (isCustomFlow) currentStep = AddGoalStep.CustomGoalMotivation
                             else currentStep = AddGoalStep.GoalTimeline
-                        }
-                    )
+                        })
                 }
 
                 is AddGoalStep.GoalSuccess -> {
                     GoalSuccessStep(
-                        goalName = goalName,
-                        onViewGoal = onViewGoal
+                        goalName = goalName, onViewGoal = onViewGoal
                     )
                 }
             }

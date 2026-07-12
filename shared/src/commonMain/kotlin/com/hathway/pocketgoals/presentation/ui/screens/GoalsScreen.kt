@@ -27,6 +27,8 @@ import com.hathway.pocketgoals.presentation.ui.components.goals_components.Goals
 import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
 import com.hathway.pocketgoals.presentation.ui.viewmodel.GoalsViewModel
 import androidx.compose.runtime.collectAsState
+import org.jetbrains.compose.resources.stringResource
+import pocketgoals.shared.generated.resources.*
 
 @Composable
 fun GoalsScreen(
@@ -112,14 +114,13 @@ fun EmptyGoalsState(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        // You could add an illustration here
         Text(
-            "No Goals Yet!",
+            stringResource(Res.string.no_goals_title),
             style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold
         )
         Text(
-            "Create your first goal and\nstart saving towards it.",
+            stringResource(Res.string.no_goals_desc),
             textAlign = androidx.compose.ui.text.style.TextAlign.Center,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.padding(top = 8.dp, bottom = 32.dp)
@@ -132,7 +133,7 @@ fun EmptyGoalsState(
         ) {
             Icon(Icons.Default.Add, null)
             Spacer(modifier = Modifier.width(8.dp))
-            Text("Create New Goal", fontWeight = FontWeight.Bold)
+            Text(stringResource(Res.string.btn_get_started), fontWeight = FontWeight.Bold)
         }
     }
 }

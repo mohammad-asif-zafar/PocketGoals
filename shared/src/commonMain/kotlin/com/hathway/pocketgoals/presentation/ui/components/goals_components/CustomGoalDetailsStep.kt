@@ -11,6 +11,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowRight
 import androidx.compose.material.icons.rounded.Category
 import androidx.compose.material.icons.rounded.DirectionsCar
+import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -25,6 +26,15 @@ import com.hathway.pocketgoals.domain.model.ThemeMode
 import com.hathway.pocketgoals.presentation.ui.components.add_expense_components.FormField
 import com.hathway.pocketgoals.presentation.ui.components.category_components.IconPickerSheet
 import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
+import org.jetbrains.compose.resources.stringResource
+import pocketgoals.shared.generated.resources.Res
+import pocketgoals.shared.generated.resources.goal_btn_next
+import pocketgoals.shared.generated.resources.goal_lbl_choose_color
+import pocketgoals.shared.generated.resources.goal_lbl_choose_icon
+import pocketgoals.shared.generated.resources.goal_lbl_name
+import pocketgoals.shared.generated.resources.goal_lbl_select_icon
+import pocketgoals.shared.generated.resources.goal_placeholder_name
+
 @Composable
 fun CustomGoalDetailsStep(
     goalName: String,
@@ -33,54 +43,54 @@ fun CustomGoalDetailsStep(
     onIconSelected: (ImageVector) -> Unit,
     selectedColor: Color,
     onColorSelected: (Color) -> Unit,
-    onNext: () -> Unit
+    onNext: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     var showIconPicker by remember { mutableStateOf(false) }
     val isDark = isSystemInDarkTheme()
 
-    // 15 Palette tokens mapped directly from your brand design assets
     val colors = listOf(
-        Color(0xFF10B981), Color(0xFF3B82F6), Color(0xFFF59E0B),
-        Color(0xFFEC4899), Color(0xFF6366F1), Color(0xFF8B5CF6),
-        Color(0xFFEF4444), Color(0xFF14B8A6), Color(0xFFF87171),
-        Color(0xFFFB923C), Color(0xFF0EA5E9), Color(0xFF84CC16),
-        Color(0xFFA855F7), Color(0xFFD946EF), Color(0xFFF43F5E)
+        Color(0xFF10B981),
+        Color(0xFF3B82F6),
+        Color(0xFFF59E0B),
+        Color(0xFFEC4899),
+        Color(0xFF6366F1),
+        Color(0xFF8B5CF6),
+        Color(0xFFEF4444),
+        Color(0xFF14B8A6),
+        Color(0xFFF87171),
+        Color(0xFFFB923C),
+        Color(0xFF0EA5E9),
+        Color(0xFF84CC16),
+        Color(0xFFA855F7),
+        Color(0xFFD946EF),
+        Color(0xFFF43F5E)
     )
 
-    // Fallback stub helper interaction if picker sheet logic requires a placeholder trigger
     if (showIconPicker) {
-        // IconPickerSheet(
-        //     selectedIcon = selectedIcon,
-        //     selectedColor = selectedColor,
-        //     onIconSelected = onIconSelected,
-        //     onDismiss = { showIconPicker = false }
-        // )
+        IconPickerSheet(
+            selectedIcon = selectedIcon,
+            selectedColor = selectedColor,
+            onIconSelected = onIconSelected,
+            onDismiss = { showIconPicker = false })
     }
 
-    // Tweak transparency layer density dynamically depending on theme dark state
     val tintAlpha = if (isDark) 0.2f else 0.1f
     val borderAlpha = if (isDark) 0.4f else 0.2f
 
-    Column(
-        modifier = Modifier.fillMaxSize()
-    ) {
+    Column(modifier = modifier.fillMaxSize()) {
         Column(
-            modifier = Modifier
-                .weight(1f)
-                .padding(horizontal = 24.dp),
+            modifier = Modifier.weight(1f).padding(horizontal = 24.dp),
             verticalArrangement = Arrangement.spacedBy(24.dp)
         ) {
             Spacer(modifier = Modifier.height(24.dp))
-            // ==========================================
-            // 1. Live Icon / Color Frame Preview Bubble
-            // ==========================================
+
+            // 1. Live Icon/Color Circle Frame Preview Bubble
             Box(
-                modifier = Modifier.fillMaxWidth(),
-                contentAlignment = Alignment.Center
+                modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center
             ) {
                 Box(
-                    modifier = Modifier
-                        .size(80.dp)
+                    modifier = Modifier.size(80.dp)
                         .background(selectedColor.copy(alpha = tintAlpha), CircleShape)
                         .border(2.dp, selectedColor.copy(alpha = borderAlpha), CircleShape),
                     contentAlignment = Alignment.Center
@@ -94,32 +104,33 @@ fun CustomGoalDetailsStep(
                 }
             }
 
-            // ==========================================
-            // 2. Icon Sheet Selector Trigger
-            // ==========================================
-            FormField(label = "Choose Icon") {
+            // 2. Icon Sheet Selector Trigger Pill Row
+            FormField(label = stringResource(Res.string.goal_lbl_choose_icon)) {
                 Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(56.dp)
-                        .border(1.dp, MaterialTheme.colorScheme.outline.copy(alpha = 0.3f), RoundedCornerShape(12.dp))
-                        .clip(RoundedCornerShape(12.dp))
-                        .clickable { showIconPicker = true }
+                    modifier = Modifier.fillMaxWidth().height(56.dp).border(
+                        1.dp,
+                        MaterialTheme.colorScheme.outline.copy(alpha = 0.3f),
+                        RoundedCornerShape(12.dp)
+                    ).clip(RoundedCornerShape(12.dp)).clickable { showIconPicker = true }
                         .padding(horizontal = 12.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
+                    verticalAlignment = Alignment.CenterVertically) {
                     Box(
-                        modifier = Modifier
-                            .size(36.dp)
-                            .background(selectedColor.copy(alpha = tintAlpha), RoundedCornerShape(8.dp)),
-                        contentAlignment = Alignment.Center
+                        modifier = Modifier.size(36.dp).background(
+                            selectedColor.copy(alpha = tintAlpha), RoundedCornerShape(8.dp)
+                        ), contentAlignment = Alignment.Center
                     ) {
-                        Icon(selectedIcon, null, tint = selectedColor, modifier = Modifier.size(20.dp))
+                        Icon(
+                            selectedIcon,
+                            null,
+                            tint = selectedColor,
+                            modifier = Modifier.size(20.dp)
+                        )
                     }
                     Spacer(modifier = Modifier.width(12.dp))
                     Text(
-                        text = "Select Icon",
+                        text = stringResource(Res.string.goal_lbl_select_icon),
                         color = MaterialTheme.colorScheme.onSurface,
+                        style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.Medium
                     )
                     Spacer(modifier = Modifier.weight(1f))
@@ -131,10 +142,8 @@ fun CustomGoalDetailsStep(
                 }
             }
 
-            // ==========================================
-            // 3. Horizontal Color Row Picker
-            // ==========================================
-            FormField(label = "Choose Color") {
+            // 3. Dynamic Horizontal Color Selector Grid Channel
+            FormField(label = stringResource(Res.string.goal_lbl_choose_color)) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(10.dp)
@@ -142,19 +151,18 @@ fun CustomGoalDetailsStep(
                     colors.take(8).forEach { color ->
                         val isSelected = selectedColor == color
                         Box(
-                            modifier = Modifier
-                                .size(32.dp)
-                                .clip(CircleShape)
-                                .background(color)
-                                .clickable { onColorSelected(color) }
-                                .border(
+                            modifier = Modifier.size(32.dp).clip(CircleShape).background(color)
+                                .clickable { onColorSelected(color) }.border(
                                     width = if (isSelected) 3.dp else 0.dp,
                                     color = if (isSelected) MaterialTheme.colorScheme.background else Color.Transparent,
                                     shape = CircleShape
-                                )
-                                .then(
+                                ).then(
                                     if (isSelected) {
-                                        Modifier.border(1.dp, MaterialTheme.colorScheme.onBackground.copy(alpha = 0.4f), CircleShape)
+                                        Modifier.border(
+                                            1.dp,
+                                            MaterialTheme.colorScheme.onBackground.copy(alpha = 0.4f),
+                                            CircleShape
+                                        )
                                     } else Modifier
                                 )
                         )
@@ -162,51 +170,91 @@ fun CustomGoalDetailsStep(
                 }
             }
 
-            // ==========================================
             // 4. Goal Text Form Entry
-            // ==========================================
-            FormField(label = "Goal Name") {
+            FormField(label = stringResource(Res.string.goal_lbl_name)) {
                 OutlinedTextField(
                     value = goalName,
                     onValueChange = onGoalNameChange,
-                    placeholder = { Text("e.g. Europe Trip, New Laptop") },
+                    placeholder = { Text(stringResource(Res.string.goal_placeholder_name)) },
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(12.dp),
                     singleLine = true,
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedBorderColor = MaterialTheme.colorScheme.primary,
-                        unfocusedBorderColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f),
-                        focusedTextColor = MaterialTheme.colorScheme.onSurface,
-                        unfocusedTextColor = MaterialTheme.colorScheme.onSurface
+                        unfocusedBorderColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f)
                     )
                 )
             }
             Spacer(modifier = Modifier.height(24.dp))
         }
 
-        // ==========================================
-        // 5. Fixed Next Navigation Button Row
-        // ==========================================
+        // 5. Fixed Next Button Flow Navigation Row
         Box(modifier = Modifier.padding(24.dp)) {
             Button(
                 onClick = onNext,
                 enabled = goalName.isNotBlank(),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp),
+                modifier = Modifier.fillMaxWidth().height(56.dp),
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.primary,
                     contentColor = MaterialTheme.colorScheme.onPrimary,
                     disabledContainerColor = MaterialTheme.colorScheme.primaryContainer,
-                    disabledContentColor = Color.White.copy(alpha = 0.65f)
+                    disabledContentColor = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.5f)
                 )
             ) {
-                Text("Next", fontWeight = FontWeight.Bold)
+                Text(text = stringResource(Res.string.goal_btn_next), fontWeight = FontWeight.Bold)
             }
         }
     }
 }
+
+// Temporary Stub implementation placeholder to bypass compilation on previews
+@Composable
+fun IconPickerSheet(
+    selectedIcon: ImageVector,
+    selectedColor: Color,
+    onIconSelected: (ImageVector) -> Unit,
+    onDismiss: () -> Unit
+) {
+}
+
+
+@Preview(name = "Goal Details Setup - Light Mode")
+@Composable
+private fun CustomGoalDetailsStepLightPreviewLight() {
+    PocketGoalsTheme(themeMode = ThemeMode.LIGHT) {
+        Surface(color = MaterialTheme.colorScheme.background) {
+            CustomGoalDetailsStep(
+                goalName = "New Car Savings Fund",
+                onGoalNameChange = {},
+                selectedIcon = Icons.Rounded.Home,
+                onIconSelected = {},
+                selectedColor = Color(0xFF3B82F6),
+                onColorSelected = {},
+                onNext = {}
+            )
+        }
+    }
+}
+
+@Preview(name = "Goal Details Setup Empty - Dark Mode")
+@Composable
+private fun CustomGoalDetailsStepDarkPreviewDark() {
+    PocketGoalsTheme(themeMode = ThemeMode.DARK) {
+        Surface(color = MaterialTheme.colorScheme.background) {
+            CustomGoalDetailsStep(
+                goalName = "", // Verifies disabled opacity visual states
+                onGoalNameChange = {},
+                selectedIcon = Icons.Rounded.Home,
+                onIconSelected = {},
+                selectedColor = Color(0xFF10B981),
+                onColorSelected = {},
+                onNext = {}
+            )
+        }
+    }
+}
+
 
 @Preview
 @Composable

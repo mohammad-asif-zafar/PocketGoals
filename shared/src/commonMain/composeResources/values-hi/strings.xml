@@ -95,4 +95,21 @@
     <string name="balance_show">बैलेंस दिखाएं</string>
     <string name="balance_stats">आंकड़े</string>
 
+    <string name="add_description">विवरण जोड़ें</string>
+    <string name="description_label">विवरण</string>
+    <string name="description_placeholder">अपने लक्ष्य के बारे में कोई भी नोट जोड़ें</string>
+    <string name="motivation_label">प्रेरणा</string>
+    <string name="motivation_placeholder">यह लक्ष्य आपके लिए क्यों महत्वपूर्ण है?</string>
+    <string name="cd_toggle_dropdown_menu">ड्रॉपडाउन विकल्प मेनू टॉगल करें</string>
+    <string name="goal_lbl_choose_icon">आइकन चुनें</string>
+    <string name="goal_lbl_select_icon">आइकन का चयन करें</string>
+    <string name="goal_lbl_choose_color">रंग चुनें</string>
+    <string name="goal_lbl_name">लक्ष्य का नाम</string>
+    <string name="goal_placeholder_name">जैसे: यूरोप यात्रा, नया लैपटॉप</string>
+    <string name="goal_btn_next">आगे बढ़ें</string>
+
+    <string name="set_target_amount">लक्ष्य राशि निर्धारित करें</string>
+    <string name="quick_select">त्वरित चयन</string>
+    <string name="quick_select_other">अन्य</string>
+
 </resources>

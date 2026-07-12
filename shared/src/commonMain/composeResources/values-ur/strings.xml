@@ -94,4 +94,22 @@
     <string name="balance_show">بیلنس دکھائیں</string>
     <string name="balance_stats">اعداد و شمار</string>
 
+    <string name="add_description">تفصیلات شامل کریں</string>
+    <string name="description_label">تفصیل</string>
+    <string name="description_placeholder">اپنے مقصد کے بارے میں کوئی بھی نوٹ درج کریں</string>
+    <string name="motivation_label">تحریک</string>
+    <string name="motivation_placeholder">یہ مقصد آپ کے لیے کیوں اہم ہے؟</string>
+    <string name="cd_toggle_dropdown_menu">ڈراپ ڈاؤن اختیارات مینو کو تبدیل کریں</string>
+    <string name="goal_lbl_choose_icon">آئیکن منتخب کریں</string>
+    <string name="goal_lbl_select_icon">آئیکن چنیں</string>
+    <string name="goal_lbl_choose_color">رنگ منتخب کریں</string>
+    <string name="goal_lbl_name">ہدف کا نام</string>
+    <string name="goal_placeholder_name">مثال کے طور پر: یورپ کا سفر، نیا لیپ ٹاپ</string>
+    <string name="goal_btn_next">اگلا</string>
+
+    <string name="set_target_amount">ہدف کی رقم طے کریں</string>
+    <string name="quick_select">فوری انتخاب</string>
+    <string name="quick_select_other">دیگر</string>
+
+    
 </resources>
