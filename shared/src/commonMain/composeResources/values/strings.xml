@@ -145,4 +145,20 @@
     <string name="period_this_week">This Week</string>
     <string name="period_this_year">This Year</string>
 
+    <string name="analytics_breakdown">Category Breakdown</string>
+    <string name="total">Total</string>
+
+    <string name="timeline_header">Transaction Timeline</string>
+    <string name="timeline_empty">No transactions found for this period</string>
+    <string name="export_pdf_desc">Export financial reports as PDF</string>
+
+    <string name="filter_date_range">Select Date Range</string>
+    <string name="filter_apply">Apply Filter</string>
+    <string name="filter_start_date">Start Date</string>
+    <string name="filter_end_date">End Date</string>
+
+    <string name="analytics_top_categories">Top Categories</string>
+    <string name="analytics_see_all">See All</string>
+
+
 </resources>

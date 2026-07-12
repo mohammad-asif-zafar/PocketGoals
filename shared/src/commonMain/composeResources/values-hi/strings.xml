@@ -77,5 +77,16 @@
     <string name="period_this_month">इस महीने</string>
     <string name="period_this_week">इस सप्ताह</string>
     <string name="period_this_year">इस साल</string>
+    <string name="total">कुल</string>
+    <string name="timeline_header">लेनदेन की समयसीमा</string>
+    <string name="timeline_empty">इस अवधि के लिए कोई लेनदेन नहीं मिला</string>
+    <string name="export_pdf_desc">वित्तीय रिपोर्ट को पीडीएफ के रूप में निर्यात करें</string>
+    <string name="filter_date_range">दिनांक सीमा चुनें</string>
+    <string name="filter_apply">फ़िल्टर लागू करें</string>
+    <string name="filter_start_date">प्रारंभ तिथि</string>
+    <string name="filter_end_date">अंतिम तिथि</string>
+    <string name="analytics_top_categories">शीर्ष श्रेणियां</string>
+    <string name="analytics_see_all">सभी देखें</string>
 
+    
 </resources>

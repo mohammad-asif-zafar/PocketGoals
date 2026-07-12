@@ -76,5 +76,18 @@
     <string name="period_this_month">Bulan Ini</string>
     <string name="period_this_week">Minggu Ini</string>
     <string name="period_this_year">Tahun Ini</string>
+    <string name="total">Jumlah</string>
 
+    <string name="timeline_header">Garis Masa Transaksi</string>
+    <string name="timeline_empty">Tiada transaksi ditemui untuk tempoh ini</string>
+    <string name="export_pdf_desc">Eksport laporan kewangan sebagai PDF</string>
+
+    <string name="filter_date_range">Pilih Julat Tarikh</string>
+    <string name="filter_apply">Kenakan Penapis</string>
+    <string name="filter_start_date">Tarikh Mula</string>
+    <string name="filter_end_date">Tarikh Tamat</string>
+    <string name="analytics_top_categories">Kategori Utama</string>
+    <string name="analytics_see_all">Lihat Semua</string>
+
+    
 </resources>

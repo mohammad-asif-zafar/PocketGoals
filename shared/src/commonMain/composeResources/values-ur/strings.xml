@@ -75,5 +75,17 @@
     <string name="period_this_month">اس مہینے</string>
     <string name="period_this_week">اس ہفتے</string>
     <string name="period_this_year">اس سال</string>
+    <string name="total">کل</string>
 
+    <string name="timeline_header">لین دین کی ٹائم لائن</string>
+    <string name="timeline_empty">اس مدت کے لیے کوئی لین دین نہیں ملا</string>
+    <string name="export_pdf_desc">مالیاتی رپورٹس کو پی ڈی ایف کے طور پر ایکسپورٹ کریں</string>
+    <string name="filter_date_range">تاریخ کی حد منتخب کریں</string>
+    <string name="filter_apply">فلٹر لگائیں</string>
+    <string name="filter_start_date">شروع کی تاریخ</string>
+    <string name="filter_end_date">آخری تاریخ</string>
+    <string name="analytics_top_categories">اعلیٰ زمرہ جات</string>
+    <string name="analytics_see_all">سب دیکھیں</string>
+
+    
 </resources>

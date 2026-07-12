@@ -76,5 +76,17 @@
     <string name="period_this_month">هذا الشهر</string>
     <string name="period_this_week">هذا الأسبوع</string>
     <string name="period_this_year">هذه السنة</string>
+    <string name="total">الإجمالي</string>
+
+    <string name="timeline_header">جدول المعاملات الزمني</string>
+    <string name="timeline_empty">لم يتم العثور على معاملات لهذه الفترة</string>
+    <string name="export_pdf_desc">تصدير التقارير المالية بصيغة PDF</string>
+    <string name="filter_date_range">حدد النطاق الزمني</string>
+    <string name="filter_apply">تطبيق التصفية</string>
+    <string name="filter_start_date">تاريخ البدء</string>
+    <string name="filter_end_date">تاريخ الانتهاء</string>
+    <string name="analytics_top_categories">أعلى الفئات</string>
+    <string name="analytics_see_all">عرض الكل</string>
+
 
 </resources>
