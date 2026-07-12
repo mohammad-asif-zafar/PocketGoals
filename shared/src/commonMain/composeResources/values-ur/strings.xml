@@ -20,5 +20,15 @@
     <string name="text_or_continue">یا اس کے ساتھ جاری رکھیں</string>
     <string name="text_dont_have_account">کیا آپ کا اکاؤنٹ نہیں ہے؟</string>
     <string name="btn_sign_up">سائن اپ کریں</string>
+    <string name="cd_select_option">انتخابات کی تفصیل کھولیں</string>
+    <string name="label_income_type">آمدنی کی قسم</string>
+    <string name="label_amount">رقم</string>
+    <string name="label_date">تاریخ</string>
+    <string name="label_payment_method">طریقہ ادائیگی</string>
+    <string name="label_note_optional">نوٹ (اختیاری)</string>
+
+    <string name="hint_enter_amount">رقم درج کریں</string>
+    <string name="hint_select_method">طریقہ منتخب کریں</string>
+    <string name="hint_add_note">نوٹ لکھیں</string>
 
 </resources>

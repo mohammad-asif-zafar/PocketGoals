@@ -20,5 +20,15 @@
     <string name="text_or_continue">أو المتابعة باستخدام</string>
     <string name="text_dont_have_account">ليس لديك حساب؟</string>
     <string name="btn_sign_up">إنشاء حساب</string>
+    <string name="cd_select_option">توسيع خيارات الاختيار</string>
+    <string name="label_income_type">نوع الدخل</string>
+    <string name="label_amount">المبلغ</string>
+    <string name="label_date">التاريخ</string>
+    <string name="label_payment_method">طريقة الدفع</string>
+    <string name="label_note_optional">ملاحظة (اختياري)</string>
 
+    <string name="hint_enter_amount">أدخل المبلغ</string>
+    <string name="hint_select_method">اختر الطريقة</string>
+    <string name="hint_add_note">أضف ملاحظة</string>
+    
 </resources>

@@ -38,11 +38,10 @@ import pocketgoals.shared.generated.resources.text_or_continue
 
 @Composable
 fun LoginScreen(
-    onLoginSuccess: () -> Unit,
-    onSignupClick: () -> Unit
+    onLoginSuccess: () -> Unit, onSignupClick: () -> Unit
 ) {
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("asifzafar00@yhahoo.com") }
+    var password by remember { mutableStateOf("Qwerty@#12345") }
     var passwordVisible by remember { mutableStateOf(false) }
 
     val scrollState = rememberScrollState()
@@ -54,20 +53,15 @@ fun LoginScreen(
     val bodyTextColor = MaterialTheme.colorScheme.onSurface
 
     Scaffold(
-        containerColor = MaterialTheme.colorScheme.background,
-        // Using bottomBar pins the footer cleanly without weight-based infinite layout calculations
-        bottomBar = {
+        containerColor = MaterialTheme.colorScheme.background, bottomBar = {
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .windowInsetsPadding(WindowInsets.safeDrawing) // Safe area for iOS Home Indicator / Android Nav Bar
+                modifier = Modifier.fillMaxWidth().windowInsetsPadding(WindowInsets.safeDrawing)
                     .padding(bottom = 24.dp, top = 8.dp),
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = stringResource(Res.string.text_dont_have_account),
-                    color = labelTextColor
+                    text = stringResource(Res.string.text_dont_have_account), color = labelTextColor
                 )
                 TextButton(onClick = onSignupClick) {
                     Text(
@@ -77,15 +71,11 @@ fun LoginScreen(
                     )
                 }
             }
-        }
-    ) { padding ->
+        }) { padding ->
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-                .verticalScroll(scrollState)
+            modifier = Modifier.fillMaxSize().padding(padding).verticalScroll(scrollState)
                 .padding(horizontal = 24.dp),
-            horizontalAlignment = Alignment.Start
+            horizontalAlignment = Alignment.Start,
         ) {
             Spacer(modifier = Modifier.height(24.dp))
 
@@ -99,8 +89,7 @@ fun LoginScreen(
             Text(
                 text = stringResource(Res.string.login_subtitle),
                 style = MaterialTheme.typography.bodyMedium,
-                color = labelTextColor,
-                modifier = Modifier.padding(top = 8.dp)
+                color = labelTextColor
             )
 
             Spacer(modifier = Modifier.height(40.dp))
@@ -109,7 +98,11 @@ fun LoginScreen(
             OutlinedTextField(
                 value = email,
                 onValueChange = { email = it },
-                placeholder = { Text(stringResource(Res.string.hint_email), color = labelTextColor) },
+                placeholder = {
+                    Text(
+                        stringResource(Res.string.hint_email), color = labelTextColor
+                    )
+                },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(12.dp),
                 singleLine = true,
@@ -128,7 +121,11 @@ fun LoginScreen(
             OutlinedTextField(
                 value = password,
                 onValueChange = { password = it },
-                placeholder = { Text(stringResource(Res.string.hint_password), color = labelTextColor) },
+                placeholder = {
+                    Text(
+                        stringResource(Res.string.hint_password), color = labelTextColor
+                    )
+                },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(12.dp),
                 singleLine = true,
@@ -152,7 +149,7 @@ fun LoginScreen(
                 )
             )
 
-            // Forgot Password (Mirrors dynamically to top-left in Arabic & Urdu layouts)
+            // Forgot Password
             TextButton(
                 onClick = { /* Handle forgot password logic */ },
                 modifier = Modifier.align(Alignment.End)
@@ -166,15 +163,19 @@ fun LoginScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // Primary Call to Action Button
+            // Primary Call-to-Action Button (Triggers temporary mock authorization routing)
             Button(
-                onClick = onLoginSuccess,
+                onClick = {
+                    if (isFormValid) {
+                        onLoginSuccess() // Directly logs in without an auth backend check
+                    }
+                },
                 enabled = isFormValid,
                 modifier = Modifier.fillMaxWidth().height(56.dp),
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = primaryColor,
-                    contentColor = MaterialTheme.colorScheme.onPrimary, // Fixed: High visibility text setup
+                    contentColor = MaterialTheme.colorScheme.onPrimary,
                     disabledContainerColor = primaryColor.copy(alpha = 0.35f),
                     disabledContentColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.65f)
                 )
@@ -190,8 +191,7 @@ fun LoginScreen(
 
             // Divider Section
             Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
+                modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
             ) {
                 HorizontalDivider(modifier = Modifier.weight(1f), color = borderColor)
                 Text(
@@ -205,7 +205,7 @@ fun LoginScreen(
 
             Spacer(modifier = Modifier.height(32.dp))
 
-            // Social Providers Block
+            // Social Providers Block (Mock clicks routing directly to Dashboard)
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
@@ -214,37 +214,31 @@ fun LoginScreen(
                     text = "Google",
                     iconLabel = "G",
                     modifier = Modifier.weight(1f),
-                    onClick = { /* Handle Google login */ }
+                    onClick = onLoginSuccess // Mock login bypass
                 )
                 SocialLoginButton(
                     text = "Apple",
                     iconLabel = "A",
                     modifier = Modifier.weight(1f),
-                    onClick = { /* Handle Apple login */ }
+                    onClick = onLoginSuccess // Mock login bypass
                 )
             }
 
-            // Fixed: Secure constant height space eliminates infinite sizing crashes inside layouts
             Spacer(modifier = Modifier.height(24.dp))
         }
     }
 }
+
 // Inline Social Button subcomponent for stand-alone layout parsing setup
 @Composable
 fun SocialLoginButton(
-    text: String,
-    iconLabel: String,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    text: String, iconLabel: String, onClick: () -> Unit, modifier: Modifier = Modifier
 ) {
     Row(
-        modifier = modifier
-            .height(52.dp)
-            .clip(RoundedCornerShape(12.dp))
+        modifier = modifier.height(52.dp).clip(RoundedCornerShape(12.dp))
             .background(MaterialTheme.colorScheme.surface)
             .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(12.dp))
-            .clickable { onClick() }
-            .padding(horizontal = 16.dp),
+            .clickable { onClick() }.padding(horizontal = 16.dp),
         // Fix: Use spacedBy to automatically handle padding orientation for RTL/LTR scripts
         horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
         verticalAlignment = Alignment.CenterVertically

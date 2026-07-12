@@ -20,5 +20,14 @@
     <string name="text_or_continue">atau teruskan dengan</string>
     <string name="text_dont_have_account">Belum mempunyai akaun?</string>
     <string name="btn_sign_up">Daftar</string>
+    <string name="cd_select_option">Kembangkan pilihan jawapan</string>
+    <string name="label_income_type">Jenis Pendapatan</string>
+    <string name="label_amount">Jumlah</string>
+    <string name="label_date">Tarikh</string>
+    <string name="label_payment_method">Kaedah Pembayaran</string>
+    <string name="label_note_optional">Nota (Pilihan)</string>
 
+    <string name="hint_enter_amount">Masukkan Jumlah</string>
+    <string name="hint_select_method">Pilih Kaedah</string>
+    <string name="hint_add_note">Tambah nota</string>
 </resources>

@@ -1,7 +1,13 @@
 package com.hathway.pocketgoals.presentation.ui.screens
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -10,22 +16,42 @@ import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Email
 import androidx.compose.material.icons.rounded.Lock
 import androidx.compose.material.icons.rounded.Person
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.hathway.pocketgoals.presentation.ui.components.common_components.SocialLoginButton
+import com.hathway.pocketgoals.domain.model.ThemeMode
+import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
+import com.hathway.pocketgoals.presentation.ui.theme.Primary
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SignupScreen(
-    onSignupSuccess: () -> Unit,
-    onBackClick: () -> Unit
+    onSignupSuccess: () -> Unit, onBackClick: () -> Unit
 ) {
     var fullName by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
@@ -33,39 +59,46 @@ fun SignupScreen(
     var confirmPassword by remember { mutableStateOf("") }
     var agreeToTerms by remember { mutableStateOf(false) }
 
+    // Theme color mappings
+    val primaryColor = MaterialTheme.colorScheme.primary
+    val borderColor = MaterialTheme.colorScheme.outline
+    val placeholderColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
+    val bodyTextColor = MaterialTheme.colorScheme.onSurface
+
+    val isFormValid =
+        fullName.isNotBlank() && email.isNotBlank() && password.length >= 6 && password == confirmPassword && agreeToTerms
+
     Scaffold(
-        containerColor = Color.White,
-        topBar = {
+        containerColor = MaterialTheme.colorScheme.background, topBar = {
             TopAppBar(
-                title = { },
-                navigationIcon = {
-                    IconButton(onClick = onBackClick) {
-                        Icon(Icons.AutoMirrored.Rounded.ArrowBack, null)
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.White)
+                title = { }, navigationIcon = {
+                IconButton(onClick = onBackClick) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
+                        contentDescription = "Back",
+                        tint = bodyTextColor
+                    )
+                }
+            }, colors = TopAppBarDefaults.topAppBarColors(
+                containerColor = MaterialTheme.colorScheme.background
             )
-        }
-    ) { padding ->
+            )
+        }) { padding ->
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-                .padding(24.dp)
-                .verticalScroll(rememberScrollState()),
-            horizontalAlignment = Alignment.Start
+            modifier = Modifier.fillMaxSize().padding(padding).padding(horizontal = 24.dp)
+                .verticalScroll(rememberScrollState()), horizontalAlignment = Alignment.Start
         ) {
             Text(
                 text = "Create Your Account",
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold,
-                color = Color(0xFF0F172A)
+                color = MaterialTheme.colorScheme.onBackground
             )
-            
+
             Text(
                 text = "Sign up to get started with PocketGoals",
                 style = MaterialTheme.typography.bodyMedium,
-                color = Color.Gray,
+                color = placeholderColor,
                 modifier = Modifier.padding(top = 8.dp)
             )
 
@@ -75,13 +108,16 @@ fun SignupScreen(
             OutlinedTextField(
                 value = fullName,
                 onValueChange = { fullName = it },
-                placeholder = { Text("Full Name") },
+                placeholder = { Text("Full Name", color = placeholderColor) },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(12.dp),
-                leadingIcon = { Icon(Icons.Rounded.Person, null, tint = Color.LightGray) },
+                singleLine = true,
+                leadingIcon = { Icon(Icons.Rounded.Person, null, tint = placeholderColor) },
                 colors = OutlinedTextFieldDefaults.colors(
-                    unfocusedBorderColor = Color(0xFFE2E8F0),
-                    focusedBorderColor = Color(0xFF0F766E)
+                    unfocusedBorderColor = borderColor,
+                    focusedBorderColor = primaryColor,
+                    focusedTextColor = bodyTextColor,
+                    unfocusedTextColor = bodyTextColor
                 )
             )
 
@@ -91,13 +127,16 @@ fun SignupScreen(
             OutlinedTextField(
                 value = email,
                 onValueChange = { email = it },
-                placeholder = { Text("Email or Mobile Number") },
+                placeholder = { Text("Email or Mobile Number", color = placeholderColor) },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(12.dp),
-                leadingIcon = { Icon(Icons.Rounded.Email, null, tint = Color.LightGray) },
+                singleLine = true,
+                leadingIcon = { Icon(Icons.Rounded.Email, null, tint = placeholderColor) },
                 colors = OutlinedTextFieldDefaults.colors(
-                    unfocusedBorderColor = Color(0xFFE2E8F0),
-                    focusedBorderColor = Color(0xFF0F766E)
+                    unfocusedBorderColor = borderColor,
+                    focusedBorderColor = primaryColor,
+                    focusedTextColor = bodyTextColor,
+                    unfocusedTextColor = bodyTextColor
                 )
             )
 
@@ -107,14 +146,17 @@ fun SignupScreen(
             OutlinedTextField(
                 value = password,
                 onValueChange = { password = it },
-                placeholder = { Text("Password") },
+                placeholder = { Text("Password", color = placeholderColor) },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(12.dp),
-                leadingIcon = { Icon(Icons.Rounded.Lock, null, tint = Color.LightGray) },
+                singleLine = true,
+                leadingIcon = { Icon(Icons.Rounded.Lock, null, tint = placeholderColor) },
                 visualTransformation = PasswordVisualTransformation(),
                 colors = OutlinedTextFieldDefaults.colors(
-                    unfocusedBorderColor = Color(0xFFE2E8F0),
-                    focusedBorderColor = Color(0xFF0F766E)
+                    unfocusedBorderColor = borderColor,
+                    focusedBorderColor = primaryColor,
+                    focusedTextColor = bodyTextColor,
+                    unfocusedTextColor = bodyTextColor
                 )
             )
 
@@ -124,44 +166,52 @@ fun SignupScreen(
             OutlinedTextField(
                 value = confirmPassword,
                 onValueChange = { confirmPassword = it },
-                placeholder = { Text("Confirm Password") },
+                placeholder = { Text("Confirm Password", color = placeholderColor) },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(12.dp),
-                leadingIcon = { Icon(Icons.Rounded.Lock, null, tint = Color.LightGray) },
+                singleLine = true,
+                leadingIcon = { Icon(Icons.Rounded.Lock, null, tint = placeholderColor) },
                 visualTransformation = PasswordVisualTransformation(),
                 colors = OutlinedTextFieldDefaults.colors(
-                    unfocusedBorderColor = Color(0xFFE2E8F0),
-                    focusedBorderColor = Color(0xFF0F766E)
+                    unfocusedBorderColor = borderColor,
+                    focusedBorderColor = primaryColor,
+                    focusedTextColor = bodyTextColor,
+                    unfocusedTextColor = bodyTextColor
                 )
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
             Row(
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()
             ) {
                 Checkbox(
                     checked = agreeToTerms,
                     onCheckedChange = { agreeToTerms = it },
-                    colors = CheckboxDefaults.colors(checkedColor = Color(0xFF0F766E))
+                    colors = CheckboxDefaults.colors(
+                        checkedColor = primaryColor, uncheckedColor = borderColor
+                    )
                 )
                 Text(
                     text = "I agree to the Terms of Service\nand Privacy Policy",
                     style = MaterialTheme.typography.bodySmall,
-                    color = Color.Gray
+                    color = placeholderColor
                 )
             }
 
             Spacer(modifier = Modifier.height(32.dp))
 
+            // Main Action Button
             Button(
                 onClick = onSignupSuccess,
-                enabled = agreeToTerms,
+                enabled = isFormValid,
                 modifier = Modifier.fillMaxWidth().height(56.dp),
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF0F766E),
-                    disabledContainerColor = Color(0xFF0F766E).copy(alpha = 0.3f)
+                    containerColor = primaryColor,
+                    contentColor = MaterialTheme.colorScheme.onPrimary, // Fixed: High visibility text setup
+                    disabledContainerColor = primaryColor.copy(alpha = 0.35f),
+                    disabledContentColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.65f)
                 )
             ) {
                 Text("Sign Up", fontWeight = FontWeight.Bold, fontSize = 16.sp)
@@ -169,40 +219,56 @@ fun SignupScreen(
 
             Spacer(modifier = Modifier.height(32.dp))
 
-            // Or continue with
+            // Or continue with divider section
             Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
+                modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
             ) {
-                HorizontalDivider(modifier = Modifier.weight(1f), color = Color(0xFFE2E8F0))
+                HorizontalDivider(modifier = Modifier.weight(1f), color = borderColor)
                 Text(
                     text = "or continue with",
                     modifier = Modifier.padding(horizontal = 16.dp),
-                    color = Color.Gray,
+                    color = placeholderColor,
                     style = MaterialTheme.typography.bodySmall
                 )
-                HorizontalDivider(modifier = Modifier.weight(1f), color = Color(0xFFE2E8F0))
+                HorizontalDivider(modifier = Modifier.weight(1f), color = borderColor)
             }
 
             Spacer(modifier = Modifier.height(32.dp))
 
+            // Social Register Options
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 SocialLoginButton(
-                    text = "Google",
-                    icon = "G",
-                    modifier = Modifier.weight(1f)
+                    text = "Google", iconLabel = "G", onClick = {}, modifier = Modifier.weight(1f)
                 )
                 SocialLoginButton(
-                    text = "Apple",
-                    icon = "A",
-                    modifier = Modifier.weight(1f)
+                    text = "Apple", iconLabel = "A", onClick = {}, modifier = Modifier.weight(1f)
                 )
             }
-            
             Spacer(modifier = Modifier.height(32.dp))
         }
+    }
+}
+
+
+// ==========================================================
+// Theme-Safe Split Previews
+// ==========================================================
+
+@Preview
+@Composable
+fun SignupScreenLightPreview() {
+    PocketGoalsTheme(themeMode = ThemeMode.LIGHT) {
+        SignupScreen(onSignupSuccess = {}, onBackClick = {})
+    }
+}
+
+@Preview
+@Composable
+fun SignupScreenDarkPreview() {
+    PocketGoalsTheme(themeMode = ThemeMode.DARK) {
+        SignupScreen(onSignupSuccess = {}, onBackClick = {})
     }
 }

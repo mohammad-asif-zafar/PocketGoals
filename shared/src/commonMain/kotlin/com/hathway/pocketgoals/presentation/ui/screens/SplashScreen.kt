@@ -7,8 +7,11 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -28,9 +32,8 @@ import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import pocketgoals.shared.generated.resources.Res
-import pocketgoals.shared.generated.resources.splash
-import androidx.compose.ui.layout.ContentScale
 import pocketgoals.shared.generated.resources.app_name
+import pocketgoals.shared.generated.resources.splash
 
 @Composable
 fun SplashScreen(onSplashFinished: () -> Unit) {
@@ -67,12 +70,12 @@ fun SplashScreen(onSplashFinished: () -> Unit) {
         Image(
             painter = painterResource(Res.drawable.splash),
             contentDescription = stringResource(Res.string.app_name),
-            modifier = Modifier.fillMaxSize(),
-            // FIX: Forces the image layout to crop and scale smoothly into all edge margins
+            modifier = Modifier
+                .fillMaxSize(), // Removed generic padding restrictions here
             contentScale = ContentScale.Crop
         )
 
-        // Footer message
+        // Footer message - Safely padded using system navigation bars inset space
         Text(
             text = "Take control of your money,\nbuild a better future.",
             textAlign = TextAlign.Center,
@@ -80,7 +83,8 @@ fun SplashScreen(onSplashFinished: () -> Unit) {
             color = Color.White.copy(alpha = 0.6f),
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .padding(bottom = 48.dp)
+                .windowInsetsPadding(WindowInsets.navigationBars) // Ensures text doesn't hide behind system navbar gesture bar
+                .padding(bottom = 32.dp)
                 .alpha(alpha.value)
         )
     }

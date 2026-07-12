@@ -5,6 +5,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -42,10 +43,10 @@ fun NavigationContainer(
         bottomBar = {
             // Hide bottom bar on auth and splash screens
             val hideBottomBar = currentDestination?.route?.contains("Splash") == true ||
-                               currentDestination?.route?.contains("Onboarding") == true ||
-                               currentDestination?.route?.contains("Login") == true ||
-                               currentDestination?.route?.contains("Signup") == true
-            
+                    currentDestination?.route?.contains("Onboarding") == true ||
+                    currentDestination?.route?.contains("Login") == true ||
+                    currentDestination?.route?.contains("Signup") == true
+
             if (!hideBottomBar) {
                 AppBottomBar(
                     currentRoute = currentDestination?.route,
@@ -62,33 +63,29 @@ fun NavigationContainer(
                     }
                 )
             }
-        }) { innerPadding ->
+        }
+    ) { innerPadding ->
+        // FIX: Removed .padding(innerPadding) from the NavHost container.
+        // This opens up full-bleed edge-to-edge layout space across coordinates.
         NavHost(
             navController = navController,
             startDestination = SplashRoute,
-            modifier = Modifier.fillMaxSize().padding(innerPadding),
+            modifier = Modifier.fillMaxSize(),
 
             enterTransition = {
-                slideInHorizontally(
-                    initialOffsetX = { fullWidth -> fullWidth }, animationSpec = tween(300)
-                ) + fadeIn(animationSpec = tween(300))
+                slideInHorizontally(initialOffsetX = { fullWidth -> fullWidth }, animationSpec = tween(300)) + fadeIn(animationSpec = tween(300))
             },
             exitTransition = {
-                slideOutHorizontally(
-                    targetOffsetX = { fullWidth -> -fullWidth }, animationSpec = tween(300)
-                ) + fadeOut(animationSpec = tween(300))
+                slideOutHorizontally(targetOffsetX = { fullWidth -> -fullWidth }, animationSpec = tween(300)) + fadeOut(animationSpec = tween(300))
             },
             popEnterTransition = {
-                slideInHorizontally(
-                    initialOffsetX = { fullWidth -> -fullWidth }, animationSpec = tween(300)
-                ) + fadeIn(animationSpec = tween(300))
+                slideInHorizontally(initialOffsetX = { fullWidth -> -fullWidth }, animationSpec = tween(300)) + fadeIn(animationSpec = tween(300))
             },
             popExitTransition = {
-                slideOutHorizontally(
-                    targetOffsetX = { fullWidth -> fullWidth }, animationSpec = tween(300)
-                ) + fadeOut(animationSpec = tween(300))
+                slideOutHorizontally(targetOffsetX = { fullWidth -> fullWidth }, animationSpec = tween(300)) + fadeOut(animationSpec = tween(300))
             }
         ) {
+            // --- EDGE-TO-EDGE FULL SCREEN DESTINATIONS ---
             composable<SplashRoute> {
                 SplashScreen(onSplashFinished = {
                     navController.navigate(OnboardingRoute) {
@@ -96,6 +93,7 @@ fun NavigationContainer(
                     }
                 })
             }
+
             composable<OnboardingRoute> {
                 OnboardingScreen(
                     onFinished = {
@@ -108,6 +106,7 @@ fun NavigationContainer(
                     }
                 )
             }
+
             composable<LoginRoute> {
                 LoginScreen(
                     onLoginSuccess = {
@@ -120,6 +119,7 @@ fun NavigationContainer(
                     }
                 )
             }
+
             composable<SignupRoute> {
                 SignupScreen(
                     onSignupSuccess = {
@@ -132,43 +132,60 @@ fun NavigationContainer(
                     }
                 )
             }
+
+            // --- MAIN TAB DESTINATIONS (CONSUME THE BOTTOM BAR PADDING) ---
             composable<HomeRoute> {
-                HomeScreen(
-                    onProfileNavigation = { navController.navigate(ProfileRoute) },
-                    onAddExpenseClick = { navController.navigate(AddExpenseRoute) },
-                    onAddIncomeClick = { navController.navigate(AddIncomeRoute) },
-                    onTransferClick = { /* navController.navigate(TransferRoute) */ },
-                    onViewReportsClick = { navController.navigate(AnalyticsRoute) },
-                    onManageClick = { /* Handle manage logic or navigate */ }
-                )
+                Box(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
+                    HomeScreen(
+                        onProfileNavigation = { navController.navigate(ProfileRoute) },
+                        onAddExpenseClick = { navController.navigate(AddExpenseRoute) },
+                        onAddIncomeClick = { navController.navigate(AddIncomeRoute) },
+                        onTransferClick = { /* navController.navigate(TransferRoute) */ },
+                        onViewReportsClick = { navController.navigate(AnalyticsRoute) },
+                        onManageClick = { /* Handle manage logic or navigate */ }
+                    )
+                }
             }
+
             composable<TransactionsRoute> {
-                TransactionsScreen(viewModel = transactionsViewModel)
+                Box(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
+                    TransactionsScreen(viewModel = transactionsViewModel)
+                }
             }
+
+            // --- INDEPENDENT OVERLAY SUBFLOW SCREEN SCALINGS ---
             composable<AddExpenseRoute> {
                 AddExpenseScreen(
-                    onBackClick = { navController.popBackStack() }, 
+                    onBackClick = { navController.popBackStack() },
                     onViewTransaction = { navController.popBackStack() },
                     onSaveTransaction = { transactionsViewModel.addTransaction(it) }
                 )
             }
+
             composable<AddIncomeRoute> {
                 AddIncomeScreen(
-                    onBackClick = { navController.popBackStack() }, 
+                    onBackClick = { navController.popBackStack() },
                     onViewIncome = { navController.popBackStack() },
                     onSaveTransaction = { transactionsViewModel.addTransaction(it) }
                 )
             }
+
             composable<AnalyticsRoute> { backStackEntry ->
                 val viewModel: AnalyticsViewModel = viewModel(viewModelStoreOwner = backStackEntry)
-                AnalyticsScreen(viewModel = viewModel)
+                Box(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
+                    AnalyticsScreen(viewModel = viewModel)
+                }
             }
+
             composable<GoalsRoute> {
-                GoalsScreen(
-                    viewModel = goalsViewModel,
-                    onAddGoalClick = { navController.navigate(AddGoalRoute) }
-                )
+                Box(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
+                    GoalsScreen(
+                        viewModel = goalsViewModel,
+                        onAddGoalClick = { navController.navigate(AddGoalRoute) }
+                    )
+                }
             }
+
             composable<AddGoalRoute> {
                 AddGoalScreen(
                     viewModel = goalsViewModel,
@@ -177,11 +194,14 @@ fun NavigationContainer(
                     onSaveTransaction = { transactionsViewModel.addTransaction(it) }
                 )
             }
+
             composable<ProfileRoute> {
-                ProfileScreen(
-                    settingsViewModel = settingsViewModel,
-                    onBackClick = { navController.popBackStack() }
-                )
+                Box(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
+                    ProfileScreen(
+                        settingsViewModel = settingsViewModel,
+                        onBackClick = { navController.popBackStack() }
+                    )
+                }
             }
         }
     }

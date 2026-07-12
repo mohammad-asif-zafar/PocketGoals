@@ -20,5 +20,14 @@
     <string name="text_or_continue">या इसके साथ जारी रखें</string>
     <string name="text_dont_have_account">खाता नहीं है?</string>
     <string name="btn_sign_up">साइन अप करें</string>
+    <string name="cd_select_option">विकल्पों का विस्तार करें</string>
+    <string name="label_income_type">आय का प्रकार</string>
+    <string name="label_amount">राशि</string>
+    <string name="label_date">दिनांक</string>
+    <string name="label_payment_method">भुगतान का तरीका</string>
+    <string name="label_note_optional">नोट (वैकल्पिक)</string>
 
+    <string name="hint_enter_amount">राशि दर्ज करें</string>
+    <string name="hint_select_method">طरीका चुनें</string>
+    <string name="hint_add_note">एक नोट जोड़ें</string>
 </resources>
