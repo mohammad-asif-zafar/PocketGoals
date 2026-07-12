@@ -30,7 +30,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.hathway.pocketgoals.domain.Transaction
-
+import androidx.compose.material3.Surface
+import androidx.compose.ui.tooling.preview.Preview
+import com.hathway.pocketgoals.domain.model.ThemeMode
+import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
+import org.jetbrains.compose.resources.stringResource
+import pocketgoals.shared.generated.resources.Res
+import pocketgoals.shared.generated.resources.amount
+import pocketgoals.shared.generated.resources.category
+import pocketgoals.shared.generated.resources.edit_transaction
+import pocketgoals.shared.generated.resources.expense
+import pocketgoals.shared.generated.resources.income
+import pocketgoals.shared.generated.resources.save
+import pocketgoals.shared.generated.resources.save_changes
+import pocketgoals.shared.generated.resources.type
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -38,27 +51,52 @@ fun EditTransactionScreen(transaction: Transaction, onBack: () -> Unit, onSave: 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Edit Transaction", fontWeight = FontWeight.Bold) },
+                title = {
+                    Text(
+                        stringResource(Res.string.edit_transaction), fontWeight = FontWeight.Bold
+                    )
+                },
+
                 navigationIcon = {
                     IconButton(onClick = onBack) { Icon(Icons.Rounded.Close, null) }
-                },
-                actions = {
-                    TextButton(onClick = onSave) { Text("Save", color = Color(0xFF0F766E), fontWeight = FontWeight.Bold) }
-                }
-            )
-        }
-    ) { paddingValues ->
+                }, actions = {
+                    TextButton(onClick = onSave) {
+                        Text(
+                            text = stringResource(Res.string.save),
+                            color = Color(0xFF0F766E),
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                })
+        }) { paddingValues ->
         Column(modifier = Modifier.fillMaxSize().padding(paddingValues).padding(16.dp)) {
-            Text("Type", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
-            Row(modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                FilterChip(selected = false, onClick = {}, label = { Text("Income") }, modifier = Modifier.weight(1f))
-                FilterChip(selected = true, onClick = {}, label = { Text("Expense") }, modifier = Modifier.weight(1f))
+            Text(
+                text = stringResource(Res.string.type),
+                style = MaterialTheme.typography.titleSmall,
+                fontWeight = FontWeight.Bold
+            )
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
+                horizontalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                FilterChip(
+                    selected = false,
+                    onClick = {},
+                    label = { Text(stringResource(Res.string.income)) },
+                    modifier = Modifier.weight(1f)
+                )
+                FilterChip(
+                    selected = true,
+                    onClick = {},
+                    label = { Text(stringResource(Res.string.expense)) },
+                    modifier = Modifier.weight(1f)
+                )
             }
 
             OutlinedTextField(
                 value = transaction.amount.toString(),
                 onValueChange = {},
-                label = { Text("Amount") },
+                label = { Text(stringResource(Res.string.amount)) },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(12.dp)
             )
@@ -66,11 +104,10 @@ fun EditTransactionScreen(transaction: Transaction, onBack: () -> Unit, onSave: 
             OutlinedTextField(
                 value = transaction.title,
                 onValueChange = {},
-                label = { Text("Category") },
+                label = { Text(stringResource(Res.string.category)) },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(12.dp),
-                trailingIcon = { Icon(Icons.Rounded.KeyboardArrowDown, null) }
-            )
+                trailingIcon = { Icon(Icons.Rounded.KeyboardArrowDown, null) })
 
             Spacer(modifier = Modifier.weight(1f))
             Button(
@@ -79,8 +116,32 @@ fun EditTransactionScreen(transaction: Transaction, onBack: () -> Unit, onSave: 
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF0F766E))
             ) {
-                Text("Save Changes")
+                Text(stringResource(Res.string.save_changes))
             }
         }
     }
 }
+
+val previewData = Transaction(amount = 250.50, title = "Shopping")
+@Preview(name = "English", locale = "en", showSystemUi = true)
+@Composable
+private fun EditTransactionMultiLocaleLightPreview() {
+    PocketGoalsTheme(themeMode = ThemeMode.LIGHT) {
+        Surface {
+            EditTransactionScreen(transaction = previewData, onBack = {}, onSave = {})
+        }
+    }
+
+}
+
+@Preview(name = "English", locale = "en", showSystemUi = true)
+@Composable
+private fun EditTransactionMultiLocaleDarkPreview() {
+
+    PocketGoalsTheme(themeMode = ThemeMode.DARK) {
+        Surface {
+            EditTransactionScreen(transaction = previewData, onBack = {}, onSave = {})
+        }
+    }
+}
+

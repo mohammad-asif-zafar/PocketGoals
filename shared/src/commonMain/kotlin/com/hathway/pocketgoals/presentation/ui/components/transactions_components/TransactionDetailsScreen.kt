@@ -38,11 +38,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.hathway.pocketgoals.domain.Transaction
 import com.hathway.pocketgoals.domain.TransactionType
-import kotlin.text.ifEmpty
-
+import com.hathway.pocketgoals.domain.model.ThemeMode
+import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -140,6 +141,37 @@ fun TransactionDetailsScreen(transaction: Transaction, onBack: () -> Unit, onEdi
                     Text("Delete")
                 }
             }
+        }
+    }
+}
+
+private val mockExpense = Transaction(
+    title = "Starbucks Coffee",
+    amount = 350.00,
+    type = TransactionType.EXPENSE,
+    date = "July 12, 2026",
+    time = "10:15 AM",
+    paymentMethod = "Credit Card",
+    category = "Food & Drinks",
+    note = "Meeting with product team"
+)
+
+@Preview
+@Composable
+private fun TransactionDetailsLightPreview() {
+    PocketGoalsTheme(themeMode = ThemeMode.LIGHT) {
+        Surface {
+            TransactionDetailsScreen(transaction = mockExpense, onBack = {}, onEdit = {})
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun TransactionDetailsDarkPreview() {
+    PocketGoalsTheme(themeMode = ThemeMode.DARK) {
+        Surface {
+            TransactionDetailsScreen(transaction = mockExpense, onBack = {}, onEdit = {})
         }
     }
 }

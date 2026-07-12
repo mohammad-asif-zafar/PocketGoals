@@ -30,4 +30,30 @@
     <string name="hint_enter_amount">Masukkan Jumlah</string>
     <string name="hint_select_method">Pilih Kaedah</string>
     <string name="hint_add_note">Tambah nota</string>
+    <string name="edit_transaction">Edit Transaksi</string>
+    <string name="save">Simpan</string>
+    <string name="save_changes">Simpan Perubahan</string>
+    <string name="type">Jenis</string>
+    <string name="income">Pendapatan</string>
+    <string name="expense">Perbelanjaan</string>
+    <string name="amount">Jumlah</string>
+    <string name="category">Kategori</string>
+    <string name="search_transactions_placeholder">Cari transaksi…</string>
+    <string name="section_recent_transactions">Transaksi Terkini</string>
+    <string name="section_categories">Kategori Matlamat</string>
+    <string name="tx_details_title">Butiran Transaksi</string>
+    <string name="tx_delete_dialog_title">Padam Transaksi?</string>
+    <string name="tx_delete_dialog_desc">Adakah anda pasti mahu memadamkan transaksi ini? Tindakan ini tidak boleh diundur.</string>
+    <string name="tx_delete">Padam</string>
+    <string name="tx_cancel">Batal</string>
+    <string name="tx_edit">Edit</string>
+    <string name="tx_lbl_date">Tarikh</string>
+    <string name="tx_lbl_time">Masa</string>
+    <string name="tx_lbl_method">Kaedah Pembayaran</string>
+    <string name="tx_lbl_category">Kategori</string>
+    <string name="tx_lbl_notes">Nota</string>
+    <string name="tx_no_notes">Tiada nota ditambah</string>
+    <string name="tx_share">Kongsi transaksi</string>
+
+
 </resources>

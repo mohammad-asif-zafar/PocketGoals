@@ -30,4 +30,29 @@
     <string name="hint_enter_amount">राशि दर्ज करें</string>
     <string name="hint_select_method">طरीका चुनें</string>
     <string name="hint_add_note">एक नोट जोड़ें</string>
+    <string name="edit_transaction">लेनदेन संपादित करें</string>
+    <string name="save">सहेजें</string>
+    <string name="save_changes">बदलाव सहेजें</string>
+    <string name="type">प्रकार</string>
+    <string name="income">आय</string>
+    <string name="expense">व्यय</string>
+    <string name="amount">राशि</string>
+    <string name="category">श्रेणी</string>
+    <string name="search_transactions_placeholder">लेनदेन खोजें…</string>
+    <string name="section_recent_transactions">हाल के लेनदेन</string>
+    <string name="section_categories">लक्ष्य श्रेणियां</string>
+    <string name="tx_details_title">लेनदेन का विवरण</string>
+    <string name="tx_delete_dialog_title">लेनदेन हटाएं?</string>
+    <string name="tx_delete_dialog_desc">क्या आप निश्चित रूप से इस लेनदेन को हटाना चाहते हैं? यह क्रिया पूर्ववत नहीं की जा सकती।</string>
+    <string name="tx_delete">हटाएं</string>
+    <string name="tx_cancel">रद्द करें</string>
+    <string name="tx_edit">संपादित करें</string>
+    <string name="tx_lbl_date">तारीख</string>
+    <string name="tx_lbl_time">समय</string>
+    <string name="tx_lbl_method">भुगतान का तरीका</string>
+    <string name="tx_lbl_category">श्रेणी</string>
+    <string name="tx_lbl_notes">टिप्पणियाँ</string>
+    <string name="tx_no_notes">कोई टिप्पणी नहीं जोड़ी गई</string>
+    <string name="tx_share">लेनदेन साझा करें</string>
+
 </resources>

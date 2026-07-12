@@ -30,5 +30,29 @@
     <string name="hint_enter_amount">رقم درج کریں</string>
     <string name="hint_select_method">طریقہ منتخب کریں</string>
     <string name="hint_add_note">نوٹ لکھیں</string>
-
+    <string name="edit_transaction">لین دین میں ترمیم کریں</string>
+    <string name="save">محفوظ کریں</string>
+    <string name="save_changes">تبدیلیاں محفوظ کریں</string>
+    <string name="type">قسم</string>
+    <string name="income">آمدنی</string>
+    <string name="expense">خرچہ</string>
+    <string name="amount">رقم</string>
+    <string name="category">زمرہ</string>
+    <string name="search_transactions_placeholder">لین دین تلاش کریں…</string>
+    <string name="section_recent_transactions">حالیہ لین دین</string>
+    <string name="section_categories">زمرہ جات</string>
+    <string name="tx_details_title">لین دین کی تفصیلات</string>
+    <string name="tx_delete_dialog_title">لین دین حذف کریں؟</string>
+    <string name="tx_delete_dialog_desc">کیا آپ واقعی یہ لین دین حذف کرنا چاہتے ہیں؟ اس عمل کو واپس نہیں لایا جا سکتا۔</string>
+    <string name="tx_delete">حذف کریں</string>
+    <string name="tx_cancel">منسوخ کریں</string>
+    <string name="tx_edit">ترمیم کریں</string>
+    <string name="tx_lbl_date">تاریخ</string>
+    <string name="tx_lbl_time">وقت</string>
+    <string name="tx_lbl_method">ادائیگی کا طریقہ</string>
+    <string name="tx_lbl_category">زمرہ</string>
+    <string name="tx_lbl_notes">نوٹس</string>
+    <string name="tx_no_notes">کوئی نوٹس شامل نہیں ہیں</string>
+    <string name="tx_share">لین دین شیئر کریں</string>
+    
 </resources>

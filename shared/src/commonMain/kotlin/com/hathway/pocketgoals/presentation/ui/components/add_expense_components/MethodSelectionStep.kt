@@ -35,76 +35,87 @@ fun MethodSelectionStep(
         PaymentMethod("Wallet", Icons.Rounded.AccountBalanceWallet)
     )
 
-    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-        Text(
-            "Select Payment Method",
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(bottom = 16.dp)
-        )
-
-        LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-            modifier = Modifier.weight(1f)
+    Column(modifier = Modifier.fillMaxSize()) {
+        Column(
+            modifier = Modifier
+                .weight(1f)
+                .padding(horizontal = 24.dp),
+            verticalArrangement = Arrangement.Top
         ) {
-            items(methods) { method ->
-                val isSelected = method.name == selectedMethod
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(64.dp)
-                        .clip(RoundedCornerShape(16.dp))
-                        .background(
-                            if (isSelected) MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
-                            else MaterialTheme.colorScheme.surface
-                        )
-                        .border(
-                            1.dp,
-                            if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline.copy(alpha = 0.2f),
-                            RoundedCornerShape(16.dp)
-                        )
-                        .clickable { onMethodSelected(method.name) }
-                        .padding(horizontal = 16.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Box(
+            Spacer(modifier = Modifier.height(24.dp))
+            Text(
+                "Select Payment Method",
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(bottom = 16.dp)
+            )
+
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+                modifier = Modifier.weight(1f)
+            ) {
+                items(methods) { method ->
+                    val isSelected = method.name == selectedMethod
+                    Row(
                         modifier = Modifier
-                            .size(40.dp)
+                            .fillMaxWidth()
+                            .height(64.dp)
+                            .clip(RoundedCornerShape(16.dp))
                             .background(
-                                if (isSelected) MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
-                                else MaterialTheme.colorScheme.surfaceVariant,
-                                RoundedCornerShape(12.dp)
-                            ),
-                        contentAlignment = Alignment.Center
+                                if (isSelected) MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
+                                else MaterialTheme.colorScheme.surface
+                            )
+                            .border(
+                                1.dp,
+                                if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline.copy(alpha = 0.2f),
+                                RoundedCornerShape(16.dp)
+                            )
+                            .clickable { onMethodSelected(method.name) }
+                            .padding(horizontal = 16.dp),
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Icon(
-                            imageVector = method.icon,
-                            contentDescription = null,
-                            tint = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
+                        Box(
+                            modifier = Modifier
+                                .size(40.dp)
+                                .background(
+                                    if (isSelected) MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
+                                    else MaterialTheme.colorScheme.surfaceVariant,
+                                    RoundedCornerShape(12.dp)
+                                ),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                imageVector = method.icon,
+                                contentDescription = null,
+                                tint = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                        Spacer(modifier = Modifier.width(16.dp))
+                        Text(
+                            text = method.name,
+                            style = MaterialTheme.typography.bodyLarge,
+                            fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
+                            color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
                         )
-                    }
-                    Spacer(modifier = Modifier.width(16.dp))
-                    Text(
-                        text = method.name,
-                        style = MaterialTheme.typography.bodyLarge,
-                        fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
-                        color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
-                    )
-                    Spacer(modifier = Modifier.weight(1f))
-                    if (isSelected) {
-                        RadioButton(selected = true, onClick = null, colors = RadioButtonDefaults.colors(selectedColor = MaterialTheme.colorScheme.primary))
+                        Spacer(modifier = Modifier.weight(1f))
+                        if (isSelected) {
+                            RadioButton(selected = true, onClick = null, colors = RadioButtonDefaults.colors(selectedColor = MaterialTheme.colorScheme.primary))
+                        }
                     }
                 }
             }
+            Spacer(modifier = Modifier.height(24.dp))
         }
 
-        Button(
-            onClick = onDone,
-            enabled = selectedMethod != null,
-            modifier = Modifier.fillMaxWidth().height(56.dp).padding(top = 16.dp),
-            shape = MaterialTheme.shapes.medium
-        ) {
-            Text("Done", fontWeight = FontWeight.Bold)
+        Box(modifier = Modifier.padding(24.dp)) {
+            Button(
+                onClick = onDone,
+                enabled = selectedMethod != null,
+                modifier = Modifier.fillMaxWidth().height(56.dp),
+                shape = RoundedCornerShape(12.dp)
+            ) {
+                Text("Done", fontWeight = FontWeight.Bold)
+            }
         }
     }
 }

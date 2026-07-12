@@ -49,13 +49,14 @@ fun GoalDetailsStep(
     val iconBgAlpha = if (isDark) 0.22f else 0.1f
 
     Column(
-        modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)
+        modifier = Modifier.fillMaxSize()
     ) {
         // 1. Core Scrollable Content Form Layer
         Column(
-            modifier = Modifier.weight(1f).verticalScroll(scrollState).padding(16.dp),
+            modifier = Modifier.weight(1f).verticalScroll(scrollState).padding(horizontal = 24.dp),
             verticalArrangement = Arrangement.spacedBy(24.dp)
         ) {
+            Spacer(modifier = Modifier.height(24.dp))
             // Icon Placeholder Box (Top center)
             Box(
                 modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center
@@ -129,10 +130,11 @@ fun GoalDetailsStep(
                     )
                 )
             }
+            Spacer(modifier = Modifier.height(24.dp))
         }
 
         // 2. Fixed Button Action Panel Row
-        Box(modifier = Modifier.padding(16.dp)) {
+        Box(modifier = Modifier.padding(24.dp)) {
             Button(
                 onClick = onNext,
                 enabled = goalName.isNotBlank(),

@@ -48,9 +48,10 @@ fun AddExpenseFormStep(
             modifier = Modifier
                 .weight(1f)
                 .verticalScroll(scrollState)
-                .padding(16.dp),
+                .padding(horizontal = 24.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
+            Spacer(modifier = Modifier.height(24.dp))
             // Category Field
             FormField(label = "Category") {
                 FormItemRow(
@@ -109,9 +110,10 @@ fun AddExpenseFormStep(
                     borderColor = borderColor
                 )
             }
+            Spacer(modifier = Modifier.height(24.dp))
         }
 
-        Box(modifier = Modifier.padding(16.dp)) {
+        Box(modifier = Modifier.padding(24.dp)) {
             Button(
                 onClick = onNext,
                 enabled = isNextEnabled,

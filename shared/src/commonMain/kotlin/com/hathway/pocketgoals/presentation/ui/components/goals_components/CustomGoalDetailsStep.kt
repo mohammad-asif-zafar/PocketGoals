@@ -62,16 +62,15 @@ fun CustomGoalDetailsStep(
     val borderAlpha = if (isDark) 0.4f else 0.2f
 
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
+        modifier = Modifier.fillMaxSize()
     ) {
         Column(
             modifier = Modifier
                 .weight(1f)
-                .padding(16.dp),
+                .padding(horizontal = 24.dp),
             verticalArrangement = Arrangement.spacedBy(24.dp)
         ) {
+            Spacer(modifier = Modifier.height(24.dp))
             // ==========================================
             // 1. Live Icon / Color Frame Preview Bubble
             // ==========================================
@@ -182,12 +181,13 @@ fun CustomGoalDetailsStep(
                     )
                 )
             }
+            Spacer(modifier = Modifier.height(24.dp))
         }
 
         // ==========================================
         // 5. Fixed Next Navigation Button Row
         // ==========================================
-        Box(modifier = Modifier.padding(16.dp)) {
+        Box(modifier = Modifier.padding(24.dp)) {
             Button(
                 onClick = onNext,
                 enabled = goalName.isNotBlank(),

@@ -36,12 +36,13 @@ fun GoalAmountStep(
     val bodyTextColor = MaterialTheme.colorScheme.onSurface
 
     Column(
-        modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)
+        modifier = Modifier.fillMaxSize()
     ) {
         // 1. Core Scrollable Grid Content Section
         Column(
-            modifier = Modifier.weight(1f).padding(16.dp)
+            modifier = Modifier.weight(1f).padding(horizontal = 24.dp)
         ) {
+            Spacer(modifier = Modifier.height(24.dp))
             Text(
                 text = "Target Amount",
                 style = MaterialTheme.typography.titleMedium,
@@ -111,10 +112,11 @@ fun GoalAmountStep(
                     }
                 }
             }
+            Spacer(modifier = Modifier.height(24.dp))
         }
 
         // 2. Fixed Action Block Container
-        Column(modifier = Modifier.padding(16.dp)) {
+        Column(modifier = Modifier.padding(24.dp)) {
             Button(
                 onClick = onNext,
                 enabled = amount != "0" && amount.isNotBlank(),

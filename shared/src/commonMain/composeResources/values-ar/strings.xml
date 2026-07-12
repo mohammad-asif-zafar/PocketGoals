@@ -30,5 +30,29 @@
     <string name="hint_enter_amount">أدخل المبلغ</string>
     <string name="hint_select_method">اختر الطريقة</string>
     <string name="hint_add_note">أضف ملاحظة</string>
+    <string name="edit_transaction">تعديل المعاملة</string>
+    <string name="save">حفظ</string>
+    <string name="save_changes">حفظ التغييرات</string>
+    <string name="type">النوع</string>
+    <string name="income">دخل</string>
+    <string name="expense">مصروف</string>
+    <string name="amount">المبلغ</string>
+    <string name="category">الفئة</string>
+    <string name="search_transactions_placeholder">البحث عن المعاملات…</string>
+    <string name="section_recent_transactions">المعاملات الأخيرة</string>
+    <string name="section_categories">فئات الأهداف</string>
+    <string name="tx_details_title">تفاصيل المعاملة</string>
+    <string name="tx_delete_dialog_title">حذف المعاملة؟</string>
+    <string name="tx_delete_dialog_desc">هل أنت متأكد أنك تريد حذف هذه المعاملة؟ لا يمكن التراجع عن هذا الإجراء.</string>
+    <string name="tx_delete">حذف</string>
+    <string name="tx_cancel">إلغاء</string>
+    <string name="tx_edit">تعديل</string>
+    <string name="tx_lbl_date">التاريخ</string>
+    <string name="tx_lbl_time">الوقت</string>
+    <string name="tx_lbl_method">طريقة الدفع</string>
+    <string name="tx_lbl_category">الفئة</string>
+    <string name="tx_lbl_notes">ملاحظات</string>
+    <string name="tx_no_notes">لم يتم إضافة ملاحظات</string>
+    <string name="tx_share">مشاركة المعاملة</string>
     
 </resources>
