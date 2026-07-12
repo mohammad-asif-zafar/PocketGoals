@@ -87,5 +87,11 @@
     <string name="analytics_top_categories">اعلیٰ زمرہ جات</string>
     <string name="analytics_see_all">سب دیکھیں</string>
 
-    
+    <string name="balance_total">کل بیلنس</string>
+    <string name="balance_income">آمدنی</string>
+    <string name="balance_expenses">اخراجات</string>
+    <string name="balance_hide">بیلنس چھپائیں</string>
+    <string name="balance_show">بیلنس دکھائیں</string>
+    <string name="balance_stats">اعداد و شمار</string>
+
 </resources>

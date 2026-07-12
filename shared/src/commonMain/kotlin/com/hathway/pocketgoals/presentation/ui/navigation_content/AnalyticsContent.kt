@@ -125,13 +125,12 @@ fun AnalyticsContent(
     }
 }
 
-/**
- * Isolated content element built specifically to test layout responses inside previews.
- * Handles LTR/RTL structural configurations adaptively.
- */
 @Composable
 fun AnalyticsPreviewLanguageContainer(
-    variantLabel: String, themeMode: ThemeMode, isRtl: Boolean, mockState: AnalyticsUiState
+    variantLabel: String,
+    themeMode: ThemeMode,
+    isRtl: Boolean,
+    mockState: AnalyticsUiState
 ) {
     Column(modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp)) {
         Text(
@@ -149,7 +148,6 @@ fun AnalyticsPreviewLanguageContainer(
                     color = MaterialTheme.colorScheme.background,
                     tonalElevation = 1.dp
                 ) {
-                    // This calls your core layout composable screen
                     AnalyticsContent(uiState = mockState, onPeriodClick = {}, onSeeAllClick = {})
                 }
             }
@@ -157,22 +155,17 @@ fun AnalyticsPreviewLanguageContainer(
     }
 }
 
-/**
- * Complete Analytics Dashboard Preview Canvas.
- * Renders all requested language strings and styles inside your target layout platform.
- */
-@Preview(name = "Analytics Main - Dark Theme")
+@Preview(name = "Analytics Studio Multiplatform Preview Grid")
 @Composable
 fun FullAnalyticsDashboardMatrixPreview() {
-
-    // Updated to use your exact data class structure
     val sampleCategories = listOf(
         AnalyticsCategoryData(
             name = "Food & Dining",
             value = "₹ 14,250",
             color = Color(0xFFEF4444),
             icon = Icons.Rounded.Fastfood
-        ), AnalyticsCategoryData(
+        ),
+        AnalyticsCategoryData(
             name = "Shopping",
             value = "₹ 8,900",
             color = Color(0xFF3B82F6),
@@ -180,7 +173,6 @@ fun FullAnalyticsDashboardMatrixPreview() {
         )
     )
 
-// Corrected mock state targeting AnalyticsCategoryData lists
     val baseMockUiState = AnalyticsUiState(
         selectedPeriod = "This Month",
         totalAmount = "₹ 23,150",
@@ -189,71 +181,91 @@ fun FullAnalyticsDashboardMatrixPreview() {
     )
 
     Column(
-        modifier = Modifier.fillMaxSize().background(Color(0xFFE2E8F0))
-            .verticalScroll(rememberScrollState()).padding(16.dp)
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(0xFFF1F5F9))
+            .verticalScroll(rememberScrollState())
+            .padding(16.dp)
     ) {
+        // ==========================================================
+        // LIGHT MODES SECTION
+        // ==========================================================
         Text(
-            "☀️ LIGHT MODE DASHBOARDS",
-            style = MaterialTheme.typography.titleLarge,
-            color = Color.Black
+            text = "☀️ LIGHT MODE MATRIX",
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold,
+            color = Color(0xFF0F172A),
+            modifier = Modifier.padding(bottom = 8.dp)
         )
-        Spacer(modifier = Modifier.height(8.dp))
 
-        AnalyticsPreviewLanguageContainer("English (LTR)", ThemeMode.LIGHT, false, baseMockUiState)
         AnalyticsPreviewLanguageContainer(
-            "Hindi (LTR)", ThemeMode.LIGHT, false, baseMockUiState.copy(selectedPeriod = "इस महीने")
-        )
-        AnalyticsPreviewLanguageContainer(
-            "Malay (LTR)",
+            "English",
             ThemeMode.LIGHT,
-            false,
-            baseMockUiState.copy(selectedPeriod = "Bulan Ini")
+            isRtl = false,
+            baseMockUiState
         )
         AnalyticsPreviewLanguageContainer(
-            "Urdu (RTL)", ThemeMode.LIGHT, true, baseMockUiState.copy(selectedPeriod = "اس مہینے")
-        )
-        AnalyticsPreviewLanguageContainer(
-            "Arabic (RTL)",
+            "Hindi (हिंदी)",
             ThemeMode.LIGHT,
-            true,
-            baseMockUiState.copy(selectedPeriod = "هذا الشهر")
+            isRtl = false,
+            baseMockUiState
+        )
+        AnalyticsPreviewLanguageContainer(
+            "Malay (Bahasa Melayu)",
+            ThemeMode.LIGHT,
+            isRtl = false,
+            baseMockUiState
+        )
+        AnalyticsPreviewLanguageContainer(
+            "Urdu (اردو - RTL)",
+            ThemeMode.LIGHT,
+            isRtl = true,
+            baseMockUiState
+        )
+        AnalyticsPreviewLanguageContainer(
+            "Arabic (العربية - RTL)",
+            ThemeMode.LIGHT,
+            isRtl = true,
+            baseMockUiState
         )
 
         Spacer(modifier = Modifier.height(32.dp))
 
+        // ==========================================================
+        // DARK MODES SECTION
+        // ==========================================================
         Text(
-            "🌙 DARK MODE DASHBOARDS",
-            style = MaterialTheme.typography.titleLarge,
-            color = Color.Black
+            text = "🌙 DARK MODE MATRIX",
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold,
+            color = Color(0xFF0F172A),
+            modifier = Modifier.padding(bottom = 8.dp)
         )
-        Spacer(modifier = Modifier.height(8.dp))
 
+        AnalyticsPreviewLanguageContainer("English", ThemeMode.DARK, isRtl = false, baseMockUiState)
         AnalyticsPreviewLanguageContainer(
-            "English (LTR) - Dark", ThemeMode.DARK, false, baseMockUiState
+            "Hindi (हिंदी)",
+            ThemeMode.DARK,
+            isRtl = false,
+            baseMockUiState
         )
         AnalyticsPreviewLanguageContainer(
-            "Hindi (LTR) - Dark",
+            "Malay (Bahasa Melayu)",
             ThemeMode.DARK,
-            false,
-            baseMockUiState.copy(selectedPeriod = "इस महीने")
+            isRtl = false,
+            baseMockUiState
         )
         AnalyticsPreviewLanguageContainer(
-            "Malay (LTR) - Dark",
+            "Urdu (اردو - RTL)",
             ThemeMode.DARK,
-            false,
-            baseMockUiState.copy(selectedPeriod = "Bulan Ini")
+            isRtl = true,
+            baseMockUiState
         )
         AnalyticsPreviewLanguageContainer(
-            "Urdu (RTL) - Dark",
+            "Arabic (العربية - RTL)",
             ThemeMode.DARK,
-            true,
-            baseMockUiState.copy(selectedPeriod = "اس مہینے")
-        )
-        AnalyticsPreviewLanguageContainer(
-            "Arabic (RTL) - Dark",
-            ThemeMode.DARK,
-            true,
-            baseMockUiState.copy(selectedPeriod = "هذا الشهر")
+            isRtl = true,
+            baseMockUiState
         )
     }
 }

@@ -88,5 +88,11 @@
     <string name="analytics_top_categories">शीर्ष श्रेणियां</string>
     <string name="analytics_see_all">सभी देखें</string>
 
-    
+    <string name="balance_total">कुल बैलेंस</string>
+    <string name="balance_income">आय</string>
+    <string name="balance_expenses">व्यय</string>
+    <string name="balance_hide">बैलेंस छुपाएं</string>
+    <string name="balance_show">बैलेंस दिखाएं</string>
+    <string name="balance_stats">आंकड़े</string>
+
 </resources>

@@ -160,5 +160,12 @@
     <string name="analytics_top_categories">Top Categories</string>
     <string name="analytics_see_all">See All</string>
 
+    <string name="balance_total">Total Balance</string>
+    <string name="balance_income">Income</string>
+    <string name="balance_expenses">Expenses</string>
+    <string name="balance_hide">Hide balance</string>
+    <string name="balance_show">Show balance</string>
+    <string name="balance_stats">Stats</string>
+
 
 </resources>

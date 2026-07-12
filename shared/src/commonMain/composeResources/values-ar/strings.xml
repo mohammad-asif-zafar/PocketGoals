@@ -88,5 +88,11 @@
     <string name="analytics_top_categories">أعلى الفئات</string>
     <string name="analytics_see_all">عرض الكل</string>
 
+    <string name="balance_total">إجمالي الرصيد</string>
+    <string name="balance_income">الدخل</string>
+    <string name="balance_expenses">المصروفات</string>
+    <string name="balance_hide">إخفاء الرصيد</string>
+    <string name="balance_show">إظهار الرصيد</string>
+    <string name="balance_stats">الإحصائيات</string>
 
 </resources>

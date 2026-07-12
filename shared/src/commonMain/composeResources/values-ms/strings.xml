@@ -89,5 +89,11 @@
     <string name="analytics_top_categories">Kategori Utama</string>
     <string name="analytics_see_all">Lihat Semua</string>
 
-    
+    <string name="balance_total">Jumlah Baki</string>
+    <string name="balance_income">Pendapatan</string>
+    <string name="balance_expenses">Perbelanjaan</string>
+    <string name="balance_hide">Sorok baki</string>
+    <string name="balance_show">Papar baki</string>
+    <string name="balance_stats">Statistik</string>
+
 </resources>
