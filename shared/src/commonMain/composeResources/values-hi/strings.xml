@@ -55,4 +55,27 @@
     <string name="tx_no_notes">कोई टिप्पणी नहीं जोड़ी गई</string>
     <string name="tx_share">लेनदेन साझा करें</string>
 
+    <string name="placeholder_amount">राशि दर्ज करें</string>
+    <string name="placeholder_payment_method">तरीका चुनें</string>
+    <string name="placeholder_note">टिप्पणी जोड़ें</string>
+    <string name="currency_symbol">₹</string>
+
+    <string name="success_title">आय जोड़ी गई!</string>
+    <string name="success_message">%1$s को सफलतापूर्वक\n%2$s में जोड़ दिया गया है।</string>
+    <string name="btn_view_income">आय देखें</string>
+    <string name="btn_add_another">एक और आय जोड़ें</string>
+
+    <string name="summary_lbl_type">आय का प्रकार</string>
+    <string name="summary_lbl_amount">राशि</string>
+    <string name="summary_lbl_date">तारीख</string>
+    <string name="summary_lbl_method">भुगतान का तरीका</string>
+    <string name="summary_lbl_note">टिप्पणी</string>
+    <string name="summary_btn_save">आय सहेजें</string>
+    <string name="summary_btn_cancel">रद्द करें</string>
+
+    <string name="analytics_title">विश्लेषण</string>
+    <string name="period_this_month">इस महीने</string>
+    <string name="period_this_week">इस सप्ताह</string>
+    <string name="period_this_year">इस साल</string>
+
 </resources>

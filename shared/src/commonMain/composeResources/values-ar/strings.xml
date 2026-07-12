@@ -54,5 +54,27 @@
     <string name="tx_lbl_notes">ملاحظات</string>
     <string name="tx_no_notes">لم يتم إضافة ملاحظات</string>
     <string name="tx_share">مشاركة المعاملة</string>
-    
+
+    <string name="placeholder_payment_method">اختر الطريقة</string>
+    <string name="placeholder_note">أضف ملاحظة</string>
+    <string name="currency_symbol">₹</string>
+
+    <string name="success_title">تم إضافة الدخل!</string>
+    <string name="success_message">تم إضافة %1$s إلى\n%2$s بنجاح.</string>
+    <string name="btn_view_income">عرض الدخل</string>
+    <string name="btn_add_another">إضافة دخل آخر</string>
+
+    <string name="summary_lbl_type">نوع الدخل</string>
+    <string name="summary_lbl_amount">المبلغ</string>
+    <string name="summary_lbl_date">التاريخ</string>
+    <string name="summary_lbl_method">طريقة الدفع</string>
+    <string name="summary_lbl_note">ملاحظة</string>
+    <string name="summary_btn_save">حفظ الدخل</string>
+    <string name="summary_btn_cancel">إلغاء</string>
+
+    <string name="analytics_title">التحليلات</string>
+    <string name="period_this_month">هذا الشهر</string>
+    <string name="period_this_week">هذا الأسبوع</string>
+    <string name="period_this_year">هذه السنة</string>
+
 </resources>

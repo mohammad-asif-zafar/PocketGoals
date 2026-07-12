@@ -13,9 +13,12 @@ import com.hathway.pocketgoals.domain.Transaction
 import com.hathway.pocketgoals.domain.TransactionType
 import com.hathway.pocketgoals.presentation.ui.components.add_expense_components.*
 import com.hathway.pocketgoals.presentation.ui.components.add_income_components.*
+import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
+import org.jetbrains.compose.resources.stringResource
+import pocketgoals.shared.generated.resources.*
 
 @Composable
 fun AddIncomeContent(
@@ -47,14 +50,14 @@ fun AddIncomeContent(
         topBar = {
             if (currentStep !is AddIncomeStep.Success) {
                 val title = when (currentStep) {
-                    AddIncomeStep.TypeSelection -> "Add Income"
-                    AddIncomeStep.Form -> "Income Details"
-                    AddIncomeStep.AmountInput -> "Enter Amount"
-                    AddIncomeStep.DateSelection -> "Select Date"
-                    AddIncomeStep.MethodSelection -> "Payment Method"
-                    AddIncomeStep.NoteInput -> "Add Note"
-                    AddIncomeStep.Summary -> "Summary"
-                    else -> "Add Income"
+                    AddIncomeStep.TypeSelection -> stringResource(Res.string.add_income)
+                    AddIncomeStep.Form -> stringResource(Res.string.income_details)
+                    AddIncomeStep.AmountInput -> stringResource(Res.string.hint_enter_amount)
+                    AddIncomeStep.DateSelection -> stringResource(Res.string.label_date)
+                    AddIncomeStep.MethodSelection -> stringResource(Res.string.select_payment_method)
+                    AddIncomeStep.NoteInput -> stringResource(Res.string.add_note)
+                    AddIncomeStep.Summary -> stringResource(Res.string.summary)
+                    else -> stringResource(Res.string.add_income)
                 }
 
                 AddExpenseTopBar(
@@ -167,7 +170,7 @@ fun AddIncomeContent(
                         note = note,
                         onSave = { 
                             val transaction = Transaction(
-                                id = kotlinx.datetime.Clock.System.now().toEpochMilliseconds().toString(),
+                                id = Clock.System.now().toEpochMilliseconds().toString(),
                                 title = selectedType!!.name,
                                 amount = amount.toDoubleOrNull() ?: 0.0,
                                 type = TransactionType.INCOME,

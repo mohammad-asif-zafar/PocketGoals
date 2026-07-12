@@ -23,32 +23,35 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.background
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import com.hathway.pocketgoals.domain.model.ThemeMode
 import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
+import org.jetbrains.compose.resources.stringResource
+import pocketgoals.shared.generated.resources.Res
+import pocketgoals.shared.generated.resources.analytics_title
 
 @Composable
 fun AnalyticsHeader(
     selectedPeriod: String = "This Month",
-    onPeriodClick: () -> Unit = {}
+    onPeriodClick: () -> Unit = {},
+    modifier: Modifier = Modifier
 ) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp),
+        modifier = modifier.fillMaxWidth().padding(vertical = 8.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = "Analytics",
+            text = stringResource(Res.string.analytics_title),
             style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.onBackground // Adapts text color safely
+            color = MaterialTheme.colorScheme.onBackground
         )
+
         Surface(
-            modifier = Modifier.clickable { onPeriodClick() },
+            modifier = Modifier.clip(RoundedCornerShape(12.dp)).clickable { onPeriodClick() },
             shape = RoundedCornerShape(12.dp),
-            // Dynamically updates border and surface background using your defined theme tokens
             border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
             color = MaterialTheme.colorScheme.surfaceVariant
         ) {
@@ -60,14 +63,14 @@ fun AnalyticsHeader(
                     text = selectedPeriod,
                     style = MaterialTheme.typography.bodySmall,
                     fontWeight = FontWeight.Medium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant // Matches container content spec
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 Spacer(modifier = Modifier.width(4.dp))
                 Icon(
                     imageVector = Icons.Rounded.KeyboardArrowDown,
-                    contentDescription = null,
+                    contentDescription = "Select Time Period Dropdown", // Enhanced semantic context access
                     modifier = Modifier.size(16.dp),
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant // Tints icon dynamically
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
         }
@@ -80,9 +83,7 @@ fun AnalyticsHeaderLightPreview() {
     PocketGoalsTheme(themeMode = ThemeMode.LIGHT) {
         Box(modifier = Modifier.background(MaterialTheme.colorScheme.background).padding(16.dp)) {
             AnalyticsHeader(
-                selectedPeriod = "This Month",
-                onPeriodClick = {}
-            )
+                selectedPeriod = "This Month", onPeriodClick = {})
         }
     }
 }
@@ -93,9 +94,7 @@ fun AnalyticsHeaderDarkPreview() {
     PocketGoalsTheme(themeMode = ThemeMode.DARK) {
         Box(modifier = Modifier.background(MaterialTheme.colorScheme.background).padding(16.dp)) {
             AnalyticsHeader(
-                selectedPeriod = "This Month",
-                onPeriodClick = {}
-            )
+                selectedPeriod = "This Month", onPeriodClick = {})
         }
     }
 }

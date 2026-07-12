@@ -22,6 +22,8 @@ import androidx.compose.ui.unit.dp
 import com.hathway.pocketgoals.domain.ExpenseCategory
 import com.hathway.pocketgoals.domain.model.ThemeMode
 import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
+import org.jetbrains.compose.resources.stringResource
+import pocketgoals.shared.generated.resources.*
 
 @Composable
 fun AddExpenseFormStep(
@@ -53,31 +55,31 @@ fun AddExpenseFormStep(
         ) {
             Spacer(modifier = Modifier.height(24.dp))
             // Category Field
-            FormField(label = "Category") {
+            FormField(label = stringResource(Res.string.category)) {
                 FormItemRow(
                     onClick = onCategoryClick,
                     icon = category?.icon ?: Icons.Rounded.Category,
                     iconColor = category?.color ?: MaterialTheme.colorScheme.primary,
-                    text = category?.name ?: "Select Category",
+                    text = category?.name ?: stringResource(Res.string.select_category),
                     isPlaceholder = category == null,
                     borderColor = borderColor
                 )
             }
 
             // Amount Field
-            FormField(label = "Amount") {
+            FormField(label = stringResource(Res.string.amount)) {
                 FormItemRow(
                     onClick = onAmountClick,
                     icon = Icons.Rounded.Payments,
                     iconColor = MaterialTheme.colorScheme.primary,
-                    text = if (amount == "0") "Enter Amount" else "₹ $amount",
+                    text = if (amount == "0") stringResource(Res.string.hint_enter_amount) else "₹ $amount",
                     isPlaceholder = amount == "0",
                     borderColor = borderColor
                 )
             }
 
             // Date Field
-            FormField(label = "Date") {
+            FormField(label = stringResource(Res.string.label_date)) {
                 FormItemRow(
                     onClick = onDateClick,
                     icon = Icons.Rounded.CalendarToday,
@@ -88,24 +90,24 @@ fun AddExpenseFormStep(
             }
 
             // Payment Method
-            FormField(label = "Payment Method") {
+            FormField(label = stringResource(Res.string.label_payment_method)) {
                 FormItemRow(
                     onClick = onMethodClick,
                     icon = Icons.Rounded.AccountBalanceWallet,
                     iconColor = MaterialTheme.colorScheme.primary,
-                    text = method ?: "Select Method",
+                    text = method ?: stringResource(Res.string.hint_select_method),
                     isPlaceholder = method == null,
                     borderColor = borderColor
                 )
             }
 
             // Note
-            FormField(label = "Note (Optional)") {
+            FormField(label = stringResource(Res.string.label_note_optional)) {
                 FormItemRow(
                     onClick = onNoteClick,
                     icon = Icons.AutoMirrored.Rounded.Notes,
                     iconColor = MaterialTheme.colorScheme.primary,
-                    text = if (note.isEmpty()) "Add a note" else note,
+                    text = if (note.isEmpty()) stringResource(Res.string.hint_add_note) else note,
                     isPlaceholder = note.isEmpty(),
                     borderColor = borderColor
                 )
@@ -124,7 +126,7 @@ fun AddExpenseFormStep(
                     contentColor = MaterialTheme.colorScheme.onPrimary
                 )
             ) {
-                Text("Next", fontWeight = FontWeight.Bold)
+                Text(stringResource(Res.string.btn_next), fontWeight = FontWeight.Bold)
             }
         }
     }

@@ -21,6 +21,8 @@ import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
+import org.jetbrains.compose.resources.stringResource
+import pocketgoals.shared.generated.resources.*
 
 @Composable
 fun AddGoalContent(
@@ -58,15 +60,15 @@ fun AddGoalContent(
         topBar = {
             if (currentStep !is AddGoalStep.GoalSuccess) {
                 val title = when (currentStep) {
-                    AddGoalStep.CategorySelection -> "Create Goal"
-                    AddGoalStep.GoalDetails -> "Set Details"
-                    AddGoalStep.CustomGoalDetails -> "Create Custom Goal"
-                    AddGoalStep.GoalAmount -> "Set Target Amount"
-                    AddGoalStep.GoalTimeline -> "Set Timeline"
-                    AddGoalStep.DateSelection -> "Select Target Date"
-                    AddGoalStep.CustomGoalMotivation -> "Add Description"
-                    AddGoalStep.GoalReview -> "Review Goal"
-                    else -> "Create Goal"
+                    AddGoalStep.CategorySelection -> stringResource(Res.string.create_goal)
+                    AddGoalStep.GoalDetails -> stringResource(Res.string.set_details)
+                    AddGoalStep.CustomGoalDetails -> stringResource(Res.string.create_custom_goal)
+                    AddGoalStep.GoalAmount -> stringResource(Res.string.set_target_amount)
+                    AddGoalStep.GoalTimeline -> stringResource(Res.string.set_timeline)
+                    AddGoalStep.DateSelection -> stringResource(Res.string.target_date_label)
+                    AddGoalStep.CustomGoalMotivation -> stringResource(Res.string.add_description)
+                    AddGoalStep.GoalReview -> stringResource(Res.string.review_goal)
+                    else -> stringResource(Res.string.create_goal)
                 }
 
                 AddExpenseTopBar(

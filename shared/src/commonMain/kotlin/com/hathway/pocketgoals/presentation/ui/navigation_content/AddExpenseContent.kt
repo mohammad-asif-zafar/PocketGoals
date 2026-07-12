@@ -14,9 +14,12 @@ import com.hathway.pocketgoals.domain.Transaction
 import com.hathway.pocketgoals.domain.TransactionType
 import com.hathway.pocketgoals.presentation.ui.components.add_expense_components.*
 import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
+import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
+import org.jetbrains.compose.resources.stringResource
+import pocketgoals.shared.generated.resources.*
 
 @Composable
 fun AddExpenseContent(
@@ -35,7 +38,7 @@ fun AddExpenseContent(
     var selectedDateMillis by remember { mutableStateOf<Long?>(null) }
 
     val dateText = remember(selectedDateMillis) {
-        if (selectedDateMillis == null) "15 May 2024"
+        if (selectedDateMillis == null) "11 July 2026"
         else {
             val instant = Instant.fromEpochMilliseconds(selectedDateMillis!!)
             val dt = instant.toLocalDateTime(TimeZone.currentSystemDefault())
@@ -49,19 +52,19 @@ fun AddExpenseContent(
         topBar = {
             if (currentStep !is AddExpenseStep.Success) {
                 val title = when (currentStep) {
-                    AddExpenseStep.Form -> "Add Expense"
+                    AddExpenseStep.Form -> stringResource(Res.string.add_expense)
                     AddExpenseStep.CategorySelection -> when (categoryFlowStep) {
-                        CategoryFlowStep.Selection -> "Select Category"
-                        CategoryFlowStep.Add -> "Add New Category"
-                        is CategoryFlowStep.Edit -> "Edit Category"
-                        is CategoryFlowStep.Delete -> "Delete Category"
+                        CategoryFlowStep.Selection -> stringResource(Res.string.select_category)
+                        CategoryFlowStep.Add -> stringResource(Res.string.add_new_category)
+                        is CategoryFlowStep.Edit -> stringResource(Res.string.edit_category)
+                        is CategoryFlowStep.Delete -> stringResource(Res.string.delete_category)
                     }
-                    AddExpenseStep.AmountInput -> "Enter Amount"
-                    AddExpenseStep.DateSelection -> "Select Date"
-                    AddExpenseStep.MethodSelection -> "Payment Method"
-                    AddExpenseStep.NoteInput -> "Add Note"
-                    AddExpenseStep.Summary -> "Summary"
-                    else -> "Add Expense"
+                    AddExpenseStep.AmountInput -> stringResource(Res.string.hint_enter_amount)
+                    AddExpenseStep.DateSelection -> stringResource(Res.string.label_date)
+                    AddExpenseStep.MethodSelection -> stringResource(Res.string.select_payment_method)
+                    AddExpenseStep.NoteInput -> stringResource(Res.string.add_note)
+                    AddExpenseStep.Summary -> stringResource(Res.string.summary)
+                    else -> stringResource(Res.string.add_expense)
                 }
 
                 AddExpenseTopBar(
@@ -189,7 +192,7 @@ fun AddExpenseContent(
                         note = note,
                         onSave = { 
                             val transaction = Transaction(
-                                id = kotlinx.datetime.Clock.System.now().toEpochMilliseconds().toString(),
+                                id = Clock.System.now().toEpochMilliseconds().toString(),
                                 title = selectedCategory!!.name,
                                 amount = amount.toDoubleOrNull() ?: 0.0,
                                 type = TransactionType.EXPENSE,

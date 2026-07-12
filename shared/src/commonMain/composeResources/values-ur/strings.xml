@@ -54,5 +54,26 @@
     <string name="tx_lbl_notes">نوٹس</string>
     <string name="tx_no_notes">کوئی نوٹس شامل نہیں ہیں</string>
     <string name="tx_share">لین دین شیئر کریں</string>
-    
+
+    <string name="placeholder_payment_method">طریقہ منتخب کریں</string>
+    <string name="placeholder_note">نوٹ لکھیں</string>
+    <string name="currency_symbol">₹</string>
+    <string name="success_title">آمدنی شامل ہو گئی!</string>
+    <string name="success_message">%1$s کو کامیابی کے ساتھ\n%2$s میں شامل کر دیا گیا ہے۔</string>
+    <string name="btn_view_income">آمدنی دیکھیں</string>
+    <string name="btn_add_another">ایک اور آمدنی شامل کریں</string>
+
+    <string name="summary_lbl_type">آمدنی کی قسم</string>
+    <string name="summary_lbl_amount">رقم</string>
+    <string name="summary_lbl_date">تاریخ</string>
+    <string name="summary_lbl_method">ادائیگی کا طریقہ</string>
+    <string name="summary_lbl_note">نوٹ</string>
+    <string name="summary_btn_save">آمدنی محفوظ کریں</string>
+    <string name="summary_btn_cancel">منسوخ کریں</string>
+
+    <string name="analytics_title">تجزیہ</string>
+    <string name="period_this_month">اس مہینے</string>
+    <string name="period_this_week">اس ہفتے</string>
+    <string name="period_this_year">اس سال</string>
+
 </resources>

@@ -1,4 +1,3 @@
-/*
 package com.hathway.pocketgoals.presentation.ui.components.add_income_components
 
 import androidx.compose.foundation.background
@@ -130,4 +129,3 @@ fun FormItemRowSelectedDarkPreview() {
         }
     }
 }
-*/

@@ -45,7 +45,11 @@ fun NavigationContainer(
             val hideBottomBar = currentDestination?.route?.contains("Splash") == true ||
                     currentDestination?.route?.contains("Onboarding") == true ||
                     currentDestination?.route?.contains("Login") == true ||
-                    currentDestination?.route?.contains("Signup") == true
+                    currentDestination?.route?.contains("Signup") == true ||
+                    currentDestination?.route?.contains("AddExpense") == true ||
+                    currentDestination?.route?.contains("AddIncome") == true ||
+                    currentDestination?.route?.contains("AddGoal") == true ||
+                    currentDestination?.route?.contains("Profile") == true
 
             if (!hideBottomBar) {
                 AppBottomBar(

@@ -10,7 +10,6 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.CalendarToday
-import androidx.compose.material.icons.rounded.KeyboardArrowDown
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -19,6 +18,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.hathway.pocketgoals.presentation.ui.components.add_expense_components.FormField
+import org.jetbrains.compose.resources.stringResource
+import pocketgoals.shared.generated.resources.*
 
 @Composable
 fun GoalTimelineStep(
@@ -39,13 +40,13 @@ fun GoalTimelineStep(
         ) {
             Spacer(modifier = Modifier.height(24.dp))
             Text(
-                "Set Timeline",
+                stringResource(Res.string.set_timeline),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(bottom = 16.dp)
             )
 
-            FormField(label = "Target Date") {
+            FormField(label = stringResource(Res.string.target_date_label)) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -64,7 +65,7 @@ fun GoalTimelineStep(
             Spacer(modifier = Modifier.height(24.dp))
 
             Text(
-                "Duration",
+                stringResource(Res.string.duration_label),
                 style = MaterialTheme.typography.labelMedium,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -110,7 +111,7 @@ fun GoalTimelineStep(
                     contentColor = MaterialTheme.colorScheme.onPrimary
                 )
             ) {
-                Text("Next", fontWeight = FontWeight.Bold)
+                Text(stringResource(Res.string.btn_next), fontWeight = FontWeight.Bold)
             }
         }
     }

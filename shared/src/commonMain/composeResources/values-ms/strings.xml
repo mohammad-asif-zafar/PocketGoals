@@ -55,5 +55,26 @@
     <string name="tx_no_notes">Tiada nota ditambah</string>
     <string name="tx_share">Kongsi transaksi</string>
 
+    <string name="placeholder_payment_method">Pilih Kaedah</string>
+    <string name="placeholder_note">Tambah nota</string>
+    <string name="currency_symbol">₹</string>
+
+    <string name="success_title">Pendapatan Ditambah!</string>
+    <string name="success_message">%1$s telah berjaya ditambah ke dalam\n%2$s.</string>
+    <string name="btn_view_income">Lihat Pendapatan</string>
+    <string name="btn_add_another">Tambah Pendapatan Lain</string>
+
+    <string name="summary_lbl_type">Jenis Pendapatan</string>
+    <string name="summary_lbl_amount">Jumlah</string>
+    <string name="summary_lbl_date">Tarikh</string>
+    <string name="summary_lbl_method">Kaedah Pembayaran</string>
+    <string name="summary_lbl_note">Nota</string>
+    <string name="summary_btn_save">Simpan Pendapatan</string>
+    <string name="summary_btn_cancel">Batal</string>
+
+    <string name="analytics_title">Analisis</string>
+    <string name="period_this_month">Bulan Ini</string>
+    <string name="period_this_week">Minggu Ini</string>
+    <string name="period_this_year">Tahun Ini</string>
 
 </resources>

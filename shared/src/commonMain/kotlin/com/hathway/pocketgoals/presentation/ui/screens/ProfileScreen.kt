@@ -22,6 +22,8 @@ import com.hathway.pocketgoals.domain.model.AppLanguage
 import com.hathway.pocketgoals.domain.model.ThemeMode
 import com.hathway.pocketgoals.presentation.ui.components.add_expense_components.AddExpenseTopBar
 import com.hathway.pocketgoals.presentation.ui.viewmodel.SettingsViewModel
+import org.jetbrains.compose.resources.stringResource
+import pocketgoals.shared.generated.resources.*
 
 @Composable
 fun ProfileScreen(
@@ -36,7 +38,7 @@ fun ProfileScreen(
 
     Scaffold(
         topBar = {
-            AddExpenseTopBar(title = "Profile", onBack = onBackClick)
+            AddExpenseTopBar(title = stringResource(Res.string.profile), onBack = onBackClick)
         },
         containerColor = MaterialTheme.colorScheme.background
     ) { padding ->
@@ -44,7 +46,7 @@ fun ProfileScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
-                .padding(16.dp),
+                .padding(horizontal = 24.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             // User Header
@@ -84,7 +86,7 @@ fun ProfileScreen(
             // Settings Group
             item {
                 Text(
-                    text = "App Settings",
+                    text = stringResource(Res.string.app_settings),
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(bottom = 8.dp)
@@ -94,11 +96,11 @@ fun ProfileScreen(
             item {
                 ProfileOptionItem(
                     icon = Icons.Rounded.Palette,
-                    title = "App Theme",
+                    title = stringResource(Res.string.app_theme),
                     subtitle = when (themeMode) {
-                        ThemeMode.SYSTEM -> "System Default"
-                        ThemeMode.LIGHT -> "Light Mode"
-                        ThemeMode.DARK -> "Dark Mode"
+                        ThemeMode.SYSTEM -> stringResource(Res.string.theme_system)
+                        ThemeMode.LIGHT -> stringResource(Res.string.theme_light)
+                        ThemeMode.DARK -> stringResource(Res.string.theme_dark)
                     },
                     onClick = { showThemeDialog = true }
                 )
@@ -107,7 +109,7 @@ fun ProfileScreen(
             item {
                 ProfileOptionItem(
                     icon = Icons.Rounded.Language,
-                    title = "App Language",
+                    title = stringResource(Res.string.app_language),
                     subtitle = language.label,
                     onClick = { showLanguageDialog = true }
                 )
@@ -116,7 +118,7 @@ fun ProfileScreen(
             item {
                 ProfileOptionItem(
                     icon = Icons.Rounded.Notifications,
-                    title = "Notifications",
+                    title = stringResource(Res.string.notifications),
                     subtitle = "On",
                     onClick = { }
                 )
@@ -135,8 +137,9 @@ fun ProfileScreen(
                 ) {
                     Icon(Icons.AutoMirrored.Rounded.Logout, null)
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text("Logout", fontWeight = FontWeight.Bold)
+                    Text(stringResource(Res.string.logout), fontWeight = FontWeight.Bold)
                 }
+                Spacer(modifier = Modifier.height(24.dp))
             }
         }
     }
@@ -144,7 +147,7 @@ fun ProfileScreen(
     if (showThemeDialog) {
         AlertDialog(
             onDismissRequest = { showThemeDialog = false },
-            title = { Text("Choose Theme") },
+            title = { Text(stringResource(Res.string.choose_theme)) },
             text = {
                 Column {
                     ThemeMode.entries.forEach { mode ->
@@ -164,9 +167,9 @@ fun ProfileScreen(
                             )
                             Spacer(modifier = Modifier.width(8.dp))
                             Text(text = when(mode) {
-                                ThemeMode.SYSTEM -> "System Default"
-                                ThemeMode.LIGHT -> "Light Mode"
-                                ThemeMode.DARK -> "Dark Mode"
+                                ThemeMode.SYSTEM -> stringResource(Res.string.theme_system)
+                                ThemeMode.LIGHT -> stringResource(Res.string.theme_light)
+                                ThemeMode.DARK -> stringResource(Res.string.theme_dark)
                             })
                         }
                     }
@@ -174,7 +177,7 @@ fun ProfileScreen(
             },
             confirmButton = {
                 TextButton(onClick = { showThemeDialog = false }) {
-                    Text("Cancel")
+                    Text(stringResource(Res.string.cancel))
                 }
             }
         )
@@ -183,7 +186,7 @@ fun ProfileScreen(
     if (showLanguageDialog) {
         AlertDialog(
             onDismissRequest = { showLanguageDialog = false },
-            title = { Text("Choose Language") },
+            title = { Text(stringResource(Res.string.choose_language)) },
             text = {
                 Column {
                     AppLanguage.entries.forEach { lang ->
@@ -209,7 +212,7 @@ fun ProfileScreen(
             },
             confirmButton = {
                 TextButton(onClick = { showLanguageDialog = false }) {
-                    Text("Cancel")
+                    Text(stringResource(Res.string.cancel))
                 }
             }
         )
