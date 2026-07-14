@@ -16,8 +16,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.hathway.pocketgoals.domain.model.ThemeMode
 import com.hathway.pocketgoals.presentation.ui.components.add_expense_components.FormField
+import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
 import org.jetbrains.compose.resources.stringResource
 import pocketgoals.shared.generated.resources.*
 
@@ -113,6 +116,38 @@ fun GoalTimelineStep(
             ) {
                 Text(stringResource(Res.string.btn_next), fontWeight = FontWeight.Bold)
             }
+        }
+    }
+}
+
+@Preview(name = "Goal Timeline Selection - Light Mode")
+@Composable
+private fun GoalTimelineStepLightPreview() {
+    PocketGoalsTheme(themeMode = ThemeMode.LIGHT) {
+        Surface(color = MaterialTheme.colorScheme.background) {
+            GoalTimelineStep(
+                targetDate = "Dec 18, 2026",
+                onDateClick = {},
+                duration = "1 Year", // Highlighting testing target
+                onDurationSelected = {},
+                onNext = {}
+            )
+        }
+    }
+}
+
+@Preview(name = "Goal Timeline Selection - Dark Mode")
+@Composable
+private fun GoalTimelineStepDarkPreview() {
+    PocketGoalsTheme(themeMode = ThemeMode.DARK) {
+        Surface(color = MaterialTheme.colorScheme.background) {
+            GoalTimelineStep(
+                targetDate = "Select Date",
+                onDateClick = {},
+                duration = "Custom",
+                onDurationSelected = {},
+                onNext = {}
+            )
         }
     }
 }

@@ -112,4 +112,14 @@
     <string name="quick_select">त्वरित चयन</string>
     <string name="quick_select_other">अन्य</string>
 
+    <string name="category_travel">यात्रा</string>
+    <string name="category_car">कार</string>
+    <string name="category_home">घर</string>
+    <string name="category_education">शिक्षा</string>
+    <string name="category_wedding">शादी</string>
+    <string name="category_health">स्वास्थ्य</string>
+    <string name="category_custom">कस्टम</string>
+    <string name="category_business">व्यापार</string>
+
+
 </resources>

@@ -113,5 +113,13 @@
     <string name="quick_select">Pilihan Pantas</string>
     <string name="quick_select_other">Lain-lain</string>
 
-    
+    <string name="category_travel">Pelancongan</string>
+    <string name="category_car">Kereta</string>
+    <string name="category_home">Rumah</string>
+    <string name="category_education">Pendidikan</string>
+    <string name="category_wedding">Perkahwinan</string>
+    <string name="category_health">Kesihatan</string>
+    <string name="category_custom">Sesuai Suai</string>
+    <string name="category_business">Perniagaan</string>
+
 </resources>

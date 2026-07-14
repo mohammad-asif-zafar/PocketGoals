@@ -111,5 +111,13 @@
     <string name="quick_select">فوری انتخاب</string>
     <string name="quick_select_other">دیگر</string>
 
-    
+    <string name="category_travel">سفر</string>
+    <string name="category_car">گاڑی</string>
+    <string name="category_home">گھر</string>
+    <string name="category_education">تعلیم</string>
+    <string name="category_wedding">شادی</string>
+    <string name="category_health">صحت</string>
+    <string name="category_custom">کسٹم</string>
+    <string name="category_business">کاروبار</string>
+
 </resources>

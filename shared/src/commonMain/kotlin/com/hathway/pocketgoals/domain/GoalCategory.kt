@@ -1,3 +1,4 @@
+/*
 package com.hathway.pocketgoals.domain
 
 import androidx.compose.material.icons.Icons
@@ -22,4 +23,4 @@ data class GoalCategory(
             GoalCategory("Business", Icons.Rounded.BusinessCenter, Color(0xFFF59E0B))
         )
     }
-}
+}*/

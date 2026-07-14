@@ -112,5 +112,14 @@
     <string name="quick_select">اختيار سريع</string>
     <string name="quick_select_other">آخر</string>
 
+    <string name="category_travel">السفر</string>
+    <string name="category_car">السيارة</string>
+    <string name="category_home">المنزل</string>
+    <string name="category_education">التعليم</string>
+    <string name="category_wedding">الزفاف</string>
+    <string name="category_health">الصحة</string>
+    <string name="category_custom">مخصص</string>
+    <string name="category_business">الأعمال</string>
+
 
 </resources>

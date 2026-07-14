@@ -12,7 +12,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.hathway.pocketgoals.domain.model.ThemeMode
+import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
 import org.jetbrains.compose.resources.stringResource
 import pocketgoals.shared.generated.resources.*
 
@@ -73,6 +76,42 @@ fun GoalSuccessStep(
             )
         ) {
             Text(stringResource(Res.string.view_goal), fontWeight = FontWeight.Bold)
+        }
+    }
+}
+
+
+
+@Preview(name = "Goal Timeline Selection - Light Mode")
+@Composable
+private fun GoalTimelineStepLightPreview() {
+    PocketGoalsTheme(themeMode = ThemeMode.LIGHT) {
+        Surface(color = MaterialTheme.colorScheme.background) {
+            GoalTimelineStep(
+                targetDate = "Dec 18, 2026",
+                onDateClick = {},
+                // FIX: Resolves the string dynamically via CMP resources to fix selection highlights
+                duration = "10",
+                onDurationSelected = {},
+                onNext = {}
+            )
+        }
+    }
+}
+
+@Preview(name = "Goal Timeline Selection - Dark Mode")
+@Composable
+private fun GoalTimelineStepDarkPreview() {
+    PocketGoalsTheme(themeMode = ThemeMode.DARK) {
+        Surface(color = MaterialTheme.colorScheme.background) {
+            GoalTimelineStep(
+                targetDate = "Select Date",
+                onDateClick = {},
+                // FIX: Matches localized resource tokens to satisfy strict conditional equality checks
+                duration = "other",
+                onDurationSelected = {},
+                onNext = {}
+            )
         }
     }
 }

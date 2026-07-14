@@ -16,10 +16,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.hathway.pocketgoals.domain.GoalCategory
+import com.hathway.pocketgoals.domain.model.GoalCategory
+import com.hathway.pocketgoals.domain.model.ThemeMode
+import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
 import org.jetbrains.compose.resources.stringResource
 import pocketgoals.shared.generated.resources.*
 
@@ -76,7 +78,10 @@ fun GoalCategorySelectionStep(
             ) {
                 Icon(imageVector = Icons.Rounded.Add, contentDescription = null)
                 Spacer(modifier = Modifier.width(8.dp))
-                Text(text = stringResource(Res.string.create_custom_goal), fontWeight = FontWeight.Bold)
+                Text(
+                    text = stringResource(Res.string.create_custom_goal),
+                    fontWeight = FontWeight.Bold
+                )
             }
             Spacer(modifier = Modifier.height(24.dp))
         }
@@ -105,7 +110,9 @@ fun GoalCategoryItem(
     val isDark = isSystemInDarkTheme()
 
     val borderColor =
-        if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline.copy(alpha = 0.1f)
+        if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline.copy(
+            alpha = 0.1f
+        )
     val itemBg =
         if (isSelected) MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.4f) else MaterialTheme.colorScheme.surface
 
@@ -113,8 +120,8 @@ fun GoalCategoryItem(
 
     Column(
         modifier = Modifier.clip(RoundedCornerShape(16.dp)).background(itemBg)
-            .border(1.dp, borderColor, RoundedCornerShape(16.dp))
-            .clickable(onClick = onClick).padding(16.dp),
+            .border(1.dp, borderColor, RoundedCornerShape(16.dp)).clickable(onClick = onClick)
+            .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -125,17 +132,44 @@ fun GoalCategoryItem(
         ) {
             Icon(
                 imageVector = category.icon,
-                contentDescription = category.name,
+                contentDescription = stringResource(category.name),
                 tint = category.color,
                 modifier = Modifier.size(24.dp)
             )
         }
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = category.name,
+            text = stringResource(category.name),
             style = MaterialTheme.typography.labelSmall,
             fontWeight = FontWeight.SemiBold,
             color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
         )
+    }
+}
+
+@Preview(name = "Category Selection Step - Light Mode")
+@Composable
+private fun GoalCategorySelectionStepLightPreview() {
+    // Pulls the real "Travel" category reference directly out from your default data structure
+    val mockSelectedCategory = GoalCategory.defaultCategories.firstOrNull()
+
+    PocketGoalsTheme(themeMode = ThemeMode.LIGHT) {
+        Surface(color = MaterialTheme.colorScheme.background) {
+            GoalCategorySelectionStep(
+                selectedCategory = mockSelectedCategory, // Tests active selection border highlights
+                onCategorySelected = {}, onCustomGoal = {}, onNext = {})
+        }
+    }
+}
+
+@Preview(name = "Category Selection Step - Dark Mode")
+@Composable
+private fun GoalCategorySelectionStepDarkPreview() {
+    PocketGoalsTheme(themeMode = ThemeMode.DARK) {
+        Surface(color = MaterialTheme.colorScheme.background) {
+            GoalCategorySelectionStep(
+                selectedCategory = null, // Tests unselected visual states and disabled buttons
+                onCategorySelected = {}, onCustomGoal = {}, onNext = {})
+        }
     }
 }

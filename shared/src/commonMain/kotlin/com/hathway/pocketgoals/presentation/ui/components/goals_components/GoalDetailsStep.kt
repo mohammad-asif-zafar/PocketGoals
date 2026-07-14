@@ -21,10 +21,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.hathway.pocketgoals.domain.GoalCategory
+import com.hathway.pocketgoals.domain.model.GoalCategory
 import com.hathway.pocketgoals.domain.model.ThemeMode
 import com.hathway.pocketgoals.presentation.ui.components.add_expense_components.FormField
 import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
+import org.jetbrains.compose.resources.stringResource
+import pocketgoals.shared.generated.resources.Res
+import pocketgoals.shared.generated.resources.create_goal
 
 @Composable
 fun GoalDetailsStep(
@@ -104,7 +107,9 @@ fun GoalDetailsStep(
                     )
                     Spacer(modifier = Modifier.width(12.dp))
                     Text(
-                        text = category.name, fontWeight = FontWeight.Medium, color = textColor
+                        text = stringResource(category.name),
+                        fontWeight = FontWeight.Medium,
+                        color = textColor
                     )
                     Spacer(modifier = Modifier.weight(1f))
                     Icon(
@@ -161,7 +166,7 @@ fun GoalDetailsStep(
 @Composable
 fun GoalDetailsStepLightPreview() {
     val mockCategory =
-        GoalCategory("Vacation", color = Color(0xFFF97316), icon = Icons.Rounded.Flight)
+        GoalCategory(Res.string.create_goal, color = Color(0xFFF97316), icon = Icons.Rounded.Flight)
     PocketGoalsTheme(ThemeMode.LIGHT) {
         GoalDetailsStep(
             goalName = "",
@@ -178,7 +183,7 @@ fun GoalDetailsStepLightPreview() {
 @Composable
 fun GoalDetailsStepDarkPreview() {
     val mockCategory =
-        GoalCategory("Vacation", color = Color(0xFFA78BFA), icon = Icons.Rounded.Flight)
+        GoalCategory(Res.string.create_goal, color = Color(0xFFA78BFA), icon = Icons.Rounded.Flight)
     PocketGoalsTheme(ThemeMode.DARK) {
         GoalDetailsStep(
             goalName = "Japan Spring Trip",

@@ -5,20 +5,24 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.hathway.pocketgoals.data.AddGoalStep
 import com.hathway.pocketgoals.domain.Goal
-import com.hathway.pocketgoals.domain.GoalCategory
 import com.hathway.pocketgoals.domain.Transaction
 import com.hathway.pocketgoals.domain.TransactionType
+import com.hathway.pocketgoals.domain.model.GoalCategory
+import com.hathway.pocketgoals.domain.model.ThemeMode
 import com.hathway.pocketgoals.presentation.ui.components.add_expense_components.AddExpenseTopBar
 import com.hathway.pocketgoals.presentation.ui.components.add_expense_components.DateSelectionStep
 import com.hathway.pocketgoals.presentation.ui.components.goals_components.*
-import kotlinx.datetime.Clock
+import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
+import com.hathway.pocketgoals.presentation.ui.theme.Surface
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
@@ -84,8 +88,8 @@ fun AddGoalContent(
                                 AddGoalStep.CategorySelection
 
                             AddGoalStep.GoalAmount -> {
-                                if (isCustomFlow) currentStep = AddGoalStep.CustomGoalDetails
-                                else currentStep = AddGoalStep.GoalDetails
+                                currentStep = if (isCustomFlow) AddGoalStep.CustomGoalDetails
+                                else AddGoalStep.GoalDetails
                             }
 
                             AddGoalStep.GoalTimeline -> currentStep = AddGoalStep.GoalAmount
@@ -124,7 +128,7 @@ fun AddGoalContent(
                         selectedCategory = selectedCategory,
                         onCategorySelected = {
                             selectedCategory = it
-                            isCustomFlow = it.name == "Custom"
+                            isCustomFlow = it.name == Res.string.category_custom
                             if (isCustomFlow) {
                                 currentStep = AddGoalStep.CustomGoalDetails
                             } else {
@@ -134,7 +138,7 @@ fun AddGoalContent(
                         onCustomGoal = {
                             isCustomFlow = true
                             selectedCategory =
-                                GoalCategory.defaultCategories.find { it.name == "Custom" }
+                                GoalCategory.defaultCategories.find { it.name == Res.string.category_custom }
                             currentStep = AddGoalStep.CustomGoalDetails
                         },
                         onNext = {
@@ -205,9 +209,12 @@ fun AddGoalContent(
                 }
 
                 is AddGoalStep.GoalReview -> {
+                    val customCategoryLabel = stringResource(Res.string.category_custom)
+
                     GoalReviewStep(
                         goalName = goalName,
-                        categoryName = if (isCustomFlow) "Custom" else selectedCategory?.name ?: "",
+                        categoryName = (if (isCustomFlow) customCategoryLabel else selectedCategory?.name
+                            ?: "") as String,
                         categoryIcon = if (isCustomFlow) customIcon else selectedCategory?.icon
                             ?: GoalCategory.defaultCategories.first().icon,
                         categoryColor = if (isCustomFlow) customColor else selectedCategory?.color
@@ -216,7 +223,7 @@ fun AddGoalContent(
                         targetDate = dateText,
                         duration = duration,
                         onConfirm = {
-                            val now = Clock.System.now()
+                            val now = kotlin.time.Clock.System.now()
                             val newGoal = Goal(
                                 id = now.toEpochMilliseconds().toString(),
                                 name = goalName,
@@ -258,6 +265,40 @@ fun AddGoalContent(
                     )
                 }
             }
+        }
+    }
+}
+
+// ==========================================================
+// Light & Dark Theme Coordinator Previews Matrix
+// ==========================================================
+
+@Preview(name = "Goal Flow - Light Mode", group = "Wizard Flows")
+@Composable
+private fun AddGoalContentLightPreview() {
+    PocketGoalsTheme(themeMode = ThemeMode.LIGHT) {
+        Surface(color = MaterialTheme.colorScheme.background) {
+            AddGoalContent(
+                onBackClick = {},
+                onViewGoal = {},
+                onSaveGoal = {},
+                onSaveTransaction = {}
+            )
+        }
+    }
+}
+
+@Preview(name = "Goal Flow - Dark Mode", group = "Wizard Flows")
+@Composable
+private fun AddGoalContentDarkPreview() {
+    PocketGoalsTheme(themeMode = ThemeMode.DARK) {
+        Surface(color = MaterialTheme.colorScheme.background) {
+            AddGoalContent(
+                onBackClick = {},
+                onViewGoal = {},
+                onSaveGoal = {},
+                onSaveTransaction = {}
+            )
         }
     }
 }

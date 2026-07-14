@@ -211,4 +211,14 @@
     <string name="custom_amount_title">Enter Custom Amount</string>
     <string name="custom_amount_confirm">Confirm Amount</string>
 
+    <string name="category_travel">Travel</string>
+    <string name="category_car">Car</string>
+    <string name="category_home">Home</string>
+    <string name="category_education">Education</string>
+    <string name="category_wedding">Wedding</string>
+    <string name="category_health">Health</string>
+    <string name="category_custom">Custom</string>
+    <string name="category_business">Business</string>
+
+
 </resources>
