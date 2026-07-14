@@ -49,9 +49,7 @@ fun FormDropdownField(
                 focusedBorderColor = MaterialTheme.colorScheme.outline,
                 unfocusedBorderColor = MaterialTheme.colorScheme.outline
             ),
-            modifier = Modifier
-                .fillMaxWidth()
-                .menuAnchor()
+            modifier = Modifier.fillMaxWidth().menuAnchor()
         )
 
         ExposedDropdownMenu(
@@ -60,13 +58,10 @@ fun FormDropdownField(
             modifier = Modifier.background(MaterialTheme.colorScheme.surface)
         ) {
             options.forEach { option ->
-                DropdownMenuItem(
-                    text = { Text(text = option) },
-                    onClick = {
-                        onOptionSelected(option)
-                        expanded = false
-                    }
-                )
+                DropdownMenuItem(text = { Text(text = option) }, onClick = {
+                    onOptionSelected(option)
+                    expanded = false
+                })
             }
         }
     }

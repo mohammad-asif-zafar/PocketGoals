@@ -1,5 +1,6 @@
 package com.hathway.pocketgoals.presentation.ui.components.goals_components
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -71,7 +72,7 @@ fun GoalCategorySelectionStep(
                 onClick = onCustomGoal,
                 modifier = Modifier.fillMaxWidth().height(56.dp),
                 shape = RoundedCornerShape(12.dp),
-                border = ButtonDefaults.outlinedButtonBorder.copy(width = 1.dp),
+                border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
                 colors = ButtonDefaults.outlinedButtonColors(
                     contentColor = primaryColor
                 )

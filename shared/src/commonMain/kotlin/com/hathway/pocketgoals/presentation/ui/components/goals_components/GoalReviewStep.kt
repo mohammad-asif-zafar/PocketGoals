@@ -1,5 +1,6 @@
 package com.hathway.pocketgoals.presentation.ui.components.goals_components
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
@@ -103,7 +104,7 @@ fun GoalReviewStep(
                 colors = ButtonDefaults.outlinedButtonColors(
                     contentColor = primaryColor
                 ),
-                border = ButtonDefaults.outlinedButtonBorder.copy(width = 1.dp)
+                border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
             ) {
                 Text(text = stringResource(Res.string.back), fontWeight = FontWeight.Bold)
             }

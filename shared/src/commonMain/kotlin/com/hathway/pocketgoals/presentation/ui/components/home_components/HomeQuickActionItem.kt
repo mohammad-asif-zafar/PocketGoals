@@ -35,9 +35,9 @@ fun HomeQuickActionItem(
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
-            .clip(RoundedCornerShape(12.dp)) // Clips the ripple interaction background neatly
+            .clip(RoundedCornerShape(12.dp))
             .clickable { onClick() }
-            .padding(4.dp) // Gives touch target breathing room without layout distortion
+            .padding(4.dp)
     ) {
         Box(
             modifier = Modifier

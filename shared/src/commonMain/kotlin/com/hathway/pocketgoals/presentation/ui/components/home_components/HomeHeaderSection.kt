@@ -19,6 +19,7 @@ import androidx.compose.material.icons.rounded.NotificationsNone
 import androidx.compose.material.icons.rounded.Person
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -32,6 +33,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.hathway.pocketgoals.domain.model.ThemeMode
 import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
+import com.hathway.pocketgoals.presentation.ui.theme.Surface
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
@@ -85,7 +87,7 @@ fun HomeHeaderSection(
             // Notification Area
             Box(
                 modifier = Modifier
-                    .size(44.dp)
+                    .size(40.dp)
                     .clip(CircleShape)
                     .clickable { onNotificationClick() },
                 contentAlignment = Alignment.Center
@@ -133,6 +135,36 @@ fun HomeHeaderSection(
                     tint = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
+        }
+    }
+}
+
+@Preview(name = "Home Header - Light Theme")
+@Composable
+private fun HomeHeaderSectionLightPreview() {
+    PocketGoalsTheme(themeMode = ThemeMode.LIGHT) {
+        Surface(color = MaterialTheme.colorScheme.background, modifier = Modifier.padding(16.dp)) {
+            HomeHeaderSection(
+                name = "John Doe",
+                unreadCount = 5,
+                onNotificationClick = {},
+                onProfileClick = {}
+            )
+        }
+    }
+}
+
+@Preview(name = "Home Header Overflow - Dark Theme")
+@Composable
+private fun HomeHeaderSectionDarkPreview() {
+    PocketGoalsTheme(themeMode = ThemeMode.DARK) {
+        Surface(color = MaterialTheme.colorScheme.background, modifier = Modifier.padding(16.dp)) {
+            HomeHeaderSection(
+                name = "Jane Smith",
+                unreadCount = 120, // Tests your custom "99+" text truncation logic block
+                onNotificationClick = {},
+                onProfileClick = {}
+            )
         }
     }
 }

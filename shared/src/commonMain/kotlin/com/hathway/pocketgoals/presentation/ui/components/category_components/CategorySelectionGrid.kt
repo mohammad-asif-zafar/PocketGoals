@@ -1,5 +1,6 @@
 package com.hathway.pocketgoals.presentation.ui.components.category_components
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -82,7 +83,7 @@ fun CategorySelectionGrid(
             onClick = onAddNewCategory,
             modifier = Modifier.fillMaxWidth().height(56.dp),
             shape = MaterialTheme.shapes.medium,
-            border = ButtonDefaults.outlinedButtonBorder.copy(width = 1.dp)
+            border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
         ) {
             Icon(Icons.Rounded.Add, null)
             Spacer(modifier = Modifier.width(8.dp))

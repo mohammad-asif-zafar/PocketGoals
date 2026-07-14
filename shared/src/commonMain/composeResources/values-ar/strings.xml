@@ -121,5 +121,29 @@
     <string name="category_custom">مخصص</string>
     <string name="category_business">الأعمال</string>
 
+    <string name="quick_actions">إجراءات سريعة</string>
+    <string name="manage">إدارة</string>
+    <string name="add_expense_multi">إضافة مصروف</string>
+    <string name="add_income_multi">إضافة دخل</string>
+    <string name="transfer">تحويل</string>
+    <string name="view_reports">عرض التقارير</string>
 
+    <string name="top_categories">أعلى الفئات</string>
+    <string name="see_all">عرض الكل</string>
+    <string name="investment">الاستثمار</string>
+    <string name="basic_needs">الاحتياجات الأساسية</string>
+    <string name="future_pay">الدفع المستقبلي</string>
+    <string name="family_support">الدعم العائلي</string>
+
+    <string name="overview_this_month">نظرة عامة هذا الشهر</string>
+    <string name="savings">الادخار</string>
+
+    <string name="good_morning">صباح الخير</string>
+    <string name="good_afternoon">مساء الخير</string>
+    <string name="good_evening">مساء الخير</string>
+    <string name="notifications">الإشعارات</string>
+    <string name="profile">الملف الشخصي</string>
+
+    <string name="custom_amount_title">أدخل مبلغًا مخصصًا</string>
+    <string name="custom_amount_confirm">تأكيد المبلغ</string>
 </resources>

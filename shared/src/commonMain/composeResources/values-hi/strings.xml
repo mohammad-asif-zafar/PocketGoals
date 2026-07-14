@@ -122,4 +122,22 @@
     <string name="category_business">व्यापार</string>
 
 
+    <string name="quick_actions">त्वरित कार्य</string>
+    <string name="manage">प्रबंधन करें</string>
+    <string name="add_expense_multi">खर्च जोड़ें</string>
+    <string name="add_income_multi">आय जोड़ें</string>
+    <string name="transfer">ट्रांसफर</string>
+    <string name="view_reports">रिपोर्ट देखें</string>
+
+    <string name="overview_this_month">इस महीने का विवरण</string>
+    <string name="savings">बचत</string>
+
+    <string name="good_morning">सुप्रभात</string>
+    <string name="good_afternoon">नमस्कार</string>
+    <string name="good_evening">शुभ संध्या</string>
+    <string name="notifications">सूचनाएं</string>
+    <string name="profile">प्रोफ़ाइल</string>
+
+    <string name="custom_amount_title">कस्टम राशि दर्ज करें</string>
+    <string name="custom_amount_confirm">राशि की पुष्टि करें</string>
 </resources>

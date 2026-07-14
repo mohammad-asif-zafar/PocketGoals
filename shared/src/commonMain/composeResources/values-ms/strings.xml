@@ -122,4 +122,29 @@
     <string name="category_custom">Sesuai Suai</string>
     <string name="category_business">Perniagaan</string>
 
+    <string name="quick_actions">Tindakan Pantas</string>
+    <string name="manage">Urus</string>
+    <string name="add_expense_multi">Tambah Belanja</string>
+    <string name="add_income_multi">Tambah Pendapatan</string>
+    <string name="transfer">Pindahan</string>
+    <string name="view_reports">Lihat Laporan</string>
+
+    <string name="top_categories">Kategori Utama</string>
+    <string name="see_all">Lihat Semua</string>
+    <string name="investment">Pelaburan</string>
+    <string name="basic_needs">Keperluan Asas</string>
+    <string name="future_pay">Bayaran Masa Depan</string>
+    <string name="family_support">Sokongan Keluarga</string>
+
+    <string name="overview_this_month">Gambaran Keseluruhan Bulan Ini</string>
+    <string name="savings">Simpanan</string>
+
+    <string name="good_morning">Selamat pagi</string>
+    <string name="good_afternoon">Selamat tengah hari</string>
+    <string name="good_evening">Selamat petang</string>
+    <string name="notifications">Notifikasi</string>
+    <string name="profile">Profil</string>
+
+    <string name="custom_amount_title">Masukkan Jumlah Sesuai Semula</string>
+    <string name="custom_amount_confirm">Sahkan Jumlah</string>
 </resources>

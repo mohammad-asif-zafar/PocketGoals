@@ -16,12 +16,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ChevronRight
-import androidx.compose.material.icons.rounded.Fastfood
 import androidx.compose.material.icons.rounded.ShoppingBag
-import androidx.compose.material.icons.rounded.Warning
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -43,93 +38,6 @@ import androidx.compose.ui.unit.dp
 import com.hathway.pocketgoals.domain.model.ThemeMode
 import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
 import kotlin.math.roundToInt
-
-// Helper data structure for easy list mapping
-data class HomeCategoryData(
-    val name: String,
-    val percentage: Double,
-    val amount: String,
-    val icon: androidx.compose.ui.graphics.vector.ImageVector,
-    val color: Color
-)
-
-@Composable
-fun HomeCategoryCard(
-    title: String,
-    categories: List<HomeCategoryData>,
-    modifier: Modifier = Modifier
-) {
-    Card(
-        modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(20.dp),
-        // Elevates slightly in light mode and uses surface tinted surfaces for dark mode depth
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant
-        ),
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 2.dp
-        )
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        ) {
-            Text(
-                text = title,
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            // Dynamically loop over rows inside the elevated card shell bounds
-            categories.forEach { data ->
-                HomeCategoryRow(
-                    name = data.name,
-                    percentage = data.percentage,
-                    amount = data.amount,
-                    icon = data.icon,
-                    color = data.color
-                )
-            }
-        }
-    }
-}
-
-@Preview
-@Composable
-fun HomeCategoryCardLightPreview() {
-    val sampleCategories = listOf(
-        HomeCategoryData("Shopping", 42.5, "12,450", Icons.Rounded.ShoppingBag, Color(0xFFEF4444)),
-        HomeCategoryData("Food & Dining", 28.0, "8,200", Icons.Rounded.Fastfood, Color(0xFFF59E0B)),
-        HomeCategoryData("Entertainment", 15.0, "4,400", Icons.Rounded.ChevronRight, Color(0xFF3B82F6))
-    )
-
-    PocketGoalsTheme(themeMode = ThemeMode.LIGHT) {
-        Box(modifier = Modifier.background(MaterialTheme.colorScheme.background).padding(16.dp)) {
-            HomeCategoryCard(title = "Monthly Spending", categories = sampleCategories)
-        }
-    }
-}
-
-@Preview
-@Composable
-fun HomeCategoryCardDarkPreview() {
-    val sampleCategories = listOf(
-        HomeCategoryData("Shopping", 42.5, "12,450", Icons.Rounded.ShoppingBag, Color(0xFFEF4444)),
-        HomeCategoryData("Food & Dining", 28.0, "8,200", Icons.Rounded.Fastfood, Color(0xFFF59E0B)),
-        HomeCategoryData("Entertainment", 15.0, "4,400", Icons.Rounded.Warning, Color(0xFF3B82F6))
-    )
-
-    PocketGoalsTheme(themeMode = ThemeMode.DARK) {
-        Box(modifier = Modifier.background(MaterialTheme.colorScheme.background).padding(16.dp)) {
-            HomeCategoryCard(title = "Monthly Spending", categories = sampleCategories)
-        }
-    }
-}
-
 
 @Composable
 fun HomeCategoryRow(
@@ -216,6 +124,22 @@ fun HomeCategoryRow(
 @Composable
 fun HomeCategoryRowLightPreview() {
     PocketGoalsTheme(themeMode = ThemeMode.LIGHT) {
+        Box(modifier = Modifier.background(MaterialTheme.colorScheme.background).padding(16.dp)) {
+            HomeCategoryRow(
+                name = "Shopping",
+                percentage = 42.5,
+                amount = "12,450",
+                icon = Icons.Rounded.ShoppingBag,
+                color = Color(0xFFEF4444)
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+fun HomeCategoryRowDarkPreview() {
+    PocketGoalsTheme(themeMode = ThemeMode.DARK) {
         Box(modifier = Modifier.background(MaterialTheme.colorScheme.background).padding(16.dp)) {
             HomeCategoryRow(
                 name = "Shopping",

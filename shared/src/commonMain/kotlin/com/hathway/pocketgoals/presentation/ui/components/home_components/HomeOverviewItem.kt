@@ -30,9 +30,10 @@ fun HomeOverviewItem(
     label: String,
     amount: String,
     color: Color,
+    modifier: Modifier,
     isUpTrend: Boolean? = null // Nullable flag: true = up, false = down, null = hidden
 ) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = modifier) {
         Text(
             text = label,
             style = MaterialTheme.typography.labelSmall,
@@ -73,7 +74,8 @@ fun HomeOverviewItemUpPreview() {
                 label = "Income",
                 amount = "2,00,000",
                 color = Color(0xFF10B981),
-                isUpTrend = true
+                isUpTrend = true,
+                modifier = Modifier
             )
         }
     }
@@ -88,7 +90,8 @@ fun HomeOverviewItemDownPreview() {
                 label = "Expenses",
                 amount = "55,000",
                 color = Color(0xFFEF4444),
-                isUpTrend = false
+                isUpTrend = false,
+                modifier = Modifier
             )
         }
     }

@@ -8,8 +8,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.hathway.pocketgoals.data.AddGoalStep
@@ -22,7 +20,6 @@ import com.hathway.pocketgoals.presentation.ui.components.add_expense_components
 import com.hathway.pocketgoals.presentation.ui.components.add_expense_components.DateSelectionStep
 import com.hathway.pocketgoals.presentation.ui.components.goals_components.*
 import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
-import com.hathway.pocketgoals.presentation.ui.theme.Surface
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
@@ -49,8 +46,8 @@ fun AddGoalContent(
     var motivation by remember { mutableStateOf("") }
 
     // Custom Goal Specific State
-    var customIcon by remember { mutableStateOf<ImageVector>(GoalCategory.defaultCategories.first().icon) }
-    var customColor by remember { mutableStateOf<Color>(GoalCategory.defaultCategories.first().color) }
+    var customIcon by remember { mutableStateOf(GoalCategory.defaultCategories.first().icon) }
+    var customColor by remember { mutableStateOf(GoalCategory.defaultCategories.first().color) }
 
     val defaultDate = "15 May 2024"
     val dateText = remember(selectedDateMillis) {
@@ -98,8 +95,8 @@ fun AddGoalContent(
                                 AddGoalStep.GoalTimeline
 
                             AddGoalStep.GoalReview -> {
-                                if (isCustomFlow) currentStep = AddGoalStep.CustomGoalMotivation
-                                else currentStep = AddGoalStep.GoalTimeline
+                                currentStep = if (isCustomFlow) AddGoalStep.CustomGoalMotivation
+                                else AddGoalStep.GoalTimeline
                             }
 
                             else -> onBackClick()
@@ -129,10 +126,10 @@ fun AddGoalContent(
                         onCategorySelected = {
                             selectedCategory = it
                             isCustomFlow = it.name == Res.string.category_custom
-                            if (isCustomFlow) {
-                                currentStep = AddGoalStep.CustomGoalDetails
+                            currentStep = if (isCustomFlow) {
+                                AddGoalStep.CustomGoalDetails
                             } else {
-                                currentStep = AddGoalStep.GoalDetails
+                                AddGoalStep.GoalDetails
                             }
                         },
                         onCustomGoal = {
@@ -142,8 +139,8 @@ fun AddGoalContent(
                             currentStep = AddGoalStep.CustomGoalDetails
                         },
                         onNext = {
-                            if (isCustomFlow) currentStep = AddGoalStep.CustomGoalDetails
-                            else currentStep = AddGoalStep.GoalDetails
+                            currentStep = if (isCustomFlow) AddGoalStep.CustomGoalDetails
+                            else AddGoalStep.GoalDetails
                         })
                 }
 
@@ -187,8 +184,8 @@ fun AddGoalContent(
                         duration = duration,
                         onDurationSelected = { duration = it },
                         onNext = {
-                            if (isCustomFlow) currentStep = AddGoalStep.CustomGoalMotivation
-                            else currentStep = AddGoalStep.GoalReview
+                            currentStep = if (isCustomFlow) AddGoalStep.CustomGoalMotivation
+                            else AddGoalStep.GoalReview
                         })
                 }
 
@@ -254,8 +251,8 @@ fun AddGoalContent(
                             currentStep = AddGoalStep.GoalSuccess
                         },
                         onBack = {
-                            if (isCustomFlow) currentStep = AddGoalStep.CustomGoalMotivation
-                            else currentStep = AddGoalStep.GoalTimeline
+                            currentStep = if (isCustomFlow) AddGoalStep.CustomGoalMotivation
+                            else AddGoalStep.GoalTimeline
                         })
                 }
 

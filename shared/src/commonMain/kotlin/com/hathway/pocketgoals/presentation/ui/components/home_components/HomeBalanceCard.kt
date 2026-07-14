@@ -201,28 +201,62 @@ fun HomeBalanceCard(
             }
         }
     }
-}/*
-@Preview
+}
+
+// ==========================================================
+// Comprehensive Home Dashboard Preview Matrix
+// ==========================================================
+
+@Preview(name = "Balance - India (Light Mode)", group = "Currency Matrix")
 @Composable
-fun HomeBalanceCardLightPreview() {
+private fun BalanceCardIndiaLightPreview() {
     PocketGoalsTheme(themeMode = ThemeMode.LIGHT) {
-        Box(modifier = Modifier.background(MaterialTheme.colorScheme.background).padding(16.dp)) {
-            HomeBalanceCard(totalBalance = "1,45,000", income = "2,00,000", expenses = "55,000")
+        Surface(color = MaterialTheme.colorScheme.background, modifier = Modifier.padding(16.dp)) {
+            HomeBalanceCard(
+                totalBalance = "82700",
+                income = "125000",
+                expenses = "42300",
+                currencyConfig = CurrencyConfig.INR,
+                onStatsClick = {}
+            )
         }
     }
 }
 
-
-@Preview
+@Preview(name = "Balance - Malaysia (Dark Mode)", group = "Currency Matrix")
 @Composable
-fun HomeBalanceCardDarkPreview() {
+private fun BalanceCardMalaysiaDarkPreview() {
     PocketGoalsTheme(themeMode = ThemeMode.DARK) {
-        Box(modifier = Modifier.background(MaterialTheme.colorScheme.background).padding(16.dp)) {
-            HomeBalanceCard(totalBalance = "1,45,000", income = "2,00,000", expenses = "55,000")
+        Surface(color = MaterialTheme.colorScheme.background, modifier = Modifier.padding(16.dp)) {
+            HomeBalanceCard(
+                totalBalance = "24000",
+                income = "85000",
+                expenses = "61000",
+                currencyConfig = CurrencyConfig.MYR,
+                onStatsClick = {}
+            )
         }
     }
-}*/
+}
 
+@Preview(name = "Balance - Arabic/AED (RTL Layout)", group = "Currency Matrix")
+@Composable
+private fun BalanceCardArabicRtlPreview() {
+    PocketGoalsTheme(themeMode = ThemeMode.DARK) {
+        // Forces Right-To-Left direction pass to test the layout with the postfix currency symbol rule
+        CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+            Surface(color = MaterialTheme.colorScheme.background, modifier = Modifier.padding(16.dp)) {
+                HomeBalanceCard(
+                    totalBalance = "53400",
+                    income = "90000",
+                    expenses = "36600",
+                    currencyConfig = CurrencyConfig.AED,
+                    onStatsClick = {}
+                )
+            }
+        }
+    }
+}
 
 @Composable
 fun CurrencyPreviewRowDark(

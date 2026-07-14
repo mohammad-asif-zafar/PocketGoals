@@ -120,4 +120,31 @@
     <string name="category_custom">کسٹم</string>
     <string name="category_business">کاروبار</string>
 
+    <string name="quick_actions">فوری اقدامات</string>
+    <string name="manage">انتظام کریں</string>
+    <string name="add_expense_multi">خرچہ شامل کریں</string>
+    <string name="add_income_multi">آمدنی شامل کریں</string>
+    <string name="transfer">منتقلی</string>
+    <string name="view_reports">رپورٹ دیکھیں</string>
+
+    <string name="top_categories">اعلیٰ زمرہ جات</string>
+    <string name="see_all">سب دیکھیں</string>
+    <string name="investment">سرمایہ کاری</string>
+    <string name="basic_needs">بنیادی ضروریات</string>
+    <string name="future_pay">مستقبل کی ادائیگی</string>
+    <string name="family_support">خاندانی مدد</string>
+
+    <string name="overview_this_month">اس مہینے کا جائزہ</string>
+    <string name="savings">بچت</string>
+
+    <string name="good_morning">صبح بخیر</string>
+    <string name="good_afternoon">سہ پہر بخیر</string>
+    <string name="good_evening">شام بخیر</string>
+    <string name="notifications">نوٹیفیکیشنز</string>
+    <string name="profile">پروفائل</string>
+
+
+    <string name="custom_amount_title">رقم درج کریں</string>
+    <string name="custom_amount_confirm">رقم کی تصدیق کریں</string>
+    
 </resources>

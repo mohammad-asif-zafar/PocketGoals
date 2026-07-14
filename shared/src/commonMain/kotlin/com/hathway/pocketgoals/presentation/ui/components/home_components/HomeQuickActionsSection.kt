@@ -7,21 +7,27 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.CompareArrows
 import androidx.compose.material.icons.rounded.AccountBalanceWallet
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.BarChart
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.hathway.pocketgoals.domain.model.ThemeMode
 import com.hathway.pocketgoals.presentation.ui.theme.Vacation
 import com.hathway.pocketgoals.presentation.ui.theme.Investment
+import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
+import com.hathway.pocketgoals.presentation.ui.theme.Surface
 import org.jetbrains.compose.resources.stringResource
 import pocketgoals.shared.generated.resources.*
 
@@ -101,6 +107,26 @@ fun HomeQuickActionsSection(
                 iconColor = reportsIcon,
                 onClick = onViewReportsClick
             )
+        }
+    }
+}
+
+@Preview(name = "Quick Actions Panel - Light Theme")
+@Composable
+private fun HomeQuickActionsSectionLightPreview() {
+    PocketGoalsTheme(themeMode = ThemeMode.LIGHT) {
+        Surface(color = MaterialTheme.colorScheme.background, modifier = Modifier.padding(16.dp)) {
+            HomeQuickActionsSection()
+        }
+    }
+}
+
+@Preview(name = "Quick Actions Panel - Dark Theme")
+@Composable
+private fun HomeQuickActionsSectionDarkPreview() {
+    PocketGoalsTheme(themeMode = ThemeMode.DARK) {
+        Surface(color = MaterialTheme.colorScheme.background, modifier = Modifier.padding(16.dp)) {
+            HomeQuickActionsSection()
         }
     }
 }
