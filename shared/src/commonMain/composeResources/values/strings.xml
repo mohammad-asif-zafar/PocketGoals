@@ -220,4 +220,22 @@
     <string name="category_custom">Custom</string>
     <string name="category_business">Business</string>
 
+    <string name="signup_create_account">Create Your Account</string>
+    <string name="signup_subtitle">Sign up to get started with PocketGoals</string>
+    <string name="signup_placeholder_fullname">Full Name</string>
+    <string name="signup_placeholder_email">Email or Mobile Number</string>
+    <string name="signup_placeholder_password">Password</string>
+    <string name="signup_placeholder_confirm_password">Confirm Password</string>
+    <string name="signup_agree_terms">I agree to the Terms of Service\nand Privacy Policy</string>
+    <string name="signup_btn_submit">Sign Up</string>
+    <string name="signup_divider_or">or continue with</string>
+    <string name="signup_desc_google">Sign up with Google</string>
+
+
+    <string name="biometric_enable_toggle">Enable Biometric Login</string>
+    <string name="biometric_prompt_title">Authenticate</string>
+    <string name="biometric_prompt_reason">Confirm identity to unlock your PocketGoals vault dashboard</string>
+    <string name="biometric_not_available">Biometric authentication is not supported or configured on this device</string>
+
+
 </resources>

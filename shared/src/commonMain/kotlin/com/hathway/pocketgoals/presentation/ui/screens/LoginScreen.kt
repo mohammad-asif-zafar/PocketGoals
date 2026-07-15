@@ -23,7 +23,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.hathway.pocketgoals.domain.model.ThemeMode
+import com.hathway.pocketgoals.presentation.ui.components.common_components.LoadingButton
 import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 import pocketgoals.shared.generated.resources.Res
 import pocketgoals.shared.generated.resources.btn_forgot_password
@@ -163,29 +165,24 @@ fun LoginScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // Primary Call-to-Action Button (Triggers temporary mock authorization routing)
-            Button(
-                onClick = {
-                    if (isFormValid) {
-                        onLoginSuccess() // Directly logs in without an auth backend check
-                    }
-                },
+            // Integrated Async Loading Submit Button
+            var isAuthenticating by remember { mutableStateOf(false) }
+            val coroutineScope = rememberCoroutineScope()
+
+            LoadingButton(
+                text = stringResource(Res.string.btn_login),
+                isLoading = isAuthenticating,
                 enabled = isFormValid,
-                modifier = Modifier.fillMaxWidth().height(56.dp),
-                shape = RoundedCornerShape(12.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = primaryColor,
-                    contentColor = MaterialTheme.colorScheme.onPrimary,
-                    disabledContainerColor = primaryColor.copy(alpha = 0.35f),
-                    disabledContentColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.65f)
-                )
-            ) {
-                Text(
-                    text = stringResource(Res.string.btn_login),
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 16.sp
-                )
-            }
+                onClick = {
+                    coroutineScope.launch {
+                        isAuthenticating = true
+                        // Simulates an API authentication server roundtrip check delay
+                        kotlinx.coroutines.delay(1500)
+                        isAuthenticating = false
+                        onLoginSuccess()
+                    }
+                }
+            )
 
             Spacer(modifier = Modifier.height(32.dp))
 

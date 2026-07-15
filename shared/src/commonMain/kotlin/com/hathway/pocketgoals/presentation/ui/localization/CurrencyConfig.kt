@@ -6,9 +6,7 @@ enum class CurrencyConfig(
     val isoCode: String, val symbol: String, val isSymbolPrefix: Boolean
 ) {
     INR("INR", "₹", true), MYR("MYR", "RM", true), AED(
-        "AED",
-        "د.إ",
-        false
+        "AED", "د.إ", false
     ), // Symbol placed after amount for Arabic/AED standard
     USD("USD", "$", true);
 
