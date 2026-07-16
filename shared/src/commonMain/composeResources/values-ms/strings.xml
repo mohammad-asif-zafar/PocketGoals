@@ -138,6 +138,7 @@
 
     <string name="overview_this_month">Gambaran Keseluruhan Bulan Ini</string>
     <string name="savings">Simpanan</string>
+    <string name="income_added_desc">"RM%1$s telah berjaya ditambah\\nke dalam %2$s."</string>
 
     <string name="good_morning">Selamat pagi</string>
     <string name="good_afternoon">Selamat tengah hari</string>
@@ -147,4 +148,22 @@
 
     <string name="custom_amount_title">Masukkan Jumlah Sesuai Semula</string>
     <string name="custom_amount_confirm">Sahkan Jumlah</string>
+    <string name="search_categories_hint">Cari kategori...</string>
+    <string name="more_categories_title">Lebih Banyak Kategori</string>
+    <string name="see_all_action">Lihat Semua</string>
+    <string name="add_new_category_action">Tambah Kategori Baru</string>
+    <string name="category_name_placeholder">cth. Penjagaan Haiwan</string>
+
+    <string name="go_back_desc">Kembali</string>
+    <string name="delete_category">Padam Kategori</string>
+    <string name="confirm_date_action">Sahkan Tarikh</string>
+
+    <string name="method_cash">Tunai</string>
+    <string name="method_card">Kad</string>
+    <string name="method_upi">UPI / QR</string>
+    <string name="method_bank">Pindahan Bank</string>
+
+    <string name="add_note_title">Tambah Nota</string>
+    <string name="note_input_placeholder">Masukkan butiran mengenai transaksi ini...</string>
+    <string name="done_action">Selesai</string>
 </resources>

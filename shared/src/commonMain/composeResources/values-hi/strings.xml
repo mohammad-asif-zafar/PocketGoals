@@ -121,7 +121,7 @@
     <string name="category_custom">कस्टम</string>
     <string name="category_business">व्यापार</string>
 
-
+    <string name="income_added_desc">"₹%1$s को सफलतापूर्वक\\n%2$s में जोड़ दिया गया है।"</string>
     <string name="quick_actions">त्वरित कार्य</string>
     <string name="manage">प्रबंधन करें</string>
     <string name="add_expense_multi">खर्च जोड़ें</string>
@@ -137,7 +137,22 @@
     <string name="good_evening">शुभ संध्या</string>
     <string name="notifications">सूचनाएं</string>
     <string name="profile">प्रोफ़ाइल</string>
-
+    <string name="go_back_desc">पीछे जाएं</string>
+    <string name="delete_category">श्रेणी हटाएं</string>
     <string name="custom_amount_title">कस्टम राशि दर्ज करें</string>
     <string name="custom_amount_confirm">राशि की पुष्टि करें</string>
+    <string name="search_categories_hint">श्रेणियाँ खोजें...</string>
+    <string name="more_categories_title">अधिक श्रेणियाँ</string>
+    <string name="see_all_action">सभी देखें</string>
+    <string name="add_new_category_action">नई श्रेणी जोड़ें</string>
+    <string name="category_name_placeholder">जैसे: पालतू जानवरों की देखभाल</string>
+    <string name="confirm_date_action">दिनांक की पुष्टि करें</string>
+
+    <string name="method_cash">नकद</string>
+    <string name="method_card">कार्ड</string>
+    <string name="method_upi">यूपीआई / क्यूआर</string>
+    <string name="method_bank">बैंक ट्रांसफर</string>
+    <string name="add_note_title">नोट जोड़ें</string>
+    <string name="note_input_placeholder">इस लेनदेन के बारे में विवरण दर्ज करें...</string>
+    <string name="done_action">हो गया</string>
 </resources>

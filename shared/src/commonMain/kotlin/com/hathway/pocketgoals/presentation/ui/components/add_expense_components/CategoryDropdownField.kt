@@ -2,6 +2,7 @@ package com.hathway.pocketgoals.presentation.ui.components.add_expense_component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -23,8 +24,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.hathway.pocketgoals.domain.ExpenseCategory
+import com.hathway.pocketgoals.domain.model.ThemeMode
+import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -48,14 +52,9 @@ fun CategoryDropdownField(
             leadingIcon = {
                 // Dynamically updates the container tint based on your themed colors
                 Box(
-                    modifier = Modifier
-                        .padding(start = 12.dp)
-                        .size(24.dp)
-                        .background(
-                            color = selectedCategory.color.copy(alpha = 0.15f),
-                            shape = CircleShape
-                        ),
-                    contentAlignment = Alignment.Center
+                    modifier = Modifier.padding(start = 12.dp).size(24.dp).background(
+                        color = selectedCategory.color.copy(alpha = 0.15f), shape = CircleShape
+                    ), contentAlignment = Alignment.Center
                 ) {
                     Icon(
                         imageVector = selectedCategory.icon,
@@ -73,9 +72,7 @@ fun CategoryDropdownField(
                 focusedBorderColor = MaterialTheme.colorScheme.outline,
                 unfocusedBorderColor = MaterialTheme.colorScheme.outline
             ),
-            modifier = Modifier
-                .fillMaxWidth()
-                .menuAnchor()
+            modifier = Modifier.fillMaxWidth().menuAnchor()
         )
 
         ExposedDropdownMenu(
@@ -84,29 +81,55 @@ fun CategoryDropdownField(
             modifier = Modifier.background(MaterialTheme.colorScheme.surface)
         ) {
             categories.forEach { category ->
-                DropdownMenuItem(
-                    leadingIcon = {
-                        Box(
-                            modifier = Modifier
-                                .size(24.dp)
-                                .background(category.color.copy(alpha = 0.15f), shape = CircleShape),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Icon(
-                                imageVector = category.icon,
-                                contentDescription = null,
-                                tint = category.color,
-                                modifier = Modifier.size(14.dp)
-                            )
-                        }
-                    },
-                    text = { Text(text = category.name) },
-                    onClick = {
-                        onCategorySelected(category)
-                        expanded = false
+                DropdownMenuItem(leadingIcon = {
+                    Box(
+                        modifier = Modifier.size(24.dp).background(
+                            category.color.copy(alpha = 0.15f), shape = CircleShape
+                        ), contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            imageVector = category.icon,
+                            contentDescription = null,
+                            tint = category.color,
+                            modifier = Modifier.size(14.dp)
+                        )
                     }
-                )
+                }, text = { Text(text = category.name) }, onClick = {
+                    onCategorySelected(category)
+                    expanded = false
+                })
             }
         }
+    }
+}
+
+@Preview(name = "Dropdown Light Mode", showBackground = true, widthDp = 360, heightDp = 300)
+@Composable
+fun CategoryDropdownFieldLightPreview() {
+    PocketGoalsTheme(themeMode = ThemeMode.LIGHT) {
+        CategoryDropdownPreviewContainer()
+    }
+}
+
+@Preview(name = "Dropdown Dark Mode", showBackground = true, widthDp = 360, heightDp = 300)
+@Composable
+fun CategoryDropdownFieldDarkPreview() {
+    PocketGoalsTheme(themeMode = ThemeMode.DARK) {
+        CategoryDropdownPreviewContainer()
+    }
+}
+
+@Composable
+private fun CategoryDropdownPreviewContainer() {
+    val sampleCategories = remember { ExpenseCategory.defaultCategories.take(5) }
+    var selectedCategory by remember { mutableStateOf(sampleCategories.first()) }
+
+    Box(
+        modifier = Modifier.fillMaxSize().padding(16.dp), contentAlignment = Alignment.TopCenter
+    ) {
+        CategoryDropdownField(
+            selectedCategory = selectedCategory,
+            categories = sampleCategories,
+            onCategorySelected = { selectedCategory = it })
     }
 }

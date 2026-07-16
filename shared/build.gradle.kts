@@ -38,6 +38,7 @@ kotlin {
     sourceSets {
         androidMain.dependencies {
             implementation(libs.compose.uiToolingPreview)
+            implementation(libs.androidx.appcompat)
         }
         commonMain.dependencies {
             implementation(libs.compose.runtime)

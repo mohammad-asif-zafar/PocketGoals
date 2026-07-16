@@ -17,9 +17,19 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.material.icons.automirrored.rounded.MenuBook
 import androidx.compose.material.icons.automirrored.rounded.TrendingUp
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.hathway.pocketgoals.domain.model.ThemeMode
+import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
+import org.jetbrains.compose.resources.stringResource
+import pocketgoals.shared.generated.resources.Res
+import pocketgoals.shared.generated.resources.choose_icon
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -74,7 +84,7 @@ fun IconPickerSheet(
                 .padding(bottom = 32.dp)
         ) {
             Text(
-                text = "Choose Icon",
+                text = stringResource(Res.string.choose_icon),
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(bottom = 16.dp)
@@ -111,6 +121,52 @@ fun IconPickerSheet(
                     }
                 }
             }
+        }
+    }
+}
+
+
+@Preview(name = "Light Mode", showBackground = true)
+@Composable
+fun IconPickerSheetLightPreview() {
+    PocketGoalsTheme(themeMode = ThemeMode.LIGHT) {
+        IconPickerPreviewContent()
+    }
+}
+
+@Preview(name = "Dark Mode", showBackground = true)
+@Composable
+fun IconPickerSheetDarkPreview() {
+    PocketGoalsTheme(themeMode = ThemeMode.DARK) {
+        IconPickerPreviewContent()
+    }
+}
+
+@Composable
+private fun IconPickerPreviewContent() {
+    var showSheet by remember { mutableStateOf(true) }
+    var selectedIcon by remember { mutableStateOf(Icons.Rounded.Coffee) }
+
+    // Using your custom static Category Color definition for the selected token tint
+
+    var selectedColor by remember { mutableStateOf(Color(0xFF10B981)) }
+
+
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Button(onClick = { showSheet = true }) {
+            Text("Open Icon Picker")
+        }
+
+        if (showSheet) {
+            IconPickerSheet(
+                selectedIcon = selectedIcon,
+                selectedColor = selectedColor,
+                onIconSelected = { selectedIcon = it },
+                onDismiss = { showSheet = false }
+            )
         }
     }
 }

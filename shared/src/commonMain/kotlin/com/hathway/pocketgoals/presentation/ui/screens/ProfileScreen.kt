@@ -1,30 +1,80 @@
 package com.hathway.pocketgoals.presentation.ui.screens
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowRight
 import androidx.compose.material.icons.automirrored.rounded.Logout
-import androidx.compose.material.icons.rounded.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material.icons.rounded.Close
+import androidx.compose.material.icons.rounded.DarkMode
+import androidx.compose.material.icons.rounded.Language
+import androidx.compose.material.icons.rounded.Notifications
+import androidx.compose.material.icons.rounded.Palette
+import androidx.compose.material.icons.rounded.Person
+import androidx.compose.material.icons.rounded.SettingsBrightness
+import androidx.compose.material.icons.rounded.WbSunny
+import androidx.compose.material3.BottomSheetDefaults
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.RadioButtonDefaults
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.hathway.pocketgoals.domain.model.AppLanguage
 import com.hathway.pocketgoals.domain.model.ThemeMode
 import com.hathway.pocketgoals.presentation.ui.components.add_expense_components.AddExpenseTopBar
+import com.hathway.pocketgoals.presentation.ui.components.proflie_components.ProfileOptionItem
 import com.hathway.pocketgoals.presentation.ui.viewmodel.SettingsViewModel
 import org.jetbrains.compose.resources.stringResource
-import pocketgoals.shared.generated.resources.*
+import pocketgoals.shared.generated.resources.Res
+import pocketgoals.shared.generated.resources.app_language
+import pocketgoals.shared.generated.resources.app_settings
+import pocketgoals.shared.generated.resources.app_theme
+import pocketgoals.shared.generated.resources.cancel
+import pocketgoals.shared.generated.resources.choose_language
+import pocketgoals.shared.generated.resources.choose_theme
+import pocketgoals.shared.generated.resources.logout
+import pocketgoals.shared.generated.resources.notifications
+import pocketgoals.shared.generated.resources.profile
+import pocketgoals.shared.generated.resources.theme_dark
+import pocketgoals.shared.generated.resources.theme_light
+import pocketgoals.shared.generated.resources.theme_system
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileScreen(
     settingsViewModel: SettingsViewModel,
@@ -35,6 +85,7 @@ fun ProfileScreen(
     
     var showThemeDialog by remember { mutableStateOf(false) }
     var showLanguageDialog by remember { mutableStateOf(false) }
+    val sheetState = rememberModalBottomSheetState()
 
     Scaffold(
         topBar = {
@@ -59,7 +110,7 @@ fun ProfileScreen(
                         modifier = Modifier
                             .size(100.dp)
                             .clip(CircleShape)
-                            .background(MaterialTheme.colorScheme.primaryContainer),
+                            .background(MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.4f)),
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
@@ -71,12 +122,12 @@ fun ProfileScreen(
                     }
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(
-                        text = "Alex Zafar",
+                        text = "Asif Zafar",
                         style = MaterialTheme.typography.headlineSmall,
                         fontWeight = FontWeight.Bold
                     )
                     Text(
-                        text = "alex.zafar@example.com",
+                        text = "Manage your account and preferences",
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -120,6 +171,7 @@ fun ProfileScreen(
                     icon = Icons.Rounded.Notifications,
                     title = stringResource(Res.string.notifications),
                     subtitle = "On",
+                    subtitleColor = MaterialTheme.colorScheme.primary,
                     onClick = { }
                 )
             }
@@ -129,15 +181,16 @@ fun ProfileScreen(
                 Button(
                     onClick = { },
                     modifier = Modifier.fillMaxWidth().height(56.dp),
-                    shape = RoundedCornerShape(12.dp),
+                    shape = RoundedCornerShape(16.dp),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.errorContainer,
-                        contentColor = MaterialTheme.colorScheme.error
-                    )
+                        containerColor = Color(0xFF311010),
+                        contentColor = Color(0xFFEF4444)
+                    ),
+                    border = BorderStroke(1.dp, Color(0xFFEF4444).copy(alpha = 0.2f))
                 ) {
-                    Icon(Icons.AutoMirrored.Rounded.Logout, null)
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text(stringResource(Res.string.logout), fontWeight = FontWeight.Bold)
+                    Icon(Icons.AutoMirrored.Rounded.Logout, null, modifier = Modifier.size(20.dp))
+                    Spacer(modifier = Modifier.width(12.dp))
+                    Text(stringResource(Res.string.logout), fontWeight = FontWeight.Bold, fontSize = 16.sp)
                 }
                 Spacer(modifier = Modifier.height(24.dp))
             }
@@ -145,118 +198,311 @@ fun ProfileScreen(
     }
 
     if (showThemeDialog) {
-        AlertDialog(
+        ModalBottomSheet(
             onDismissRequest = { showThemeDialog = false },
-            title = { Text(stringResource(Res.string.choose_theme)) },
-            text = {
-                Column {
-                    ThemeMode.entries.forEach { mode ->
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .clickable {
-                                    settingsViewModel.setThemeMode(mode)
-                                    showThemeDialog = false
-                                }
-                                .padding(vertical = 12.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            RadioButton(
-                                selected = themeMode == mode,
-                                onClick = null
-                            )
-                            Spacer(modifier = Modifier.width(8.dp))
-                            Text(text = when(mode) {
-                                ThemeMode.SYSTEM -> stringResource(Res.string.theme_system)
-                                ThemeMode.LIGHT -> stringResource(Res.string.theme_light)
-                                ThemeMode.DARK -> stringResource(Res.string.theme_dark)
-                            })
-                        }
+            sheetState = sheetState,
+            dragHandle = {
+                BottomSheetDefaults.DragHandle()
+            },
+            containerColor = MaterialTheme.colorScheme.surface,
+            shape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp)
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 24.dp)
+                    .padding(bottom = 32.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .size(40.dp)
+                            .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f), CircleShape),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            imageVector = Icons.Rounded.Palette,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+                    }
+                    Spacer(modifier = Modifier.width(16.dp))
+                    Column {
+                        Text(
+                            text = stringResource(Res.string.choose_theme),
+                            style = MaterialTheme.typography.titleLarge,
+                            fontWeight = FontWeight.Bold
+                        )
+                        Text(
+                            text = "Select your preferred app appearance",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
                     }
                 }
-            },
-            confirmButton = {
-                TextButton(onClick = { showThemeDialog = false }) {
-                    Text(stringResource(Res.string.cancel))
+
+                Spacer(modifier = Modifier.height(24.dp))
+
+                ThemeOptionItem(
+                    title = stringResource(Res.string.theme_system),
+                    subtitle = "Follow system appearance",
+                    icon = Icons.Rounded.SettingsBrightness,
+                    iconColor = Color.Gray,
+                    isSelected = themeMode == ThemeMode.SYSTEM,
+                    onClick = { 
+                        settingsViewModel.setThemeMode(ThemeMode.SYSTEM)
+                        showThemeDialog = false
+                    }
+                )
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                ThemeOptionItem(
+                    title = stringResource(Res.string.theme_light),
+                    subtitle = "Always use light theme",
+                    icon = Icons.Rounded.WbSunny,
+                    iconColor = Color(0xFFF59E0B),
+                    isSelected = themeMode == ThemeMode.LIGHT,
+                    onClick = { 
+                        settingsViewModel.setThemeMode(ThemeMode.LIGHT)
+                        showThemeDialog = false
+                    }
+                )
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                ThemeOptionItem(
+                    title = stringResource(Res.string.theme_dark),
+                    subtitle = "Always use dark theme",
+                    icon = Icons.Rounded.DarkMode,
+                    iconColor = MaterialTheme.colorScheme.primary,
+                    isSelected = themeMode == ThemeMode.DARK,
+                    onClick = { 
+                        settingsViewModel.setThemeMode(ThemeMode.DARK)
+                        showThemeDialog = false
+                    }
+                )
+
+                Spacer(modifier = Modifier.height(24.dp))
+
+                Button(
+                    onClick = { showThemeDialog = false },
+                    modifier = Modifier.fillMaxWidth().height(56.dp),
+                    shape = RoundedCornerShape(16.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
+                        contentColor = MaterialTheme.colorScheme.primary
+                    )
+                ) {
+                    Icon(Icons.Rounded.Close, null, modifier = Modifier.size(18.dp))
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(stringResource(Res.string.cancel), fontWeight = FontWeight.Bold)
                 }
             }
-        )
+        }
     }
 
     if (showLanguageDialog) {
-        AlertDialog(
+        ModalBottomSheet(
             onDismissRequest = { showLanguageDialog = false },
-            title = { Text(stringResource(Res.string.choose_language)) },
-            text = {
-                Column {
-                    AppLanguage.entries.forEach { lang ->
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .clickable {
-                                    settingsViewModel.setLanguage(lang)
-                                    showLanguageDialog = false
-                                }
-                                .padding(vertical = 12.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            RadioButton(
-                                selected = language == lang,
-                                onClick = null
-                            )
-                            Spacer(modifier = Modifier.width(8.dp))
-                            Text(text = lang.label)
-                        }
+            sheetState = sheetState,
+            dragHandle = {
+                BottomSheetDefaults.DragHandle()
+            },
+            containerColor = MaterialTheme.colorScheme.surface,
+            shape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp)
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 24.dp)
+                    .padding(bottom = 32.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .size(40.dp)
+                            .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f), CircleShape),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            imageVector = Icons.Rounded.Language,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+                    }
+                    Spacer(modifier = Modifier.width(16.dp))
+                    Column {
+                        Text(
+                            text = stringResource(Res.string.choose_language),
+                            style = MaterialTheme.typography.titleLarge,
+                            fontWeight = FontWeight.Bold
+                        )
+                        Text(
+                            text = "Select your preferred language",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
                     }
                 }
-            },
-            confirmButton = {
-                TextButton(onClick = { showLanguageDialog = false }) {
-                    Text(stringResource(Res.string.cancel))
+
+                Spacer(modifier = Modifier.height(24.dp))
+
+                AppLanguage.entries.forEach { lang ->
+                    LanguageOptionItem(
+                        language = lang,
+                        isSelected = language == lang,
+                        onClick = {
+                            settingsViewModel.setLanguage(lang)
+                            showLanguageDialog = false
+                        }
+                    )
+                    Spacer(modifier = Modifier.height(12.dp))
+                }
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                Button(
+                    onClick = { showLanguageDialog = false },
+                    modifier = Modifier.fillMaxWidth().height(56.dp),
+                    shape = RoundedCornerShape(16.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
+                        contentColor = MaterialTheme.colorScheme.primary
+                    )
+                ) {
+                    Icon(Icons.Rounded.Close, null, modifier = Modifier.size(18.dp))
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(stringResource(Res.string.cancel), fontWeight = FontWeight.Bold)
                 }
             }
-        )
+        }
     }
 }
 
 @Composable
-fun ProfileOptionItem(
-    icon: ImageVector,
-    title: String,
-    subtitle: String,
+fun LanguageOptionItem(
+    language: AppLanguage,
+    isSelected: Boolean,
     onClick: () -> Unit
 ) {
+    val borderColor = if (isSelected) MaterialTheme.colorScheme.primary else Color.Transparent
+    val backgroundColor = if (isSelected) MaterialTheme.colorScheme.primary.copy(alpha = 0.05f) else MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f)
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(12.dp))
-            .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f))
+            .clip(RoundedCornerShape(16.dp))
+            .background(backgroundColor)
+            .then(
+                if (isSelected) Modifier.border(1.dp, borderColor, RoundedCornerShape(16.dp))
+                else Modifier
+            )
             .clickable(onClick = onClick)
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Box(
             modifier = Modifier
-                .size(40.dp)
-                .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f), CircleShape),
+                .size(48.dp)
+                .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f), RoundedCornerShape(12.dp)),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = language.symbol,
+                color = MaterialTheme.colorScheme.primary,
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold
+            )
+        }
+        Spacer(modifier = Modifier.width(16.dp))
+        Column(modifier = Modifier.weight(1f)) {
+            Text(
+                text = language.label,
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold
+            )
+            Text(
+                text = language.nativeLabel,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+        RadioButton(
+            selected = isSelected,
+            onClick = null,
+            colors = RadioButtonDefaults.colors(
+                selectedColor = MaterialTheme.colorScheme.primary
+            )
+        )
+    }
+}
+
+@Composable
+fun ThemeOptionItem(
+    title: String,
+    subtitle: String,
+    icon: ImageVector,
+    iconColor: Color,
+    isSelected: Boolean,
+    onClick: () -> Unit
+) {
+    val borderColor = if (isSelected) MaterialTheme.colorScheme.primary else Color.Transparent
+    val backgroundColor = if (isSelected) MaterialTheme.colorScheme.primary.copy(alpha = 0.05f) else MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f)
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(16.dp))
+            .background(backgroundColor)
+            .then(
+                if (isSelected) Modifier.border(1.dp, borderColor, RoundedCornerShape(16.dp))
+                else Modifier
+            )
+            .clickable(onClick = onClick)
+            .padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Box(
+            modifier = Modifier
+                .size(48.dp)
+                .background(iconColor.copy(alpha = 0.1f), CircleShape),
             contentAlignment = Alignment.Center
         ) {
             Icon(
                 imageVector = icon,
                 contentDescription = null,
-                tint = MaterialTheme.colorScheme.primary,
+                tint = iconColor,
                 modifier = Modifier.size(24.dp)
             )
         }
         Spacer(modifier = Modifier.width(16.dp))
         Column(modifier = Modifier.weight(1f)) {
-            Text(text = title, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.SemiBold)
-            Text(text = subtitle, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(
+                text = title,
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold
+            )
+            Text(
+                text = subtitle,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
         }
-        Icon(
-            imageVector = Icons.AutoMirrored.Rounded.KeyboardArrowRight,
-            contentDescription = null,
-            tint = MaterialTheme.colorScheme.outline
+        RadioButton(
+            selected = isSelected,
+            onClick = null,
+            colors = RadioButtonDefaults.colors(
+                selectedColor = MaterialTheme.colorScheme.primary
+            )
         )
     }
 }

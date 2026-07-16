@@ -70,12 +70,12 @@
     <string name="color_label">Color</string>
     <string name="save_category">Save Category</string>
     <string name="update_category">Update Category</string>
-    <string name="delete_category_confirm">Delete \'%s\'?</string>
-    <string name="delete_category_desc">This category and its data will\nbe permanently deleted.</string>
+    <string name="delete_category_confirm">Delete '%1$s'?</string>
+    <string name="delete_category_desc">This category and its data will\\n be permanently deleted.</string>
     <string name="cancel">Cancel</string>
     <string name="confirm_delete">Delete Category</string>
     <string name="expense_added">Expense Added!</string>
-    <string name="expense_added_desc">₹%s has been added to\n%s successfully.</string>
+    <string name="expense_added_desc">%1$s has been added to \\n %2$s successfully."</string>
     <string name="view_expense">View Expense</string>
     <string name="add_another_expense">Add Another Expense</string>
     <string name="summary">Summary</string>
@@ -117,7 +117,7 @@
     <string name="theme_light">Light Mode</string>
     <string name="theme_dark">Dark Mode</string>
     <string name="income_added">Income Added!</string>
-    <string name="income_added_desc">₹%s has been added to\n%s successfully.</string>
+    <string name="income_added_desc">"%1$s has been added to  %2$s successfully."</string>
     <string name="view_income">View Income</string>
     <string name="add_another_income">Add Another Income</string>
     <string name="save_income">Save Income</string>
@@ -237,5 +237,20 @@
     <string name="biometric_prompt_reason">Confirm identity to unlock your PocketGoals vault dashboard</string>
     <string name="biometric_not_available">Biometric authentication is not supported or configured on this device</string>
 
+    <string name="search_categories_hint">Search categories...</string>
+    <string name="more_categories_title">More Categories</string>
+    <string name="see_all_action">See All</string>
+    <string name="add_new_category_action">Add New Category</string>
+    <string name="go_back_desc">Go back</string>
+    <string name="category_name_placeholder">e.g. Pet Care</string>
+    <string name="confirm_date_action">Confirm Date</string>
+
+    <string name="method_cash">Cash</string>
+    <string name="method_card">Card</string>
+    <string name="method_upi">UPI / QR</string>
+    <string name="method_bank">Bank Transfer</string>
+    <string name="add_note_title">Add Note</string>
+    <string name="note_input_placeholder">Enter details about this transaction...</string>
+    <string name="done_action">Done</string>
 
 </resources>

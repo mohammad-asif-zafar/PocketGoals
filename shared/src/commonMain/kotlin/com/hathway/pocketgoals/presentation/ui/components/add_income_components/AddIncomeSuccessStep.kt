@@ -27,16 +27,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.hathway.pocketgoals.domain.model.ThemeMode
+import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
 import org.jetbrains.compose.resources.stringResource
 import pocketgoals.shared.generated.resources.*
 
 @Composable
 fun AddIncomeSuccessStep(
-    amount: String,
-    typeName: String,
-    onViewIncome: () -> Unit,
-    onAddAnother: () -> Unit
+    amount: String, typeName: String, onViewIncome: () -> Unit, onAddAnother: () -> Unit
 ) {
     Column(
         modifier = Modifier.fillMaxSize().padding(24.dp),
@@ -44,10 +44,16 @@ fun AddIncomeSuccessStep(
         verticalArrangement = Arrangement.Center
     ) {
         Box(
-            modifier = Modifier.size(100.dp).background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f), CircleShape),
+            modifier = Modifier.size(100.dp)
+                .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f), CircleShape),
             contentAlignment = Alignment.Center
         ) {
-            Icon(Icons.Rounded.Check, null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(48.dp))
+            Icon(
+                Icons.Rounded.Check,
+                null,
+                tint = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.size(48.dp)
+            )
         }
         Spacer(modifier = Modifier.height(24.dp))
         Text(
@@ -85,7 +91,35 @@ fun AddIncomeSuccessStep(
             shape = RoundedCornerShape(12.dp),
             border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary)
         ) {
-            Text(stringResource(Res.string.add_another_income), color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold)
+            Text(
+                stringResource(Res.string.add_another_income),
+                color = MaterialTheme.colorScheme.primary,
+                fontWeight = FontWeight.Bold
+            )
         }
+    }
+}
+
+@Preview(name = "Success Light Mode", showBackground = true, widthDp = 360, heightDp = 640)
+@Composable
+fun AddIncomeSuccessStepLightPreview() {
+    PocketGoalsTheme(themeMode = ThemeMode.LIGHT) {
+        AddIncomeSuccessStep(
+            amount = "$5,000",
+            typeName = "Salary",
+            onViewIncome = {},
+            onAddAnother = {})
+    }
+}
+
+@Preview(name = "Success Dark Mode", showBackground = true, widthDp = 360, heightDp = 640)
+@Composable
+fun AddIncomeSuccessStepDarkPreview() {
+    PocketGoalsTheme(themeMode = ThemeMode.DARK) {
+        AddIncomeSuccessStep(
+            amount = "$5,000",
+            typeName = "Salary",
+            onViewIncome = {},
+            onAddAnother = {})
     }
 }

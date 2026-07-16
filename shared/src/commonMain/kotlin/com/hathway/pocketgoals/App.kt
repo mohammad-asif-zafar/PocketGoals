@@ -3,6 +3,7 @@ package com.hathway.pocketgoals
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.hathway.pocketgoals.presentation.ui.navigation.NavigationContainer
@@ -15,8 +16,13 @@ fun App(
     settingsViewModel: SettingsViewModel = viewModel()
 ) {
     val themeMode by settingsViewModel.themeMode.collectAsState()
-    
-    PocketGoalsTheme(themeMode = themeMode) {
-        NavigationContainer()
+    val language by settingsViewModel.language.collectAsState()
+
+    // Using key(language) forces a full recomposition when the language changes,
+    // ensuring all stringResource() calls are re-evaluated.
+    key(language) {
+        PocketGoalsTheme(themeMode = themeMode) {
+            NavigationContainer()
+        }
     }
 }

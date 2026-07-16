@@ -17,9 +17,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.hathway.pocketgoals.domain.ExpenseCategory
+import com.hathway.pocketgoals.domain.model.ThemeMode
 import com.hathway.pocketgoals.presentation.ui.components.add_expense_components.FormField
+import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
 import org.jetbrains.compose.resources.stringResource
 import pocketgoals.shared.generated.resources.*
 
@@ -36,11 +39,21 @@ fun AddEditCategoryForm(
     var showIconPicker by remember { mutableStateOf(false) }
 
     val colors = listOf(
-        Color(0xFF10B981), Color(0xFF3B82F6), Color(0xFFF59E0B),
-        Color(0xFFEC4899), Color(0xFF6366F1), Color(0xFF8B5CF6),
-        Color(0xFFEF4444), Color(0xFF14B8A6), Color(0xFFF87171),
-        Color(0xFFFB923C), Color(0xFF0EA5E9), Color(0xFF84cc16),
-        Color(0xFFa855f7), Color(0xFFd946ef), Color(0xFFf43f5e)
+        Color(0xFF10B981),
+        Color(0xFF3B82F6),
+        Color(0xFFF59E0B),
+        Color(0xFFEC4899),
+        Color(0xFF6366F1),
+        Color(0xFF8B5CF6),
+        Color(0xFFEF4444),
+        Color(0xFF14B8A6),
+        Color(0xFFF87171),
+        Color(0xFFFB923C),
+        Color(0xFF0EA5E9),
+        Color(0xFF84cc16),
+        Color(0xFFa855f7),
+        Color(0xFFd946ef),
+        Color(0xFFf43f5e)
     )
 
     if (showIconPicker) {
@@ -48,8 +61,7 @@ fun AddEditCategoryForm(
             selectedIcon = selectedIcon,
             selectedColor = selectedColor,
             onIconSelected = { selectedIcon = it },
-            onDismiss = { showIconPicker = false }
-        )
+            onDismiss = { showIconPicker = false })
     }
 
     Column(
@@ -57,12 +69,10 @@ fun AddEditCategoryForm(
         verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
         Box(
-            modifier = Modifier.fillMaxWidth(),
-            contentAlignment = Alignment.Center
+            modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center
         ) {
             Box(
-                modifier = Modifier
-                    .size(80.dp)
+                modifier = Modifier.size(80.dp)
                     .background(selectedColor.copy(alpha = 0.1f), CircleShape)
                     .border(2.dp, selectedColor.copy(alpha = 0.3f), CircleShape),
                 contentAlignment = Alignment.Center
@@ -80,7 +90,7 @@ fun AddEditCategoryForm(
             OutlinedTextField(
                 value = name,
                 onValueChange = { name = it },
-                placeholder = { Text("e.g. Pet Care") },
+                placeholder = { Text(text = stringResource(Res.string.category_name_placeholder)) },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(12.dp),
                 singleLine = true,
@@ -93,24 +103,32 @@ fun AddEditCategoryForm(
 
         FormField(label = stringResource(Res.string.icon_label)) {
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp)
-                    .border(1.dp, MaterialTheme.colorScheme.outline.copy(alpha = 0.3f), RoundedCornerShape(12.dp))
-                    .clickable { showIconPicker = true }
-                    .padding(horizontal = 12.dp),
+                modifier = Modifier.fillMaxWidth().height(56.dp).border(
+                    1.dp,
+                    MaterialTheme.colorScheme.outline.copy(alpha = 0.3f),
+                    RoundedCornerShape(12.dp)
+                ).clickable { showIconPicker = true }.padding(horizontal = 12.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Box(
-                    modifier = Modifier.size(36.dp).background(selectedColor.copy(alpha = 0.1f), RoundedCornerShape(8.dp)),
+                    modifier = Modifier.size(36.dp)
+                        .background(selectedColor.copy(alpha = 0.1f), RoundedCornerShape(8.dp)),
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(selectedIcon, null, tint = selectedColor, modifier = Modifier.size(20.dp))
                 }
                 Spacer(modifier = Modifier.width(12.dp))
-                Text(stringResource(Res.string.select_category), color = MaterialTheme.colorScheme.onSurface, fontWeight = FontWeight.Medium)
+                Text(
+                    stringResource(Res.string.select_category),
+                    color = MaterialTheme.colorScheme.onSurface,
+                    fontWeight = FontWeight.Medium
+                )
                 Spacer(modifier = Modifier.weight(1f))
-                Icon(Icons.AutoMirrored.Rounded.KeyboardArrowRight, null, tint = MaterialTheme.colorScheme.outline)
+                Icon(
+                    Icons.AutoMirrored.Rounded.KeyboardArrowRight,
+                    null,
+                    tint = MaterialTheme.colorScheme.outline
+                )
             }
         }
 
@@ -121,17 +139,12 @@ fun AddEditCategoryForm(
             ) {
                 colors.take(8).forEach { color ->
                     Box(
-                        modifier = Modifier
-                            .size(32.dp)
-                            .clip(CircleShape)
-                            .background(color)
-                            .clickable { selectedColor = color }
-                            .border(
+                        modifier = Modifier.size(32.dp).clip(CircleShape).background(color)
+                            .clickable { selectedColor = color }.border(
                                 width = if (selectedColor == color) 3.dp else 0.dp,
                                 color = if (selectedColor == color) Color.White else Color.Transparent,
                                 shape = CircleShape
-                            )
-                            .then(
+                            ).then(
                                 if (selectedColor == color) {
                                     Modifier.border(1.dp, color.copy(alpha = 0.5f), CircleShape)
                                 } else Modifier
@@ -144,23 +157,61 @@ fun AddEditCategoryForm(
         Spacer(modifier = Modifier.weight(1f))
 
         Button(
-            onClick = { if (name.isNotBlank()) onSave(ExpenseCategory(name, selectedColor, selectedIcon)) },
+            onClick = {
+                if (name.isNotBlank()) onSave(
+                    ExpenseCategory(
+                        name, selectedColor, selectedIcon
+                    )
+                )
+            },
             modifier = Modifier.fillMaxWidth().height(56.dp),
             shape = RoundedCornerShape(12.dp),
             enabled = name.isNotBlank()
         ) {
-            Text(if (initialCategory == null) stringResource(Res.string.save_category) else stringResource(Res.string.update_category), fontWeight = FontWeight.Bold)
+            Text(
+                if (initialCategory == null) stringResource(Res.string.save_category) else stringResource(
+                    Res.string.update_category
+                ), fontWeight = FontWeight.Bold
+            )
         }
 
         if (onDelete != null) {
             TextButton(
-                onClick = onDelete,
-                modifier = Modifier.fillMaxWidth()
+                onClick = onDelete, modifier = Modifier.fillMaxWidth()
             ) {
                 Icon(Icons.Rounded.Delete, null, tint = MaterialTheme.colorScheme.error)
                 Spacer(modifier = Modifier.width(8.dp))
-                Text(stringResource(Res.string.delete_category), color = MaterialTheme.colorScheme.error)
+                Text(
+                    stringResource(Res.string.delete_category),
+                    color = MaterialTheme.colorScheme.error
+                )
             }
         }
     }
+}
+
+@Preview(name = "Form Light Mode", showBackground = true, widthDp = 360, heightDp = 720)
+@Composable
+fun AddEditCategoryFormLightPreview() {
+    PocketGoalsTheme(themeMode = ThemeMode.LIGHT) {
+        AddEditCategoryFormPreviewContent()
+    }
+}
+
+@Preview(name = "Form Dark Mode", showBackground = true, widthDp = 360, heightDp = 720)
+@Composable
+fun AddEditCategoryFormDarkPreview() {
+    PocketGoalsTheme(themeMode = ThemeMode.DARK) {
+        AddEditCategoryFormPreviewContent()
+    }
+}
+
+@Composable
+private fun AddEditCategoryFormPreviewContent() {
+    // Pass null to preview the "Add Category" state, or mock data to preview "Edit Category"
+    AddEditCategoryForm(
+        initialCategory = null,
+        onSave = {},
+        onDelete = {} // Providing a callback ensures the delete text button is rendered
+    )
 }

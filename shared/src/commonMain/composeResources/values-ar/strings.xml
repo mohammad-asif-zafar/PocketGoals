@@ -143,7 +143,23 @@
     <string name="good_evening">مساء الخير</string>
     <string name="notifications">الإشعارات</string>
     <string name="profile">الملف الشخصي</string>
-
+    <string name="go_back_desc">الرجوع للخلف</string>
+    <string name="delete_category">حذف الفئة</string>
     <string name="custom_amount_title">أدخل مبلغًا مخصصًا</string>
     <string name="custom_amount_confirm">تأكيد المبلغ</string>
+    <string name="income_added_desc">"تم إضافة %1$s د.إ إلى\\n%2$s بنجاح."</string>
+    <string name="search_categories_hint">البحث عن الفئات...</string>
+    <string name="more_categories_title">المزيد من الفئات</string>
+    <string name="see_all_action">عرض الكل</string>
+    <string name="add_new_category_action">إضافة فئة جديدة</string>
+    <string name="category_name_placeholder">مثال: رعاية الحيوانات الأليفة</string>
+    <string name="confirm_date_action">تأكيد التاريخ</string>
+    <string name="method_cash">نقداً</string>
+    <string name="method_card">بطاقة</string>
+    <string name="method_upi">مسح رمز QR</string>
+    <string name="method_bank">تحويل بنكي</string>
+
+    <string name="add_note_title">إضافة ملاحظة</string>
+    <string name="note_input_placeholder">أدخل تفاصيل حول هذه المعاملة...</string>
+    <string name="done_action">تم</string>
 </resources>

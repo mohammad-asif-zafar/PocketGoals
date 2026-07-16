@@ -8,6 +8,7 @@
 
     <string name="title_save_money">مزید رقم بچائیں</string>
     <string name="desc_save_money">بجٹ ترتیب دیں، اخراجات پر نظر رکھیں اور\nہر ماہ زیادہ بچت کریں۔</string>
+    <string name="income_added_desc">"Rs. %1$s کامیابی کے ساتھ\\n%2$s میں شامل کر دیا گیا ہے۔"</string>
 
     <string name="title_achieve_goals">اپنے مقاصد حاصل کریں</string>
     <string name="desc_achieve_goals">اپنی مرضی کے مطابق اہداف بنائیں اور اپنے\nمالی خوابوں کو پورا کریں۔</string>
@@ -143,8 +144,23 @@
     <string name="notifications">نوٹیفیکیشنز</string>
     <string name="profile">پروفائل</string>
 
+    <string name="go_back_desc">پیچھے جائیں</string>
+    <string name="delete_category">زمرہ حذف کریں</string>
 
     <string name="custom_amount_title">رقم درج کریں</string>
     <string name="custom_amount_confirm">رقم کی تصدیق کریں</string>
-    
+    <string name="search_categories_hint">زمرہ جات تلاش کریں...</string>
+    <string name="more_categories_title">مزید زمرہ جات</string>
+    <string name="see_all_action">سب دیکھیں</string>
+    <string name="add_new_category_action">نیا زمرہ شامل کریں</string>
+    <string name="category_name_placeholder">جیسے: پالتو جانوروں کی دیکھ بھال</string>
+    <string name="confirm_date_action">تاریخ کی تصدیق کریں</string>
+    <string name="method_cash">نقد</string>
+    <string name="method_card">कार्ड / کارڈ</string>
+    <string name="method_upi">یو پی آئی / کیو آر</string>
+    <string name="method_bank">بینک ٹرانسفر</string>
+    <string name="add_note_title">نوٹ شامل کریں</string>
+    <string name="note_input_placeholder">اس لین دین کے بارے میں تفصیلات درج کریں...</string>
+    <string name="done_action">ہو گیا</string>
+
 </resources>

@@ -11,6 +11,7 @@ import androidx.compose.material.icons.automirrored.rounded.Notes
 import androidx.compose.material.icons.rounded.CalendarToday
 import androidx.compose.material.icons.rounded.CreditCard
 import androidx.compose.material.icons.rounded.Payments
+import androidx.compose.material.icons.rounded.Restaurant
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -19,8 +20,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.hathway.pocketgoals.domain.ExpenseCategory
+import com.hathway.pocketgoals.domain.model.ThemeMode
+import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
 import org.jetbrains.compose.resources.stringResource
 import pocketgoals.shared.generated.resources.*
 
@@ -90,45 +94,37 @@ fun AddExpenseSummaryStep(
     }
 }
 
+@Preview(name = "Summary Step Light Mode", showBackground = true, widthDp = 360, heightDp = 640)
 @Composable
-fun SummaryItemRow(
-    icon: ImageVector, label: String, value: String, customIconColor: Color? = null
-) {
-    val baseIconColor = customIconColor ?: MaterialTheme.colorScheme.primary
-    val iconContainerBg = baseIconColor.copy(alpha = 0.1f)
-
-    Row(
-        modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
-    ) {
-        Box(
-            modifier = Modifier.size(48.dp).clip(RoundedCornerShape(12.dp))
-                .background(iconContainerBg), contentAlignment = Alignment.Center
-        ) {
-            Icon(
-                imageVector = icon,
-                contentDescription = label,
-                tint = baseIconColor,
-                modifier = Modifier.size(24.dp)
-            )
-        }
-
-        Spacer(modifier = Modifier.width(16.dp))
-
-        Column(
-            verticalArrangement = Arrangement.spacedBy(4.dp)
-        ) {
-            Text(
-                text = label,
-                style = MaterialTheme.typography.labelMedium,
-                fontWeight = FontWeight.SemiBold,
-                color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)
-            )
-            Text(
-                text = value,
-                style = MaterialTheme.typography.bodyMedium,
-                fontWeight = FontWeight.Medium,
-                color = MaterialTheme.colorScheme.onSurface
-            )
-        }
+fun AddExpenseSummaryStepLightPreview() {
+    PocketGoalsTheme(themeMode = ThemeMode.LIGHT) {
+        AddExpenseSummaryStepPreviewContent()
     }
+}
+
+@Preview(name = "Summary Step Dark Mode", showBackground = true, widthDp = 360, heightDp = 640)
+@Composable
+fun AddExpenseSummaryStepDarkPreview() {
+    PocketGoalsTheme(themeMode = ThemeMode.DARK) {
+        AddExpenseSummaryStepPreviewContent()
+    }
+}
+
+@Composable
+private fun AddExpenseSummaryStepPreviewContent() {
+    val mockCategory = ExpenseCategory(
+        name = "Food & Dining",
+        color = Color(0xFFF59E0B),
+        icon = Icons.Rounded.Restaurant
+    )
+
+    AddExpenseSummaryStep(
+        amount = "1,250",
+        category = mockCategory,
+        date = "16 July 2026",
+        method = "Credit Card",
+        note = "Business dinner with clients",
+        onSave = {},
+        onCancel = {}
+    )
 }

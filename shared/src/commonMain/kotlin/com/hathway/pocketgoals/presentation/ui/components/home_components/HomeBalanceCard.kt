@@ -326,7 +326,7 @@ fun FullCurrencyMatrixPreview() {
         CurrencyPreviewRow(
             "Global - Default English (USD Prefix)",
             false,
-            CurrencyConfig.USD,
+            CurrencyConfig.INR,
             "5400",
             "1200",
             "450"
