@@ -2,11 +2,9 @@ package com.hathway.pocketgoals.presentation.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Home
-import androidx.compose.material.icons.rounded.Kitchen
-import androidx.compose.material.icons.rounded.Work
 import androidx.compose.ui.graphics.Color
+import com.hathway.pocketgoals.domain.model.TransactionType
+import com.hathway.pocketgoals.domain.repository.TransactionRepository
 import com.hathway.pocketgoals.presentation.ui.components.analytics_components.AnalyticsCategoryData
 import com.hathway.pocketgoals.presentation.ui.state.AnalyticsUiState
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,7 +13,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class AnalyticsViewModel : ViewModel() {
+class AnalyticsViewModel(
+    private val repository: TransactionRepository
+) : ViewModel() {
 
     // Internal mutable state backer
     private val _uiState = MutableStateFlow(AnalyticsUiState())
@@ -30,25 +30,49 @@ class AnalyticsViewModel : ViewModel() {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
 
-            // Simulation point for database or networking layer routines
-            val sampleCategories = listOf(
-                AnalyticsCategoryData("Investment", "₹31,023 (34.47%)", Color(0xFF3B82F6), Icons.Rounded.Work),
-                AnalyticsCategoryData("Basic Needs", "₹25,029 (27.81%)", Color(0xFF10B981), Icons.Rounded.Home),
-                AnalyticsCategoryData("Future Pay", "₹13,599 (15.11%)", Color(0xFFF59E0B), Icons.Rounded.Kitchen)
-            )
+            repository.getTransactions().collect { transactions ->
+                if (transactions.isEmpty()) {
+                    _uiState.update {
+                        it.copy(
+                            totalAmount = "₹0",
+                            categories = emptyList(),
+                            isLoading = false
+                        )
+                    }
+                } else {
+                    // Calculate real analytics from transactions
+                    val totalExpense = transactions
+                        .filter { it.type == TransactionType.EXPENSE }
+                        .sumOf { it.amount }
+                    
+                    // Simple category grouping for analytics
+                    val categoryGroups = transactions
+                        .filter { it.type == TransactionType.EXPENSE }
+                        .groupBy { it.category }
+                        .map { (category, txs) ->
+                            val amount = txs.sumOf { it.amount }
+                            val percentage = (amount / totalExpense * 100).toInt()
+                            AnalyticsCategoryData(
+                                name = category,
+                                value = "₹${amount.toInt()} ($percentage%)",
+                                color = Color(0xFF3B82F6), // Should come from category
+                                icon = txs.first().icon
+                            )
+                        }
 
-            _uiState.update {
-                it.copy(
-                    totalAmount = "₹90,000",
-                    categories = sampleCategories,
-                    isLoading = false
-                )
+                    _uiState.update {
+                        it.copy(
+                            totalAmount = "₹${totalExpense.toInt()}",
+                            categories = categoryGroups,
+                            isLoading = false
+                        )
+                    }
+                }
             }
         }
     }
 
     fun updateSelectedPeriod(period: String) {
         _uiState.update { it.copy(selectedPeriod = period) }
-        // Re-trigger loadAnalyticsData() here based on the selected period if needed
     }
 }

@@ -21,6 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.hathway.pocketgoals.data.GoalMockData
+import com.hathway.pocketgoals.data.repository.MockGoalRepositoryImpl
 import com.hathway.pocketgoals.domain.model.ThemeMode
 import com.hathway.pocketgoals.presentation.ui.components.goals_components.GoalItem
 import com.hathway.pocketgoals.presentation.ui.components.goals_components.GoalsTopBar
@@ -143,7 +144,7 @@ fun EmptyGoalsState(
 fun GoalsScreenDashboardPreview() {
     PocketGoalsTheme(themeMode = ThemeMode.LIGHT) {
         GoalsScreen(
-            viewModel = GoalsViewModel(),
+            viewModel = GoalsViewModel(MockGoalRepositoryImpl()),
             onAddGoalClick = {}
         )
     }

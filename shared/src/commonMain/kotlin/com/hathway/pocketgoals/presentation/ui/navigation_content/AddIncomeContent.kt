@@ -9,8 +9,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import com.hathway.pocketgoals.data.AddIncomeStep
 import com.hathway.pocketgoals.domain.IncomeType
-import com.hathway.pocketgoals.domain.Transaction
-import com.hathway.pocketgoals.domain.TransactionType
+import com.hathway.pocketgoals.domain.model.Transaction
+import com.hathway.pocketgoals.domain.model.TransactionType
 import com.hathway.pocketgoals.presentation.ui.components.add_expense_components.*
 import com.hathway.pocketgoals.presentation.ui.components.add_income_components.*
 import kotlinx.datetime.Clock

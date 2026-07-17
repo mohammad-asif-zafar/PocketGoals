@@ -10,8 +10,8 @@ import androidx.compose.ui.Modifier
 import com.hathway.pocketgoals.data.AddExpenseStep
 import com.hathway.pocketgoals.data.CategoryFlowStep
 import com.hathway.pocketgoals.domain.ExpenseCategory
-import com.hathway.pocketgoals.domain.Transaction
-import com.hathway.pocketgoals.domain.TransactionType
+import com.hathway.pocketgoals.domain.model.Transaction
+import com.hathway.pocketgoals.domain.model.TransactionType
 import com.hathway.pocketgoals.presentation.ui.components.add_expense_components.*
 import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
 import kotlinx.datetime.Clock

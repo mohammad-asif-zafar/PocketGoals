@@ -29,7 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.hathway.pocketgoals.domain.Transaction
+import com.hathway.pocketgoals.domain.model.Transaction
 import androidx.compose.material3.Surface
 import androidx.compose.ui.tooling.preview.Preview
 import com.hathway.pocketgoals.domain.model.ThemeMode

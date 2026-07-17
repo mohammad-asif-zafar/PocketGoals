@@ -5,16 +5,16 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.hathway.pocketgoals.presentation.ui.localization.LanguageProvider
 import com.hathway.pocketgoals.presentation.ui.navigation.NavigationContainer
 import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
 import com.hathway.pocketgoals.presentation.ui.viewmodel.SettingsViewModel
+import org.koin.compose.koinInject
 
 @Composable
 @Preview
 fun App(
-    settingsViewModel: SettingsViewModel = viewModel()
+    settingsViewModel: SettingsViewModel = koinInject()
 ) {
     val themeMode by settingsViewModel.themeMode.collectAsState()
     val language by settingsViewModel.language.collectAsState()

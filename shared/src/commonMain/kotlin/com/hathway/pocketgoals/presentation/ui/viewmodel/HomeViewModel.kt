@@ -2,6 +2,8 @@ package com.hathway.pocketgoals.presentation.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.hathway.pocketgoals.domain.model.TransactionType
+import com.hathway.pocketgoals.domain.repository.TransactionRepository
 import com.hathway.pocketgoals.presentation.ui.state.HomeUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -9,7 +11,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel(
+    private val repository: TransactionRepository
+) : ViewModel() {
 
     // Internal mutable state backer
     private val _uiState = MutableStateFlow(HomeUiState())
@@ -25,16 +29,27 @@ class HomeViewModel : ViewModel() {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
 
-            // Simulation of concurrent database queries or backend updates
-            _uiState.update {
-                it.copy(
-                    userName = "Alex",
-                    totalBalance = "1,45,000",
-                    income = "2,00,000",
-                    expenses = "55,000",
-                    unreadNotificationCount = 5, // Hydrated safely via asynchronous data streams
-                    isLoading = false
-                )
+            repository.getTransactions().collect { transactions ->
+                val totalIncome = transactions
+                    .filter { it.type == TransactionType.INCOME }
+                    .sumOf { it.amount }
+                
+                val totalExpense = transactions
+                    .filter { it.type == TransactionType.EXPENSE }
+                    .sumOf { it.amount }
+                
+                val balance = totalIncome - totalExpense
+
+                _uiState.update {
+                    it.copy(
+                        userName = "User",
+                        totalBalance = balance.toInt().toString(),
+                        income = totalIncome.toInt().toString(),
+                        expenses = totalExpense.toInt().toString(),
+                        unreadNotificationCount = 0,
+                        isLoading = false
+                    )
+                }
             }
         }
     }

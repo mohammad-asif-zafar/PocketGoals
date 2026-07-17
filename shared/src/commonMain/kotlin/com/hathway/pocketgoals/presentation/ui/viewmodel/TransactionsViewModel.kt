@@ -1,8 +1,8 @@
 package com.hathway.pocketgoals.presentation.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.hathway.pocketgoals.domain.Transaction
-import com.hathway.pocketgoals.domain.TransactionType
+import com.hathway.pocketgoals.domain.model.Transaction
+import com.hathway.pocketgoals.domain.model.TransactionType
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,74 +15,36 @@ import androidx.compose.material.icons.rounded.ShoppingCart
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 
-class TransactionsViewModel : ViewModel() {
+import com.hathway.pocketgoals.domain.repository.TransactionRepository
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
 
-    // Seed initial mock tracking data items into a single master state holder stream
-    private val _transactions = MutableStateFlow(
-        listOf(
-            Transaction(
-                "1",
-                "Groceries",
-                2500.0,
-                TransactionType.EXPENSE,
-                "18 May 2024",
-                "10:30 AM",
-                "Groceries",
-                "Cash",
-                "Weekly groceries from supermarket",
-                Icons.Rounded.ShoppingCart
-            ), Transaction(
-                "2",
-                "Salary",
-                125000.0,
-                TransactionType.INCOME,
-                "15 May 2024",
-                "09:00 AM",
-                "Salary",
-                "Bank Transfer",
-                "",
-                Icons.Rounded.AccountBalance
-            ), Transaction(
-                "3",
-                "Electricity Bill",
-                1200.0,
-                TransactionType.EXPENSE,
-                "14 May 2024",
-                "08:00 PM",
-                "Bills",
-                "UPI",
-                "",
-                Icons.Rounded.Lightbulb
-            ), Transaction(
-                "4",
-                "Fuel",
-                4500.0,
-                TransactionType.EXPENSE,
-                "14 May 2024",
-                "04:45 PM",
-                "Transport",
-                "Card",
-                "",
-                Icons.Rounded.DirectionsCar
-            )
+class TransactionsViewModel(
+    private val repository: TransactionRepository
+) : ViewModel() {
+
+    val transactions: StateFlow<List<Transaction>> = repository.getTransactions()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = emptyList()
         )
-    )
-    val transactions: StateFlow<List<Transaction>> = _transactions.asStateFlow()
 
     fun addTransaction(transaction: Transaction) {
-        _transactions.update { current ->
-            listOf(transaction) + current
+        viewModelScope.launch {
+            repository.addTransaction(transaction)
         }
     }
 
     fun updateTransaction(transaction: Transaction) {
         viewModelScope.launch {
-            _transactions.update { currentList ->
-                currentList.map { existingTx ->
-                    // Uses ID matching pipeline to ensure identical titles do not break data states
-                    if (existingTx.id == transaction.id) transaction else existingTx
-                }
-            }
+            repository.updateTransaction(transaction)
+        }
+    }
+    
+    fun deleteTransaction(id: String) {
+        viewModelScope.launch {
+            repository.deleteTransaction(id)
         }
     }
 
@@ -91,7 +53,8 @@ class TransactionsViewModel : ViewModel() {
      * Returns a ByteArray representing a formatted CSV file text block.
      */
     fun compileTransactionReport(): ByteArray {
-        val currentData = _transactions.value
+        val currentData = transactions.value
+
 
         // Build the localized column header rails array pipeline
         val csvBuilder = StringBuilder()

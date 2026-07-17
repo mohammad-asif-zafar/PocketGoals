@@ -1,26 +1,33 @@
 package com.hathway.pocketgoals.presentation.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.hathway.pocketgoals.data.GoalMockData
 import com.hathway.pocketgoals.domain.Goal
-import kotlinx.coroutines.flow.MutableStateFlow
+import com.hathway.pocketgoals.domain.repository.GoalRepository
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
-class GoalsViewModel : ViewModel() {
-    private val _goals = MutableStateFlow(GoalMockData.mockGoals)
-    val goals: StateFlow<List<Goal>> = _goals.asStateFlow()
+class GoalsViewModel(
+    private val repository: GoalRepository
+) : ViewModel() {
+    val goals: StateFlow<List<Goal>> = repository.getGoals()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = emptyList()
+        )
 
     fun addGoal(goal: Goal) {
-        _goals.update { currentGoals ->
-            currentGoals + goal
+        viewModelScope.launch {
+            repository.addGoal(goal)
         }
     }
 
     fun removeGoal(goal: Goal) {
-        _goals.update { currentGoals ->
-            currentGoals.filter { it.id != goal.id }
+        viewModelScope.launch {
+            repository.deleteGoal(goal.id)
         }
     }
 }

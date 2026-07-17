@@ -12,7 +12,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -25,12 +24,13 @@ import com.hathway.pocketgoals.presentation.ui.viewmodel.AnalyticsViewModel
 import com.hathway.pocketgoals.presentation.ui.viewmodel.GoalsViewModel
 import com.hathway.pocketgoals.presentation.ui.viewmodel.SettingsViewModel
 import com.hathway.pocketgoals.presentation.ui.viewmodel.TransactionsViewModel
+import org.koin.compose.koinInject
 
 @Composable
 fun NavigationContainer(
-    settingsViewModel: SettingsViewModel = viewModel(),
-    goalsViewModel: GoalsViewModel = viewModel(),
-    transactionsViewModel: TransactionsViewModel = viewModel()
+    settingsViewModel: SettingsViewModel = koinInject(),
+    goalsViewModel: GoalsViewModel = koinInject(),
+    transactionsViewModel: TransactionsViewModel = koinInject()
 ) {
     val navController: NavHostController = rememberNavController()
 
@@ -169,8 +169,8 @@ fun NavigationContainer(
                 )
             }
 
-            composable<AnalyticsRoute> { backStackEntry ->
-                val viewModel: AnalyticsViewModel = viewModel(viewModelStoreOwner = backStackEntry)
+            composable<AnalyticsRoute> {
+                val viewModel: AnalyticsViewModel = koinInject()
                 Box(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
                     AnalyticsScreen(viewModel = viewModel)
                 }

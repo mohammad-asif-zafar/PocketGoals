@@ -1,6 +1,6 @@
 package com.hathway.pocketgoals.presentation.ui.state
 
-import com.hathway.pocketgoals.domain.Transaction
+import com.hathway.pocketgoals.domain.model.Transaction
 
 sealed class TransactionFlowState {
     data object List : TransactionFlowState()

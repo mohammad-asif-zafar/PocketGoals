@@ -12,20 +12,23 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.hathway.pocketgoals.data.AddGoalStep
 import com.hathway.pocketgoals.domain.Goal
-import com.hathway.pocketgoals.domain.Transaction
-import com.hathway.pocketgoals.domain.TransactionType
+import com.hathway.pocketgoals.domain.model.Transaction
+import com.hathway.pocketgoals.domain.model.TransactionType
 import com.hathway.pocketgoals.domain.model.GoalCategory
 import com.hathway.pocketgoals.domain.model.ThemeMode
 import com.hathway.pocketgoals.presentation.ui.components.add_expense_components.AddExpenseTopBar
 import com.hathway.pocketgoals.presentation.ui.components.add_expense_components.DateSelectionStep
 import com.hathway.pocketgoals.presentation.ui.components.goals_components.*
 import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
+import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.compose.resources.stringResource
 import pocketgoals.shared.generated.resources.*
+import kotlin.time.ExperimentalTime
 
+@OptIn(ExperimentalTime::class)
 @Composable
 fun AddGoalContent(
     onBackClick: () -> Unit,
@@ -220,7 +223,7 @@ fun AddGoalContent(
                         targetDate = dateText,
                         duration = duration,
                         onConfirm = {
-                            val now = kotlin.time.Clock.System.now()
+                            val now = Clock.System.now()
                             val newGoal = Goal(
                                 id = now.toEpochMilliseconds().toString(),
                                 name = goalName,
