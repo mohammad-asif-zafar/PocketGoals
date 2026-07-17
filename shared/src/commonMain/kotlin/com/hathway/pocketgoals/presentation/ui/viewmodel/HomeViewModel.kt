@@ -1,9 +1,11 @@
 package com.hathway.pocketgoals.presentation.ui.viewmodel
 
+import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hathway.pocketgoals.domain.model.TransactionType
 import com.hathway.pocketgoals.domain.repository.TransactionRepository
+import com.hathway.pocketgoals.presentation.ui.components.analytics_components.AnalyticsCategoryData
 import com.hathway.pocketgoals.presentation.ui.state.HomeUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -40,12 +42,31 @@ class HomeViewModel(
                 
                 val balance = totalIncome - totalExpense
 
+                // Simple category grouping for top categories
+                val categoryGroups = transactions
+                    .filter { it.type == TransactionType.EXPENSE }
+                    .groupBy { it.category }
+                    .map { (category, txs) ->
+                        val amount = txs.sumOf { it.amount }
+                        val percentage = if (totalExpense > 0) (amount / totalExpense * 100).toInt() else 0
+                        AnalyticsCategoryData(
+                            name = category,
+                            value = "₹${amount.toInt()} ($percentage%)",
+                            color = Color(0xFF3B82F6), // Should come from category
+                            icon = txs.first().icon
+                        )
+                    }.sortedByDescending { it.value }
+
                 _uiState.update {
                     it.copy(
                         userName = "User",
                         totalBalance = balance.toInt().toString(),
                         income = totalIncome.toInt().toString(),
                         expenses = totalExpense.toInt().toString(),
+                        monthlyIncome = totalIncome.toInt().toString(), // Using total as monthly for now
+                        monthlyExpenses = totalExpense.toInt().toString(),
+                        monthlySavings = (totalIncome - totalExpense).toInt().toString(),
+                        topCategories = categoryGroups,
                         unreadNotificationCount = 0,
                         isLoading = false
                     )

@@ -107,7 +107,7 @@ fun AddExpenseFormStep(
                     onClick = onNoteClick,
                     icon = Icons.AutoMirrored.Rounded.Notes,
                     iconColor = MaterialTheme.colorScheme.primary,
-                    text = if (note.isEmpty()) stringResource(Res.string.hint_add_note) else note,
+                    text = note.ifEmpty { stringResource(Res.string.hint_add_note) },
                     isPlaceholder = note.isEmpty(),
                     borderColor = borderColor
                 )

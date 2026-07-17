@@ -2,6 +2,8 @@ package com.hathway.pocketgoals.presentation.ui.navigation_content
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -74,46 +76,73 @@ fun AnalyticsContent(
             }
 
             item {
-                ExpenseOverviewSection(totalAmount = uiState.totalAmount)
+                ExpenseOverviewSection(
+                    totalAmount = uiState.totalAmount,
+                    categories = uiState.categories
+                )
             }
 
             item {
                 SpendingTrendSection()
             }
 
-            // Inline the Top Categories Header Panel
-            item {
-                Row(
-                    modifier = Modifier.fillMaxWidth().padding(top = 24.dp, bottom = 16.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = stringResource(Res.string.analytics_top_categories),
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.onBackground
-                    )
-                    Text(
-                        text = stringResource(Res.string.analytics_see_all),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = Success, // Uses custom project Success token color
-                        fontWeight = FontWeight.SemiBold,
-                        modifier = Modifier.clip(MaterialTheme.shapes.small)
-                            .clickable { onSeeAllClick() }
-                            .padding(horizontal = 8.dp, vertical = 4.dp))
+            if (uiState.categories.isEmpty()) {
+                item {
+                    Box(
+                        modifier = Modifier.fillMaxWidth().padding(vertical = 60.dp),
+                        contentAlignment = androidx.compose.ui.Alignment.Center
+                    ) {
+                        Column(horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally) {
+                            Text(
+                                text = "UI is Empty",
+                                style = MaterialTheme.typography.titleLarge,
+                                fontWeight = FontWeight.Bold,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Text(
+                                text = "No analytics data available yet.",
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                    }
                 }
-            }
+            } else {
+                // Inline the Top Categories Header Panel
+                item {
+                    Row(
+                        modifier = Modifier.fillMaxWidth().padding(top = 24.dp, bottom = 16.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = stringResource(Res.string.analytics_top_categories),
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.onBackground
+                        )
+                        Text(
+                            text = stringResource(Res.string.analytics_see_all),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = Success, // Uses custom project Success token color
+                            fontWeight = FontWeight.SemiBold,
+                            modifier = Modifier.clip(MaterialTheme.shapes.small)
+                                .clickable { onSeeAllClick() }
+                                .padding(horizontal = 8.dp, vertical = 4.dp))
+                    }
+                }
 
-            // Efficiently recycle items linearly within the same scroll viewport layout
-            items(
-                items = uiState.categories, key = { it.name }) { category ->
-                AnalyticsCategoryItem(
-                    name = category.name,
-                    value = category.value,
-                    color = category.color,
-                    icon = category.icon
-                )
+                // Efficiently recycle items linearly within the same scroll viewport layout
+                items(
+                    items = uiState.categories, key = { it.name }) { category ->
+                    AnalyticsCategoryItem(
+                        name = category.name,
+                        value = category.value,
+                        color = category.color,
+                        icon = category.icon
+                    )
+                }
             }
 
             item {

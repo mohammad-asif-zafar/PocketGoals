@@ -89,17 +89,39 @@ fun TransactionsListScreen(
         }
     ) { paddingValues ->
         Box(modifier = Modifier.fillMaxSize().padding(paddingValues)) {
-            LazyColumn(
-                modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(16.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                item { SectionHeader(stringResource(Res.string.recent_activity)) }
-                items(filteredTransactions) { transaction ->
-                    TransactionListItem(transaction = transaction, onClick = { onTransactionClick(transaction) })
+            if (filteredTransactions.isEmpty()) {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = "UI is Empty",
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = "No transactions found matching your criteria.",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
                 }
-                item { Spacer(modifier = Modifier.height(80.dp)) }
+            } else {
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize(),
+                    contentPadding = PaddingValues(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    item { SectionHeader(stringResource(Res.string.recent_activity)) }
+                    items(filteredTransactions) { transaction ->
+                        TransactionListItem(transaction = transaction, onClick = { onTransactionClick(transaction) })
+                    }
+                    item { Spacer(modifier = Modifier.height(80.dp)) }
+                }
             }
+
             Box(modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 16.dp)) {
                 val totalIncome = transactions.filter { it.type == TransactionType.INCOME }.sumOf { it.amount }
                 val totalExpense = transactions.filter { it.type == TransactionType.EXPENSE }.sumOf { it.amount }

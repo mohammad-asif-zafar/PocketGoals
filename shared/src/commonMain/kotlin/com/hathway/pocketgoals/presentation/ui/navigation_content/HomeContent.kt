@@ -1,6 +1,8 @@
 package com.hathway.pocketgoals.presentation.ui.navigation_content
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -87,13 +89,39 @@ fun HomeContent(
         // Overview This Month
         item {
             HomeOverviewSection(
-                income = "150,000", expenses = "85,000", savings = "65,000"
+                income = uiState.monthlyIncome,
+                expenses = uiState.monthlyExpenses,
+                savings = uiState.monthlySavings
             )
+        }
+
+        if (uiState.topCategories.isEmpty() && uiState.totalBalance == "0") {
+            item {
+                Box(
+                    modifier = Modifier.fillMaxWidth().padding(vertical = 40.dp),
+                    contentAlignment = androidx.compose.ui.Alignment.Center
+                ) {
+                    Column(horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally) {
+                        Text(
+                            text = "UI is Empty",
+                            style = MaterialTheme.typography.titleLarge,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = "Add your first transaction to get started!",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                }
+            }
         }
 
         // Top Categories
         item {
-            HomeTopCategoriesSection()
+            HomeTopCategoriesSection(categories = uiState.topCategories)
         }
     }
 }

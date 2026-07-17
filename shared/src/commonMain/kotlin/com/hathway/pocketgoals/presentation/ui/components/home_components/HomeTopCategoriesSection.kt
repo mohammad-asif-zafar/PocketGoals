@@ -23,12 +23,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.hathway.pocketgoals.domain.model.ThemeMode
+import com.hathway.pocketgoals.presentation.ui.components.analytics_components.AnalyticsCategoryData
 import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
 import org.jetbrains.compose.resources.stringResource
 import pocketgoals.shared.generated.resources.*
 
 @Composable
-fun HomeTopCategoriesSection() {
+fun HomeTopCategoriesSection(
+    categories: List<AnalyticsCategoryData>
+) {
+    if (categories.isEmpty()) return
+
     Column {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -50,19 +55,32 @@ fun HomeTopCategoriesSection() {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        HomeCategoryRow(stringResource(Res.string.investment), 34.47, "31,029", Icons.AutoMirrored.Rounded.TrendingUp, Color(0xFF3B82F6))
-        HomeCategoryRow(stringResource(Res.string.basic_needs), 27.81, "25,029", Icons.Rounded.Home, Color(0xFF10B981))
-        HomeCategoryRow(stringResource(Res.string.future_pay), 15.11, "13,599", Icons.Rounded.Kitchen, Color(0xFFF59E0B))
-        HomeCategoryRow(stringResource(Res.string.family_support), 9.27, "8,343", Icons.Rounded.Star, Color(0xFF8B5CF6))
+        categories.take(4).forEach { category ->
+            val percentageMatch = "\\((\\d+)%\\)".toRegex().find(category.value)
+            val percentage = percentageMatch?.groupValues?.get(1)?.toDoubleOrNull() ?: 0.0
+            val amount = category.value.split(" ").getOrNull(0) ?: "0" // Adjusted split
+
+            HomeCategoryRow(
+                category.name,
+                percentage,
+                amount,
+                category.icon,
+                category.color
+            )
+        }
     }
 }
 
 @Preview(name = "Home Top Categories - Light Mode")
 @Composable
 private fun HomeTopCategoriesSectionLightPreview() {
+    val mockCategories = listOf(
+        AnalyticsCategoryData("Investment", "₹31,029 (34%)", Color(0xFF3B82F6), Icons.AutoMirrored.Rounded.TrendingUp),
+        AnalyticsCategoryData("Basic Needs", "₹25,029 (27%)", Color(0xFF10B981), Icons.Rounded.Home)
+    )
     PocketGoalsTheme(themeMode = ThemeMode.LIGHT) {
         Surface(color = MaterialTheme.colorScheme.background, modifier = Modifier.padding(16.dp)) {
-            HomeTopCategoriesSection()
+            HomeTopCategoriesSection(categories = mockCategories)
         }
     }
 }
@@ -70,9 +88,13 @@ private fun HomeTopCategoriesSectionLightPreview() {
 @Preview(name = "Home Top Categories - Dark Mode")
 @Composable
 private fun HomeTopCategoriesSectionDarkPreview() {
+    val mockCategories = listOf(
+        AnalyticsCategoryData("Investment", "₹31,029 (34%)", Color(0xFF3B82F6), Icons.AutoMirrored.Rounded.TrendingUp),
+        AnalyticsCategoryData("Basic Needs", "₹25,029 (27%)", Color(0xFF10B981), Icons.Rounded.Home)
+    )
     PocketGoalsTheme(themeMode = ThemeMode.DARK) {
         Surface(color = MaterialTheme.colorScheme.background, modifier = Modifier.padding(16.dp)) {
-            HomeTopCategoriesSection()
+            HomeTopCategoriesSection(categories = mockCategories)
         }
     }
 }

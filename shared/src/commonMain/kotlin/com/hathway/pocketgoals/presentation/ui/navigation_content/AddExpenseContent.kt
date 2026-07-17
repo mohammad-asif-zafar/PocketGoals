@@ -20,7 +20,9 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.compose.resources.stringResource
 import pocketgoals.shared.generated.resources.*
+import kotlin.time.ExperimentalTime
 
+@OptIn(ExperimentalTime::class)
 @Composable
 fun AddExpenseContent(
     onBackClick: () -> Unit,
