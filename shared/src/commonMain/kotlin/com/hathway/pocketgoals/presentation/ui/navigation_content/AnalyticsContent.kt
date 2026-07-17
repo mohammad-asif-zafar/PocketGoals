@@ -25,11 +25,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.hathway.pocketgoals.data.AnalyticsUiCategory
 import com.hathway.pocketgoals.domain.model.ThemeMode
 import com.hathway.pocketgoals.presentation.ui.components.analytics_components.AnalyticsCategoryItem
 import com.hathway.pocketgoals.presentation.ui.components.analytics_components.AnalyticsHeader
@@ -127,10 +125,7 @@ fun AnalyticsContent(
 
 @Composable
 fun AnalyticsPreviewLanguageContainer(
-    variantLabel: String,
-    themeMode: ThemeMode,
-    isRtl: Boolean,
-    mockState: AnalyticsUiState
+    variantLabel: String, themeMode: ThemeMode, isRtl: Boolean, mockState: AnalyticsUiState
 ) {
     Column(modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp)) {
         Text(
@@ -164,8 +159,7 @@ fun FullAnalyticsDashboardMatrixPreview() {
             value = "₹ 14,250",
             color = Color(0xFFEF4444),
             icon = Icons.Rounded.Fastfood
-        ),
-        AnalyticsCategoryData(
+        ), AnalyticsCategoryData(
             name = "Shopping",
             value = "₹ 8,900",
             color = Color(0xFF3B82F6),
@@ -181,11 +175,8 @@ fun FullAnalyticsDashboardMatrixPreview() {
     )
 
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color(0xFFF1F5F9))
-            .verticalScroll(rememberScrollState())
-            .padding(16.dp)
+        modifier = Modifier.fillMaxSize().background(Color(0xFFF1F5F9))
+            .verticalScroll(rememberScrollState()).padding(16.dp)
     ) {
         // ==========================================================
         // LIGHT MODES SECTION
@@ -199,34 +190,7 @@ fun FullAnalyticsDashboardMatrixPreview() {
         )
 
         AnalyticsPreviewLanguageContainer(
-            "English",
-            ThemeMode.LIGHT,
-            isRtl = false,
-            baseMockUiState
-        )
-        AnalyticsPreviewLanguageContainer(
-            "Hindi (हिंदी)",
-            ThemeMode.LIGHT,
-            isRtl = false,
-            baseMockUiState
-        )
-        AnalyticsPreviewLanguageContainer(
-            "Malay (Bahasa Melayu)",
-            ThemeMode.LIGHT,
-            isRtl = false,
-            baseMockUiState
-        )
-        AnalyticsPreviewLanguageContainer(
-            "Urdu (اردو - RTL)",
-            ThemeMode.LIGHT,
-            isRtl = true,
-            baseMockUiState
-        )
-        AnalyticsPreviewLanguageContainer(
-            "Arabic (العربية - RTL)",
-            ThemeMode.LIGHT,
-            isRtl = true,
-            baseMockUiState
+            "English", ThemeMode.LIGHT, isRtl = false, baseMockUiState
         )
 
         Spacer(modifier = Modifier.height(32.dp))
@@ -242,30 +206,12 @@ fun FullAnalyticsDashboardMatrixPreview() {
             modifier = Modifier.padding(bottom = 8.dp)
         )
 
-        AnalyticsPreviewLanguageContainer("English", ThemeMode.DARK, isRtl = false, baseMockUiState)
         AnalyticsPreviewLanguageContainer(
-            "Hindi (हिंदी)",
+            "English",
             ThemeMode.DARK,
             isRtl = false,
             baseMockUiState
         )
-        AnalyticsPreviewLanguageContainer(
-            "Malay (Bahasa Melayu)",
-            ThemeMode.DARK,
-            isRtl = false,
-            baseMockUiState
-        )
-        AnalyticsPreviewLanguageContainer(
-            "Urdu (اردو - RTL)",
-            ThemeMode.DARK,
-            isRtl = true,
-            baseMockUiState
-        )
-        AnalyticsPreviewLanguageContainer(
-            "Arabic (العربية - RTL)",
-            ThemeMode.DARK,
-            isRtl = true,
-            baseMockUiState
-        )
+
     }
 }

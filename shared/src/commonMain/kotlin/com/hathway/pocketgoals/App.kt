@@ -6,6 +6,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.hathway.pocketgoals.presentation.ui.localization.LanguageProvider
 import com.hathway.pocketgoals.presentation.ui.navigation.NavigationContainer
 import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
 import com.hathway.pocketgoals.presentation.ui.viewmodel.SettingsViewModel
@@ -21,8 +22,10 @@ fun App(
     // Using key(language) forces a full recomposition when the language changes,
     // ensuring all stringResource() calls are re-evaluated.
     key(language) {
-        PocketGoalsTheme(themeMode = themeMode) {
-            NavigationContainer()
+        LanguageProvider(language.code) {
+            PocketGoalsTheme(themeMode = themeMode) {
+                NavigationContainer()
+            }
         }
     }
 }
