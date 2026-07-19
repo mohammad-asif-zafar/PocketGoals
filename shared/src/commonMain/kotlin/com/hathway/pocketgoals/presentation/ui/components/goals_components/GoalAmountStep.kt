@@ -29,6 +29,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.hathway.pocketgoals.domain.model.ThemeMode
+import com.hathway.pocketgoals.presentation.ui.localization.CurrencyConfig
+import com.hathway.pocketgoals.presentation.ui.localization.CurrencyFormatter
 import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
 import com.hathway.pocketgoals.presentation.ui.theme.Surface
 import org.jetbrains.compose.resources.stringResource
@@ -45,18 +47,19 @@ fun GoalAmountStep(
     onAmountChange: (String) -> Unit,
     onOtherClick: () -> Unit, // Added handler to cleanly dispatch custom number keypad flows
     onNext: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    currencyConfig: CurrencyConfig = CurrencyConfig.fromSystemLocale()
 ) {
-    val currencySymbol = stringResource(Res.string.currency_symbol)
+  //  val currencySymbol = stringResource(Res.string.currency_symbol)
     val otherLabel = stringResource(Res.string.quick_select_other)
 
-    val quickSelectOptions = remember(currencySymbol, otherLabel) {
+    val quickSelectOptions = remember(currencyConfig, otherLabel) {
         listOf(
-            "$currencySymbol 1,000",
-            "$currencySymbol 10,000",
-            "$currencySymbol 25,000",
-            "$currencySymbol 50,000",
-            "$currencySymbol 1,00,000",
+            "$currencyConfig 1,000",
+            "$currencyConfig 10,000",
+            "$currencyConfig 25,000",
+            "$currencyConfig 50,000",
+            "$currencyConfig 1,00,000",
             otherLabel
         )
     }
@@ -89,7 +92,7 @@ fun GoalAmountStep(
             ) {
                 val isZero = amount == "0" || amount.isBlank()
                 Text(
-                    text = if (isZero) "$currencySymbol 0" else "$currencySymbol $amount",
+                    text = if (isZero) "$currencyConfig 0" else "$currencyConfig $amount",
                     style = MaterialTheme.typography.headlineSmall,
                     fontWeight = FontWeight.Bold,
                     color = if (isZero) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.onSurface
@@ -114,7 +117,7 @@ fun GoalAmountStep(
                 modifier = Modifier.weight(1f)
             ) {
                 items(quickSelectOptions) { option ->
-                    val cleanOptionValue = option.replace("$currencySymbol ", "").replace(",", "")
+                    val cleanOptionValue = option.replace("$currencyConfig ", "").replace(",", "")
                     // Highlights grid card border if item match matches current data string
                     val isTileSelected = amount == cleanOptionValue && option != otherLabel
 
@@ -136,7 +139,7 @@ fun GoalAmountStep(
                             }, contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            text = option,
+                            text = CurrencyFormatter.formatAmount(option, currencyConfig),
                             fontWeight = if (isTileSelected) FontWeight.Bold else FontWeight.Medium,
                             color = if (isTileSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
                         )

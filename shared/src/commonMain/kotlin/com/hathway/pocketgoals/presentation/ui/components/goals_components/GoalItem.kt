@@ -34,11 +34,13 @@ import androidx.compose.ui.unit.dp
 import com.hathway.pocketgoals.domain.Goal
 import com.hathway.pocketgoals.domain.model.ThemeMode
 import com.hathway.pocketgoals.domain.util.mockAmount.formatMockAmount
+import com.hathway.pocketgoals.presentation.ui.localization.CurrencyConfig
 import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
 
 @Composable
 fun GoalItem(
-    goal: Goal, onClick: () -> Unit, modifier: Modifier = Modifier
+    goal: Goal, onClick: () -> Unit, modifier: Modifier = Modifier,
+    currencyConfig: CurrencyConfig = CurrencyConfig.fromSystemLocale()
 ) {
     Card(modifier = modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp)).clickable { onClick() }
         .border(
@@ -78,7 +80,7 @@ fun GoalItem(
                 Spacer(modifier = Modifier.height(4.dp))
 
                 Text(
-                    text = "₹${formatMockAmount(goal.savedAmount)} / ₹${formatMockAmount(goal.targetAmount)}",
+                    text = "$currencyConfig${formatMockAmount(goal.savedAmount)} / $currencyConfig${formatMockAmount(goal.targetAmount)}",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     fontWeight = FontWeight.Medium

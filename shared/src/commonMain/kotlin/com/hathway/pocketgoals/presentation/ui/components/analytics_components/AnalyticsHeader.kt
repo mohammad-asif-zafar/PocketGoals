@@ -66,12 +66,12 @@ fun AnalyticsHeader(
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 Spacer(modifier = Modifier.width(4.dp))*/
-                Icon(
+                /*Icon(
                     imageVector = Icons.Rounded.KeyboardArrowDown,
                     contentDescription = "Select Time Period Dropdown", // Enhanced semantic context access
                     modifier = Modifier.size(16.dp),
                     tint = MaterialTheme.colorScheme.onSurfaceVariant
-                )
+                )*/
             }
         }
     }

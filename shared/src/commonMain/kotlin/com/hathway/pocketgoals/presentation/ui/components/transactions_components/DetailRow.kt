@@ -17,13 +17,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.hathway.pocketgoals.domain.model.ThemeMode
+import com.hathway.pocketgoals.presentation.ui.localization.CurrencyConfig
+import com.hathway.pocketgoals.presentation.ui.localization.CurrencyFormatter
 import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
 
 @Composable
 fun DetailRow(
     label: String,
     value: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    currencyConfig: CurrencyConfig = CurrencyConfig.fromSystemLocale()
 ) {
     Row(
         modifier = modifier
@@ -33,13 +36,13 @@ fun DetailRow(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = label,
+            text = CurrencyFormatter.formatAmount(label, currencyConfig),
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.weight(1f)
         )
         Spacer(modifier = Modifier.width(16.dp))
         Text(
-            text = value,
+            text = CurrencyFormatter.formatAmount(value, currencyConfig),
             fontWeight = FontWeight.SemiBold,
             color = MaterialTheme.colorScheme.onSurface,
             textAlign = TextAlign.End,

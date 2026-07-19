@@ -20,6 +20,11 @@ import com.hathway.pocketgoals.domain.ExpenseCategory
 import com.hathway.pocketgoals.domain.IncomeType
 import com.hathway.pocketgoals.domain.model.Transaction
 
+import kotlinx.datetime.Instant
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
+
+@OptIn(kotlin.time.ExperimentalTime::class)
 class AnalyticsViewModel(
     private val repository: TransactionRepository
 ) : ViewModel() {
@@ -80,12 +85,32 @@ class AnalyticsViewModel(
             }.sortedByDescending { it.value.substringBefore(" ").substringAfter("₹").toIntOrNull() ?: 0 }
 
         // Bar Data: Group by day for simple weekly view
-        val barData = listOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun").map { day ->
-            // Mocking day-wise distribution for now but summing actual data if date matched
-            // Since our 'date' field is a formatted string, real grouping would need date parsing
-            // For now, distributing total across days for visual effect if real parsing is complex
-            val value = if (totalAmount > 0) (totalAmount / 7).toFloat() else 0f
-            BarChartDataPoint(day, value)
+        val dayLabels = listOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
+        val dailyTotals = mutableMapOf<String, Double>()
+        dayLabels.forEach { dailyTotals[it] = 0.0 }
+
+        filteredTransactions.forEach { tx ->
+            if (tx.createdAt > 0) {
+                val dateTime = Instant.fromEpochMilliseconds(tx.createdAt)
+                    .toLocalDateTime(TimeZone.currentSystemDefault())
+                val dayName = when (dateTime.dayOfWeek.name) {
+                    "MONDAY" -> "Mon"
+                    "TUESDAY" -> "Tue"
+                    "WEDNESDAY" -> "Wed"
+                    "THURSDAY" -> "Thu"
+                    "FRIDAY" -> "Fri"
+                    "SATURDAY" -> "Sat"
+                    "SUNDAY" -> "Sun"
+                    else -> ""
+                }
+                if (dayName.isNotEmpty()) {
+                    dailyTotals[dayName] = (dailyTotals[dayName] ?: 0.0) + tx.amount
+                }
+            }
+        }
+
+        val barData = dayLabels.map { day ->
+            BarChartDataPoint(day, dailyTotals[day]?.toFloat() ?: 0f)
         }
 
         // Real Donut Data from categories

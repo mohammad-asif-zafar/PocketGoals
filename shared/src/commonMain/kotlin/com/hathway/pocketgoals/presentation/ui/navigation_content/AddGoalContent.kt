@@ -42,7 +42,7 @@ fun AddGoalContent(
     // Goal State
     var goalName by remember { mutableStateOf("") }
     var selectedCategory by remember { mutableStateOf<GoalCategory?>(null) }
-    var targetAmount by remember { mutableStateOf("0") }
+    var targetAmount by remember { mutableStateOf("") }
     var selectedDateMillis by remember { mutableStateOf<Long?>(null) }
     var duration by remember { mutableStateOf("1 Year") }
     var description by remember { mutableStateOf("") }
@@ -62,17 +62,18 @@ fun AddGoalContent(
         )
     }
 
-    val defaultDate = "15 May 2024"
     val dateText = remember(selectedDateMillis) {
-        if (selectedDateMillis == null) defaultDate
-        else {
-            val instant = Instant.fromEpochMilliseconds(selectedDateMillis!!)
-            val dt = instant.toLocalDateTime(TimeZone.currentSystemDefault())
-            "${dt.dayOfMonth} ${
-                dt.month.name.lowercase().replaceFirstChar { it.uppercase() }
-            } ${dt.year}"
-        }
+        val instant = if (selectedDateMillis == null) Clock.System.now()
+        else Instant.fromEpochMilliseconds(selectedDateMillis!!)
+
+        val dt = instant.toLocalDateTime(TimeZone.currentSystemDefault())
+        "${dt.dayOfMonth} ${
+            dt.month.name.lowercase().replaceFirstChar { it.uppercase() }
+        } ${dt.year}"
     }
+
+    val appName = stringResource(Res.string.app_name)
+    val goalCreatedLabel = stringResource(Res.string.goal_created)
 
     Scaffold(
         topBar = {
@@ -220,11 +221,15 @@ fun AddGoalContent(
 
                 is AddGoalStep.GoalReview -> {
                     val customCategoryLabel = stringResource(Res.string.category_custom)
+                    val categoryNameLabel = if (isCustomFlow) {
+                        customCategoryLabel
+                    } else {
+                        selectedCategory?.name?.let { stringResource(it) } ?: ""
+                    }
 
                     GoalReviewStep(
                         goalName = goalName,
-                        categoryName = (if (isCustomFlow) customCategoryLabel else selectedCategory?.name
-                            ?: "") as String,
+                        categoryName = categoryNameLabel,
                         categoryIcon = if (isCustomFlow) customIcon else selectedCategory?.icon
                             ?: GoalCategory.defaultCategories.first().icon,
                         categoryColor = if (isCustomFlow) customColor else selectedCategory?.color
@@ -249,15 +254,22 @@ fun AddGoalContent(
                             onSaveGoal(newGoal)
 
                             // Activity Log
+                            val localTime = now.toLocalDateTime(TimeZone.currentSystemDefault())
+                            val hour12 = if (localTime.hour % 12 == 0) 12 else localTime.hour % 12
+                            val amPm = if (localTime.hour < 12) "AM" else "PM"
+                            val timeText = "${hour12.toString().padStart(2, '0')}:${
+                                localTime.minute.toString().padStart(2, '0')
+                            } $amPm"
+
                             val transaction = Transaction(
                                 id = "goal_$generatedId",
-                                title = "Created Goal: $goalName",
+                                title = "$goalCreatedLabel: $goalName",
                                 amount = 0.0,
                                 type = TransactionType.GOAL_CREATED,
                                 date = dateText,
-                                time = "12:00 PM",
-                                category = "Goals",
-                                paymentMethod = "System",
+                                time = timeText,
+                                category = categoryNameLabel,
+                                paymentMethod = appName,
                                 icon = newGoal.icon,
                                 createdAt = now.toEpochMilliseconds()
                             )

@@ -17,13 +17,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.hathway.pocketgoals.domain.Goal
 import com.hathway.pocketgoals.presentation.ui.components.transactions_components.DetailRow
+import com.hathway.pocketgoals.presentation.ui.localization.CurrencyConfig
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GoalDetailsContent(
     goal: Goal,
     onBack: () -> Unit,
-    onDelete: () -> Unit
+    onDelete: () -> Unit,
+    currencyConfig: CurrencyConfig = CurrencyConfig.fromSystemLocale()
 ) {
     var showDeleteDialog by remember { mutableStateOf(false) }
 
@@ -118,7 +120,7 @@ fun GoalDetailsContent(
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                         Text(
-                            text = "${goal.percentage}%",
+                            text = "$currencyConfig${goal.percentage}%",
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold,
                             color = goal.color
@@ -150,7 +152,7 @@ fun GoalDetailsContent(
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                             Text(
-                                text = "₹${goal.savedAmount.toInt()}",
+                                text = "$currencyConfig${goal.savedAmount.toInt()}",
                                 style = MaterialTheme.typography.titleMedium,
                                 fontWeight = FontWeight.Bold
                             )
@@ -162,7 +164,7 @@ fun GoalDetailsContent(
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                             Text(
-                                text = "₹${goal.targetAmount.toInt()}",
+                                text = "$currencyConfig${goal.targetAmount.toInt()}",
                                 style = MaterialTheme.typography.titleMedium,
                                 fontWeight = FontWeight.Bold
                             )
@@ -174,8 +176,8 @@ fun GoalDetailsContent(
             Spacer(modifier = Modifier.height(24.dp))
 
             DetailRow("Deadline", goal.deadline)
-            DetailRow("Remaining", "₹${goal.remainingAmount.toInt()}")
-            DetailRow("Monthly Needed", "₹${goal.monthlySavingNeeded.toInt()}")
+            DetailRow("Remaining", "$currencyConfig${goal.remainingAmount.toInt()}")
+            DetailRow("Monthly Needed", "$currencyConfig${goal.monthlySavingNeeded.toInt()}")
         }
     }
 }
