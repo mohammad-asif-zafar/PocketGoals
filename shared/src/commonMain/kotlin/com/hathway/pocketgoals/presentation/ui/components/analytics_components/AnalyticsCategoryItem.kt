@@ -25,9 +25,12 @@ import androidx.compose.ui.unit.dp
 import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
 import androidx.compose.material.icons.filled.ShoppingCart // Example icon for preview
 import com.hathway.pocketgoals.domain.model.ThemeMode
+import com.hathway.pocketgoals.presentation.ui.localization.CurrencyConfig
+import com.hathway.pocketgoals.presentation.ui.localization.CurrencyFormatter
 
 @Composable
-fun AnalyticsCategoryItem(name: String, value: String, color: Color, icon: ImageVector) {
+fun AnalyticsCategoryItem(name: String, value: String, color: Color, icon: ImageVector,
+    currencyConfig: CurrencyConfig = CurrencyConfig.fromSystemLocale()) {
     Row(
         modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -56,7 +59,9 @@ fun AnalyticsCategoryItem(name: String, value: String, color: Color, icon: Image
         )
 
         Text(
-            text = value,
+            text = CurrencyFormatter.formatAmount(
+                value, currencyConfig
+            ),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant // Replaced hardcoded Color.DarkGray
         )
@@ -79,7 +84,7 @@ fun AnalyticsCategoryItemLightPreview() {
         Box(modifier = Modifier.background(MaterialTheme.colorScheme.background).padding(16.dp)) {
             AnalyticsCategoryItem(
                 name = "Shopping",
-                value = "$120.50",
+                value = "RM 120.50",
                 color = Color(0xFFFF5722),
                 icon = Icons.Default.ShoppingCart
             )

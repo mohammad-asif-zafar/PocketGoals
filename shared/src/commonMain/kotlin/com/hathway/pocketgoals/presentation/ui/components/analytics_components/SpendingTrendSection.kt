@@ -39,26 +39,32 @@ import androidx.compose.ui.unit.dp
 import com.hathway.pocketgoals.domain.model.ThemeMode
 import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
 
+
 @Composable
-fun SpendingTrendSection() {
+fun SpendingTrendSection(
+    sectionTitle: String,              // e.g., stringResource(Res.string.spending_trend)
+    points: List<Float>,               // Dynamic float entries (0.0f to 1.0f)
+    peakValueLabel: String,            // Pre-formatted highest value (e.g., "$12,450" or "١٢،٤٥٠")
+    xAxisLabels: List<String>,         // Pre-formatted dates aligned to your active language
+    modifier: Modifier = Modifier,
+    lineColor: Color = MaterialTheme.colorScheme.primary // Matches your active Light/Dark theme color
+) {
     val gridAndBorderColor = MaterialTheme.colorScheme.outlineVariant
     val labelColor = MaterialTheme.colorScheme.onSurfaceVariant
     val backgroundColor = MaterialTheme.colorScheme.background
     val density = LocalDensity.current
 
-    // State to track canvas dimensions for calculating dynamic layout position
     var canvasSize by remember { mutableStateOf(IntSize.Zero) }
 
-    val points = listOf(0.1f, 0.4f, 0.6f, 0.5f, 0.65f, 0.55f, 0.9f)
-    val maxPointIndex = points.indexOfMax() ?: -1
-    val peakValueLabel = "12,450" // Sample value for the highest spending day
+    // Dynamically calculate the highest point index based on the input list
+    val maxPointIndex = remember(points) { points.indexOfMax() ?: -1 }
 
     Column(
-        modifier = Modifier.fillMaxWidth().padding(top = 24.dp)
+        modifier = modifier.fillMaxWidth()
             .border(1.dp, gridAndBorderColor, RoundedCornerShape(16.dp)).padding(16.dp)
     ) {
         Text(
-            text = "Spending Trend",
+            text = sectionTitle,
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.onBackground
@@ -66,17 +72,15 @@ fun SpendingTrendSection() {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Wrapped in an overall Box so we can absolute-position the Compose Tooltip Layer over the Canvas
-        Box(
-            modifier = Modifier.fillMaxWidth().height(150.dp)
-        ) {
+        Box(modifier = Modifier.fillMaxWidth().height(150.dp)) {
             Canvas(
-                modifier = Modifier.fillMaxSize()
-                    .onSizeChanged { canvasSize = it } // Track size updates
-            ) {
+                modifier = Modifier.fillMaxSize().onSizeChanged { canvasSize = it }) {
                 val width = size.width
                 val height = size.height
-                val stepX = width / (points.size - 1)
+
+                // Protect layout math against division-by-zero or empty inputs
+                val totalSteps = if (points.size > 1) points.size - 1 else 1
+                val stepX = width / totalSteps
 
                 // Draw Grid Lines
                 for (i in 0..3) {
@@ -90,9 +94,9 @@ fun SpendingTrendSection() {
                 }
 
                 // Draw the Vertical Indicator Dash-Line for the highest peak
-                if (maxPointIndex != -1) {
+                if (maxPointIndex != -1 && points.isNotEmpty()) {
                     val maxTargetX = maxPointIndex * stepX
-                    val maxTargetY = height - (points[maxPointIndex] * height)
+                    val maxTargetY = height - (points[maxPointIndex].coerceIn(0f, 1f) * height)
 
                     drawLine(
                         color = gridAndBorderColor.copy(alpha = 0.8f),
@@ -111,7 +115,7 @@ fun SpendingTrendSection() {
 
                 if (points.isNotEmpty()) {
                     val startX = 0f
-                    val startY = height - (points[0] * height)
+                    val startY = height - (points[0].coerceIn(0f, 1f) * height)
 
                     trendPath.moveTo(startX, startY)
                     fillPath.moveTo(startX, height)
@@ -119,31 +123,17 @@ fun SpendingTrendSection() {
 
                     for (i in 0 until points.size - 1) {
                         val currentX = i * stepX
-                        val currentY = height - (points[i] * height)
+                        val currentY = height - (points[i].coerceIn(0f, 1f) * height)
                         val nextX = (i + 1) * stepX
-                        val nextY = height - (points[i + 1] * height)
+                        val nextY = height - (points[i + 1].coerceIn(0f, 1f) * height)
 
                         val controlX1 = currentX + (stepX / 2f)
                         val controlY1 = currentY
                         val controlX2 = currentX + (stepX / 2f)
                         val controlY2 = nextY
 
-                        trendPath.cubicTo(
-                            x1 = controlX1,
-                            y1 = controlY1,
-                            x2 = controlX2,
-                            y2 = controlY2,
-                            x3 = nextX,
-                            y3 = nextY
-                        )
-                        fillPath.cubicTo(
-                            x1 = controlX1,
-                            y1 = controlY1,
-                            x2 = controlX2,
-                            y2 = controlY2,
-                            x3 = nextX,
-                            y3 = nextY
-                        )
+                        trendPath.cubicTo(controlX1, controlY1, controlX2, controlY2, nextX, nextY)
+                        fillPath.cubicTo(controlX1, controlY1, controlX2, controlY2, nextX, nextY)
                     }
 
                     val endX = (points.size - 1) * stepX
@@ -151,52 +141,54 @@ fun SpendingTrendSection() {
                     fillPath.close()
                 }
 
-                // Draw Premium Gradient Fill
-                val brandGreen = Color(0xFF10B981)
-                drawPath(
-                    path = fillPath, brush = Brush.verticalGradient(
-                        colors = listOf(
-                            brandGreen.copy(alpha = 0.25f), backgroundColor.copy(alpha = 0.0f)
-                        ), startY = 0f, endY = height
+                if (points.isNotEmpty()) {
+                    // Draw Premium Dynamic Gradient Fill
+                    drawPath(
+                        path = fillPath, brush = Brush.verticalGradient(
+                            colors = listOf(
+                                lineColor.copy(alpha = 0.25f), backgroundColor.copy(alpha = 0.0f)
+                            ), startY = 0f, endY = height
+                        )
                     )
-                )
 
-                // Draw Smooth Stroke Line
-                drawPath(
-                    path = trendPath,
-                    color = brandGreen,
-                    style = Stroke(width = 3.dp.toPx(), cap = StrokeCap.Round)
-                )
+                    // Draw Smooth Stroke Line
+                    drawPath(
+                        path = trendPath,
+                        color = lineColor,
+                        style = Stroke(width = 3.dp.toPx(), cap = StrokeCap.Round)
+                    )
+                }
 
                 // Draw Points
                 points.forEachIndexed { index, p ->
                     val x = index * stepX
-                    val y = height - (p * height)
+                    val y = height - (p.coerceIn(0f, 1f) * height)
                     val isMax = index == maxPointIndex
                     drawCircle(
-                        color = brandGreen,
+                        color = lineColor,
                         radius = if (isMax) 5.5.dp.toPx() else 4.dp.toPx(),
                         center = Offset(x, y)
                     )
                 }
             }
 
-            // 3. Floating Tooltip Overlay Rendering Layer
-            if (maxPointIndex != -1 && canvasSize != IntSize.Zero) {
-                val stepX = canvasSize.width.toFloat() / (points.size - 1)
+            // Floating Tooltip Overlay Rendering Layer
+            if (maxPointIndex != -1 && canvasSize != IntSize.Zero && points.isNotEmpty()) {
+                val totalSteps = if (points.size > 1) points.size - 1 else 1
+                val stepX = canvasSize.width.toFloat() / totalSteps
                 val peakX = maxPointIndex * stepX
-                val peakY =
-                    canvasSize.height.toFloat() - (points[maxPointIndex] * canvasSize.height.toFloat())
+                val peakY = canvasSize.height.toFloat() - (points[maxPointIndex].coerceIn(
+                    0f, 1f
+                ) * canvasSize.height.toFloat())
 
                 with(density) {
-                    // Convert pixel positions into layout density Dp offsets
                     val tooltipOffsetX = peakX.toDp()
                     val tooltipOffsetY = peakY.toDp()
 
                     Box(
                         modifier = Modifier.offset(
-                            x = tooltipOffsetX - 40.dp, // Offsets half tooltip width to align center
-                            y = tooltipOffsetY - 36.dp  // Floats exactly above the peak coordinate
+                            x = tooltipOffsetX - 40.dp, // Aligns tooltip center over the target element
+                            y = tooltipOffsetY - 36.dp
                         ).background(
                             color = MaterialTheme.colorScheme.primaryContainer,
                             shape = RoundedCornerShape(6.dp)
@@ -216,12 +208,13 @@ fun SpendingTrendSection() {
 
         Spacer(modifier = Modifier.height(8.dp))
 
+        // Dynamic horizontal X-Axis rendering
         Row(
             modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            listOf("1 May", "8 May", "15 May", "22 May", "29 May").forEach {
+            xAxisLabels.forEach { label ->
                 Text(
-                    text = it, style = MaterialTheme.typography.labelSmall, color = labelColor
+                    text = label, style = MaterialTheme.typography.labelSmall, color = labelColor
                 )
             }
         }
@@ -241,22 +234,46 @@ private fun List<Float>.indexOfMax(): Int? {
     return maxIndex
 }
 
+
+// ==========================================================
+// Light Mode Preview (English Layout / LTR)
+// ==========================================================
 @Preview
 @Composable
 fun SpendingTrendSectionLightPreview() {
     PocketGoalsTheme(themeMode = ThemeMode.LIGHT) {
         Box(
             modifier = Modifier.background(MaterialTheme.colorScheme.background).padding(16.dp)
-        ) { SpendingTrendSection() }
+        ) {
+            SpendingTrendSection(
+                sectionTitle = "Spending Trend",
+                points = listOf(0.1f, 0.4f, 0.6f, 0.5f, 0.65f, 0.55f, 0.9f),
+                peakValueLabel = "$12,450",
+                xAxisLabels = listOf("1 May", "8 May", "15 May", "22 May", "29 May")
+            )
+        }
     }
 }
 
+// ==========================================================
+// Dark Mode Preview (Arabic or Urdu Layout / RTL Check)
+// ==========================================================
 @Preview
 @Composable
 fun SpendingTrendSectionDarkPreview() {
+    // Demonstrating Dark Theme with Arabic locale constraints
     PocketGoalsTheme(themeMode = ThemeMode.DARK) {
         Box(
             modifier = Modifier.background(MaterialTheme.colorScheme.background).padding(16.dp)
-        ) { SpendingTrendSection() }
+        ) {
+            SpendingTrendSection(
+                sectionTitle = "نزعة الإنفاق", // Localized Title
+                points = listOf(0.1f, 0.4f, 0.6f, 0.5f, 0.65f, 0.55f, 0.9f),
+                peakValueLabel = "١٢،٤٥٠ د.إ", // Localized Arabic Numbers & Currency symbol
+                xAxisLabels = listOf(
+                    "١ مايو", "٨ مايو", "١٥ مايو", "٢٢ مايو", "٢٩ مايو"
+                ) // Localized Dates
+            )
+        }
     }
 }

@@ -30,7 +30,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.hathway.pocketgoals.domain.model.Transaction
+import com.hathway.pocketgoals.domain.model.TransactionType
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.tooling.preview.Preview
 import com.hathway.pocketgoals.domain.model.ThemeMode
 import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
@@ -44,10 +49,20 @@ import pocketgoals.shared.generated.resources.income
 import pocketgoals.shared.generated.resources.save
 import pocketgoals.shared.generated.resources.save_changes
 import pocketgoals.shared.generated.resources.type
+import pocketgoals.shared.generated.resources.summary_lbl_note
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EditTransactionScreen(transaction: Transaction, onBack: () -> Unit, onSave: () -> Unit) {
+fun EditTransactionScreen(
+    transaction: Transaction,
+    onBack: () -> Unit,
+    onSave: (Transaction) -> Unit
+) {
+    var amount by remember { mutableStateOf(transaction.amount.toString()) }
+    var title by remember { mutableStateOf(transaction.title) }
+    var note by remember { mutableStateOf(transaction.note) }
+    var selectedType by remember { mutableStateOf(transaction.type) }
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -60,7 +75,16 @@ fun EditTransactionScreen(transaction: Transaction, onBack: () -> Unit, onSave: 
                 navigationIcon = {
                     IconButton(onClick = onBack) { Icon(Icons.Rounded.Close, null) }
                 }, actions = {
-                    TextButton(onClick = onSave) {
+                    TextButton(onClick = {
+                        onSave(
+                            transaction.copy(
+                                amount = amount.toDoubleOrNull() ?: transaction.amount,
+                                title = title,
+                                note = note,
+                                type = selectedType
+                            )
+                        )
+                    }) {
                         Text(
                             text = stringResource(Res.string.save),
                             color = Color(0xFF0F766E),
@@ -80,38 +104,57 @@ fun EditTransactionScreen(transaction: Transaction, onBack: () -> Unit, onSave: 
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 FilterChip(
-                    selected = false,
-                    onClick = {},
+                    selected = selectedType == TransactionType.INCOME,
+                    onClick = { selectedType = TransactionType.INCOME },
                     label = { Text(stringResource(Res.string.income)) },
                     modifier = Modifier.weight(1f)
                 )
                 FilterChip(
-                    selected = true,
-                    onClick = {},
+                    selected = selectedType == TransactionType.EXPENSE,
+                    onClick = { selectedType = TransactionType.EXPENSE },
                     label = { Text(stringResource(Res.string.expense)) },
                     modifier = Modifier.weight(1f)
                 )
             }
 
             OutlinedTextField(
-                value = transaction.amount.toString(),
-                onValueChange = {},
+                value = amount,
+                onValueChange = { amount = it },
                 label = { Text(stringResource(Res.string.amount)) },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(12.dp)
             )
             Spacer(modifier = Modifier.height(16.dp))
             OutlinedTextField(
-                value = transaction.title,
-                onValueChange = {},
+                value = title,
+                onValueChange = { title = it },
                 label = { Text(stringResource(Res.string.category)) },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(12.dp),
                 trailingIcon = { Icon(Icons.Rounded.KeyboardArrowDown, null) })
 
+            Spacer(modifier = Modifier.height(16.dp))
+            OutlinedTextField(
+                value = note,
+                onValueChange = { note = it },
+                label = { Text(stringResource(Res.string.summary_lbl_note)) },
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(12.dp),
+                minLines = 3
+            )
+
             Spacer(modifier = Modifier.weight(1f))
             Button(
-                onClick = onSave,
+                onClick = {
+                    onSave(
+                        transaction.copy(
+                            amount = amount.toDoubleOrNull() ?: transaction.amount,
+                            title = title,
+                            note = note,
+                            type = selectedType
+                        )
+                    )
+                },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF0F766E))

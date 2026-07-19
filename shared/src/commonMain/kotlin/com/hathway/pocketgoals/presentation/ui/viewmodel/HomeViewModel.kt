@@ -67,6 +67,7 @@ class HomeViewModel(
                         monthlyExpenses = totalExpense.toInt().toString(),
                         monthlySavings = (totalIncome - totalExpense).toInt().toString(),
                         topCategories = categoryGroups,
+                        isTransactionsEmpty = transactions.isEmpty(),
                         unreadNotificationCount = 0,
                         isLoading = false
                     )

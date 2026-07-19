@@ -165,4 +165,7 @@
 
     <string name="enter_amount">رقم درج کریں</string>
     <string name="operation_success">عمل کامیاب رہا</string>
+
+    <string name="spending_trend">اخراجات کا رجحان</string>
+
 </resources>

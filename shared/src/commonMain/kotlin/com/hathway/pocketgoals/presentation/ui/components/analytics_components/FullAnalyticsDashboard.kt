@@ -25,6 +25,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.hathway.pocketgoals.domain.model.ThemeMode
+import com.hathway.pocketgoals.domain.model.TransactionType
 import com.hathway.pocketgoals.presentation.ui.theme.Danger
 import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
 import com.hathway.pocketgoals.presentation.ui.theme.Success
@@ -46,6 +47,10 @@ data class DonutPieDataPoint(val name: String, val percentage: Float, val color:
 fun FullAnalyticsDashboard(
     barData: List<BarChartDataPoint>,
     donutData: List<DonutPieDataPoint>,
+    selectedType: TransactionType,
+    onTypeChange: (TransactionType) -> Unit,
+    selectedPeriod: String,
+    onPeriodChange: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     var expanded by remember { mutableStateOf(false) }
@@ -54,10 +59,9 @@ fun FullAnalyticsDashboard(
         stringResource(Res.string.period_this_month),
         stringResource(Res.string.period_this_year)
     )
-    var selectedPeriod by remember { mutableStateOf(periods[1]) }
 
     // Toggle state: 0 = Income, 1 = Expense
-    var activeToggleIdx by remember { mutableStateOf(0) }
+    val activeToggleIdx = if (selectedType == TransactionType.INCOME) 0 else 1
     val activeColor = if (activeToggleIdx == 0) Success else Danger
 
     Column(
@@ -117,7 +121,7 @@ fun FullAnalyticsDashboard(
                             periods.forEach { period ->
                                 DropdownMenuItem(
                                     text = { Text(period) },
-                                    onClick = { selectedPeriod = period; expanded = false })
+                                    onClick = { onPeriodChange(period); expanded = false })
                             }
                         }
                     }
@@ -138,7 +142,9 @@ fun FullAnalyticsDashboard(
                             modifier = Modifier.weight(1f).fillMaxHeight()
                                 .clip(RoundedCornerShape(6.dp))
                                 .background(if (isSelected) activeColor else Color.Transparent)
-                                .clickable { activeToggleIdx = idx },
+                                .clickable { 
+                                    onTypeChange(if (idx == 0) TransactionType.INCOME else TransactionType.EXPENSE)
+                                },
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
@@ -327,7 +333,14 @@ val previewDonut = listOf(
 private fun FullAnalyticsModuleLightPreview() {
     PocketGoalsTheme(themeMode = ThemeMode.LIGHT) {
         Surface(color = MaterialTheme.colorScheme.background, modifier = Modifier.padding(16.dp)) {
-            FullAnalyticsDashboard(barData = previewBars, donutData = previewDonut)
+            FullAnalyticsDashboard(
+                barData = previewBars,
+                donutData = previewDonut,
+                selectedType = TransactionType.EXPENSE,
+                onTypeChange = {},
+                selectedPeriod = "This Month",
+                onPeriodChange = {}
+            )
         }
     }
 }
@@ -337,7 +350,14 @@ private fun FullAnalyticsModuleLightPreview() {
 private fun FullAnalyticsModuleDarkPreview() {
     PocketGoalsTheme(themeMode = ThemeMode.DARK) {
         Surface(color = MaterialTheme.colorScheme.background, modifier = Modifier.padding(16.dp)) {
-            FullAnalyticsDashboard(barData = previewBars, donutData = previewDonut)
+            FullAnalyticsDashboard(
+                barData = previewBars,
+                donutData = previewDonut,
+                selectedType = TransactionType.EXPENSE,
+                onTypeChange = {},
+                selectedPeriod = "This Month",
+                onPeriodChange = {}
+            )
         }
     }
 }

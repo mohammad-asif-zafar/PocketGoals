@@ -12,6 +12,7 @@ data class HomeUiState(
     val monthlyExpenses: String = "0.00",
     val monthlySavings: String = "0.00",
     val topCategories: List<AnalyticsCategoryData> = emptyList(),
+    val isTransactionsEmpty: Boolean = true,
     val unreadNotificationCount: Int = 0,
     val isLoading: Boolean = false
 )

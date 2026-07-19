@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.sp
 import com.hathway.pocketgoals.domain.model.ThemeMode
 import com.hathway.pocketgoals.presentation.ui.localization.CurrencyConfig
 import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
+import com.hathway.pocketgoals.presentation.ui.util.AmountFormatter
 import org.jetbrains.compose.resources.stringResource
 import pocketgoals.shared.generated.resources.Res
 import pocketgoals.shared.generated.resources.enter_amount
@@ -59,27 +60,15 @@ fun AmountInputStep(
 
         CustomNumberPad(
             onNumberClick = { num ->
-                val hasDot = amount.contains(".")
-
-                when {
-                    // 1. Prevent a second decimal point completely
-                    num == "." && hasDot -> { /* Do nothing */ }
-
-                    // 2. Turn leading dot entry like "." into "0." for clean input
-                    num == "." && amount == "0" -> onAmountChange("0.")
-
-                    // 3. Regular initial character replacement if current amount is just zero
-                    amount == "0" && num != "." -> onAmountChange(num)
-
-                    // 4. Append number safely under character length limits
-                    amount.length < maxLength -> onAmountChange(amount + num)
-                }
-            },
-            onDelete = {
+                // Call shared architecture logic directly
+                val updatedAmount = AmountFormatter.processInput(
+                    currentAmount = amount, inputChar = num, maxLength = 12
+                )
+                onAmountChange(updatedAmount)
+            }, onDelete = {
                 if (amount.length > 1) onAmountChange(amount.dropLast(1))
                 else onAmountChange("0")
-            },
-            onDone = onDone
+            }, onDone = onDone
         )
     }
 }

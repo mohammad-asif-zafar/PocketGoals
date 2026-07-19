@@ -18,5 +18,6 @@ data class Transaction(
     val category: String = "",
     val paymentMethod: String = "",
     val note: String = "",
-    val icon: ImageVector = Icons.Default.Image
+    val icon: ImageVector = Icons.Default.Image,
+    val createdAt: Long = 0
 )

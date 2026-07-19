@@ -15,6 +15,7 @@ fun AnalyticsScreen(viewModel: AnalyticsViewModel = koinInject()) {
 
     AnalyticsContent(
         uiState = uiState,
-        onPeriodClick = { viewModel.updateSelectedPeriod("Next Month") }
+        onPeriodChange = { viewModel.updateSelectedPeriod(it) },
+        onTypeChange = { viewModel.updateSelectedType(it) }
     )
 }

@@ -29,6 +29,10 @@ import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import com.hathway.pocketgoals.domain.Goal
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -52,68 +56,80 @@ fun GoalsScreen(
     onAddGoalClick: () -> Unit
 ) {
     val goals by viewModel.goals.collectAsState()
+    var selectedGoal by remember { mutableStateOf<Goal?>(null) }
 
-    Scaffold(
-        topBar = {
-            GoalsTopBar(onAddGoalClick = onAddGoalClick)
-        },
-        containerColor = MaterialTheme.colorScheme.background
-    ) { paddingValues ->
-        if (goals.isEmpty()) {
-            EmptyGoalsState(onAddGoalClick = onAddGoalClick, modifier = Modifier.padding(paddingValues))
-        } else {
-            LazyColumn(
-                modifier = Modifier.fillMaxSize().padding(paddingValues)
-                    .background(MaterialTheme.colorScheme.background),
-                contentPadding = PaddingValues(16.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                items(items = goals, key = { it.id }) { goal ->
-                    val dismissState = rememberSwipeToDismissBoxState(
-                        confirmValueChange = { dismissValue ->
-                            if (dismissValue == SwipeToDismissBoxValue.EndToStart) {
-                                viewModel.removeGoal(goal)
-                                true
-                            } else {
-                                false
-                            }
-                        })
-
-                    SwipeToDismissBox(
-                        state = dismissState,
-                        enableDismissFromStartToEnd = false,
-                        backgroundContent = {
-                            val backgroundTint by animateColorAsState(
-                                targetValue = when (dismissState.targetValue) {
-                                    SwipeToDismissBoxValue.EndToStart -> MaterialTheme.colorScheme.error
-                                    else -> MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f)
+    if (selectedGoal != null) {
+        com.hathway.pocketgoals.presentation.ui.navigation_content.GoalDetailsContent(
+            goal = selectedGoal!!,
+            onBack = { selectedGoal = null },
+            onDelete = {
+                viewModel.removeGoal(selectedGoal!!)
+                selectedGoal = null
+            }
+        )
+    } else {
+        Scaffold(
+            topBar = {
+                GoalsTopBar(onAddGoalClick = onAddGoalClick)
+            },
+            containerColor = MaterialTheme.colorScheme.background
+        ) { paddingValues ->
+            if (goals.isEmpty()) {
+                EmptyGoalsState(onAddGoalClick = onAddGoalClick, modifier = Modifier.padding(paddingValues))
+            } else {
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize().padding(paddingValues)
+                        .background(MaterialTheme.colorScheme.background),
+                    contentPadding = PaddingValues(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    items(items = goals, key = { it.id }) { goal ->
+                        val dismissState = rememberSwipeToDismissBoxState(
+                            confirmValueChange = { dismissValue ->
+                                if (dismissValue == SwipeToDismissBoxValue.EndToStart) {
+                                    viewModel.removeGoal(goal)
+                                    true
+                                } else {
+                                    false
                                 }
-                            )
+                            })
 
-                            Box(
-                                modifier = Modifier.fillMaxSize()
-                                    .background(backgroundTint, shape = MaterialTheme.shapes.large)
-                                    .padding(horizontal = 20.dp), contentAlignment = Alignment.CenterEnd
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Default.Delete,
-                                    contentDescription = "Remove Goal",
-                                    tint = if (dismissState.targetValue == SwipeToDismissBoxValue.EndToStart) {
-                                        MaterialTheme.colorScheme.onError
-                                    } else {
-                                        MaterialTheme.colorScheme.error
+                        SwipeToDismissBox(
+                            state = dismissState,
+                            enableDismissFromStartToEnd = false,
+                            backgroundContent = {
+                                val backgroundTint by animateColorAsState(
+                                    targetValue = when (dismissState.targetValue) {
+                                        SwipeToDismissBoxValue.EndToStart -> MaterialTheme.colorScheme.error
+                                        else -> MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f)
                                     }
                                 )
-                            }
-                        },
-                        content = {
-                            GoalItem(
-                                goal = goal, onClick = { /* Handle dashboard item clicking routing */ })
-                        })
-                }
 
-                item {
-                    Spacer(modifier = Modifier.height(100.dp))
+                                Box(
+                                    modifier = Modifier.fillMaxSize()
+                                        .background(backgroundTint, shape = MaterialTheme.shapes.large)
+                                        .padding(horizontal = 20.dp), contentAlignment = Alignment.CenterEnd
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Default.Delete,
+                                        contentDescription = "Remove Goal",
+                                        tint = if (dismissState.targetValue == SwipeToDismissBoxValue.EndToStart) {
+                                            MaterialTheme.colorScheme.onError
+                                        } else {
+                                            MaterialTheme.colorScheme.error
+                                        }
+                                    )
+                                }
+                            },
+                            content = {
+                                GoalItem(
+                                    goal = goal, onClick = { selectedGoal = goal })
+                            })
+                    }
+
+                    item {
+                        Spacer(modifier = Modifier.height(100.dp))
+                    }
                 }
             }
         }

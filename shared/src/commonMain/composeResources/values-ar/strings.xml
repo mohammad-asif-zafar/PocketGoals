@@ -164,4 +164,7 @@
     <string name="done_action">تم</string>
     <string name="enter_amount">أدخل المبلغ</string>
     <string name="operation_success">تمت العملية بنجاح</string>
+
+    <string name="spending_trend">نزعة الإنفاق</string>
+
 </resources>

@@ -14,7 +14,7 @@ import com.hathway.pocketgoals.data.local.entity.*
         AccountEntity::class,
         CategoryEntity::class
     ],
-    version = 1
+    version = 2
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun expenseDao(): ExpenseDao

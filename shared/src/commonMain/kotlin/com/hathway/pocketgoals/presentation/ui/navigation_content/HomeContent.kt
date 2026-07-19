@@ -86,16 +86,7 @@ fun HomeContent(
                 onManageClick = { onManageClick() })
         }
 
-        // Overview This Month
-        item {
-            HomeOverviewSection(
-                income = uiState.monthlyIncome,
-                expenses = uiState.monthlyExpenses,
-                savings = uiState.monthlySavings
-            )
-        }
-
-        if (uiState.topCategories.isEmpty() && uiState.totalBalance == "0") {
+        if (uiState.isTransactionsEmpty) {
             item {
                 Box(
                     modifier = Modifier.fillMaxWidth().padding(vertical = 40.dp),
@@ -117,11 +108,20 @@ fun HomeContent(
                     }
                 }
             }
-        }
+        } else {
+            // Overview This Month
+            item {
+                HomeOverviewSection(
+                    income = uiState.monthlyIncome,
+                    expenses = uiState.monthlyExpenses,
+                    savings = uiState.monthlySavings
+                )
+            }
 
-        // Top Categories
-        item {
-            HomeTopCategoriesSection(categories = uiState.topCategories)
+            // Top Categories
+            item {
+                HomeTopCategoriesSection(categories = uiState.topCategories)
+            }
         }
     }
 }

@@ -117,8 +117,17 @@ fun TransactionsListScreen(
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
                     item { SectionHeader(stringResource(Res.string.recent_activity)) }
-                    items(filteredTransactions) { transaction ->
-                        TransactionListItem(transaction = transaction, onClick = { onTransactionClick(transaction) })
+                    /*items(filteredTransactions) { transaction ->
+                        TransactionListItem(transaction = transaction,
+                            onClick = { onTransactionClick(transaction)
+                            }
+                        )
+                    }*/
+                    items(filteredTransactions, key = { it.id }) { transaction ->
+                        TransactionListItem(
+                            transaction = transaction,
+                            onClick = { onTransactionClick(transaction) }
+                        )
                     }
                     item { Spacer(modifier = Modifier.height(80.dp)) }
                 }

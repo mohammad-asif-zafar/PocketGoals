@@ -15,6 +15,10 @@ import androidx.compose.ui.unit.dp
 import com.hathway.pocketgoals.presentation.ui.localization.CurrencyConfig
 import com.hathway.pocketgoals.presentation.ui.localization.CurrencyFormatter
 
+import androidx.compose.ui.tooling.preview.Preview
+import com.hathway.pocketgoals.domain.model.ThemeMode
+import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
+
 @Composable
 fun TransactionsSummaryBar(
     income: String,
@@ -37,5 +41,21 @@ fun TransactionsSummaryBar(
             TransactionSummaryItem("Total Expense",   CurrencyFormatter.formatAmount(expense, currencyConfig), Color(0xFFEF4444))
             TransactionSummaryItem("Net Savings",   CurrencyFormatter.formatAmount(savings, currencyConfig), Color(0xFF3B82F6))
         }
+    }
+}
+
+@Preview
+@Composable
+private fun TransactionsSummaryBarLightPreview() {
+    PocketGoalsTheme(themeMode = ThemeMode.LIGHT) {
+        TransactionsSummaryBar(income = "125000", expense = "42300", savings = "82700")
+    }
+}
+
+@Preview
+@Composable
+private fun TransactionsSummaryBarDarkPreview() {
+    PocketGoalsTheme(themeMode = ThemeMode.DARK) {
+        TransactionsSummaryBar(income = "85000", expense = "61000", savings = "24000")
     }
 }

@@ -17,23 +17,30 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.hathway.pocketgoals.domain.model.ThemeMode
+import com.hathway.pocketgoals.presentation.ui.localization.CurrencyConfig
+import com.hathway.pocketgoals.presentation.ui.localization.CurrencyFormatter
 import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
+import org.jetbrains.compose.resources.stringResource
+import pocketgoals.shared.generated.resources.Res
+import pocketgoals.shared.generated.resources.expense
+import pocketgoals.shared.generated.resources.overview
+import pocketgoals.shared.generated.resources.total
 
 @Composable
 fun ExpenseOverviewSection(
     totalAmount: String = "0",
-    categories: List<AnalyticsCategoryData> = emptyList()
+    categories: List<AnalyticsCategoryData> = emptyList(),
+    currencyConfig: CurrencyConfig = CurrencyConfig.fromSystemLocale()
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Text(
-            text = "Expense Overview",
+            text = stringResource(Res.string.expense) + " "+stringResource(Res.string.overview),
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(vertical = 16.dp),
@@ -63,7 +70,8 @@ fun ExpenseOverviewSection(
                         var startAngle = -90f
                         categories.forEach { category ->
                             val percentageMatch = "\\((\\d+)%\\)".toRegex().find(category.value)
-                            val percent = percentageMatch?.groupValues?.get(1)?.toFloatOrNull() ?: 0f
+                            val percent =
+                                percentageMatch?.groupValues?.get(1)?.toFloatOrNull() ?: 0f
                             val sweepAngle = (percent / 100f) * 360f
                             drawArc(
                                 color = category.color,
@@ -78,13 +86,15 @@ fun ExpenseOverviewSection(
 
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         Text(
-                            text = totalAmount,
+                            text = CurrencyFormatter.formatAmount(
+                                totalAmount, currencyConfig
+                            ),
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold,
                             color = MaterialTheme.colorScheme.onBackground
                         )
                         Text(
-                            text = "Total",
+                            text = stringResource(Res.string.total),
                             style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )

@@ -10,6 +10,6 @@ actual class DatabaseFactory {
         return Room.databaseBuilder<AppDatabase>(
             name = dbFile,
             factory = { AppDatabase::class.instantiateImpl() }
-        )
+        ).fallbackToDestructiveMigration(true)
     }
 }

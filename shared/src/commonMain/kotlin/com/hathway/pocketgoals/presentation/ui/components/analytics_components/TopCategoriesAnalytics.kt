@@ -26,6 +26,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.hathway.pocketgoals.domain.model.ThemeMode
 import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
+import org.jetbrains.compose.resources.stringResource
+import pocketgoals.shared.generated.resources.Res
+import pocketgoals.shared.generated.resources.analytics_see_all
+import pocketgoals.shared.generated.resources.analytics_top_categories
 
 @Composable
 fun TopCategoriesAnalyticsList(
@@ -46,13 +50,13 @@ fun TopCategoriesAnalyticsList(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Top Categories",
+                    text = stringResource(Res.string.analytics_top_categories),
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onBackground
                 )
                 Text(
-                    text = "See All",
+                    text = stringResource(Res.string.analytics_see_all),
                     style = MaterialTheme.typography.bodySmall,
                     color = Color(0xFF10B981),
                     fontWeight = FontWeight.SemiBold,
@@ -122,5 +126,8 @@ fun TopCategoriesAnalyticsListDarkPreview() {
 }
 
 data class AnalyticsCategoryData(
-    val name: String, val value: String, val color: Color, val icon: ImageVector
+    val name: String,
+    val value: String,
+    val color: Color,
+    val icon: ImageVector
 )

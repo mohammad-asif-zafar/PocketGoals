@@ -186,6 +186,7 @@
     <string name="transfer">Transfer</string>
     <string name="view_reports">View\nReports</string>
     <string name="overview_this_month">Overview This Month</string>
+    <string name="overview">Overview</string>
     <string name="savings">Savings</string>
     <string name="top_categories">Top Categories</string>
     <string name="basic_needs">Basic Needs</string>
@@ -255,5 +256,5 @@
 
     <string name="enter_amount">Enter Amount</string>
     <string name="operation_success">Operation Successful</string>
-
+    <string name="spending_trend">Spending Trend</string>
 </resources>

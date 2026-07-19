@@ -3,7 +3,6 @@ package com.hathway.pocketgoals.presentation.ui.navigation_content
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -33,7 +32,6 @@ import androidx.compose.ui.unit.dp
 import com.hathway.pocketgoals.domain.model.ThemeMode
 import com.hathway.pocketgoals.presentation.ui.components.analytics_components.AnalyticsCategoryItem
 import com.hathway.pocketgoals.presentation.ui.components.analytics_components.AnalyticsHeader
-import com.hathway.pocketgoals.presentation.ui.components.analytics_components.ExpenseOverviewSection
 import com.hathway.pocketgoals.presentation.ui.components.analytics_components.SpendingTrendSection
 import com.hathway.pocketgoals.presentation.ui.state.AnalyticsUiState
 import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
@@ -50,11 +48,16 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
 import com.hathway.pocketgoals.presentation.ui.components.analytics_components.AnalyticsCategoryData
+import pocketgoals.shared.generated.resources.spending_trend
+
+import com.hathway.pocketgoals.domain.model.TransactionType
+import com.hathway.pocketgoals.presentation.ui.components.analytics_components.FullAnalyticsDashboard
 
 @Composable
 fun AnalyticsContent(
     uiState: AnalyticsUiState,
-    onPeriodClick: () -> Unit = {},
+    onPeriodChange: (String) -> Unit = {},
+    onTypeChange: (TransactionType) -> Unit = {},
     onSeeAllClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
@@ -71,28 +74,41 @@ fun AnalyticsContent(
         ) {
             item {
                 AnalyticsHeader(
-                    selectedPeriod = uiState.selectedPeriod, onPeriodClick = onPeriodClick
+                    selectedPeriod = uiState.selectedPeriod, onPeriodClick = { /* Logic for period selection */ }
                 )
             }
 
             item {
-                ExpenseOverviewSection(
-                    totalAmount = uiState.totalAmount,
-                    categories = uiState.categories
+                FullAnalyticsDashboard(
+                    barData = uiState.barData,
+                    donutData = uiState.donutData,
+                    selectedType = uiState.selectedType,
+                    onTypeChange = onTypeChange,
+                    selectedPeriod = uiState.selectedPeriod,
+                    onPeriodChange = onPeriodChange
                 )
             }
 
             item {
-                SpendingTrendSection()
+                // Only render the chart if we have data points to display
+                if (uiState.trendPoints.isNotEmpty()) {
+                    SpendingTrendSection(
+                        sectionTitle = stringResource(Res.string.spending_trend),
+                        points = uiState.trendPoints,
+                        peakValueLabel = uiState.peakValueLabel,
+                        xAxisLabels = uiState.xAxisLabels,
+                        modifier = Modifier.padding(horizontal = 16.dp)
+                    )
+                }
             }
 
-            if (uiState.categories.isEmpty()) {
+            if (uiState.isTransactionsEmpty) {
                 item {
                     Box(
                         modifier = Modifier.fillMaxWidth().padding(vertical = 60.dp),
-                        contentAlignment = androidx.compose.ui.Alignment.Center
+                        contentAlignment = Alignment.Center
                     ) {
-                        Column(horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally) {
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
                             Text(
                                 text = "UI is Empty",
                                 style = MaterialTheme.typography.titleLarge,
@@ -172,7 +188,7 @@ fun AnalyticsPreviewLanguageContainer(
                     color = MaterialTheme.colorScheme.background,
                     tonalElevation = 1.dp
                 ) {
-                    AnalyticsContent(uiState = mockState, onPeriodClick = {}, onSeeAllClick = {})
+                    AnalyticsContent(uiState = mockState, onPeriodChange = {}, onSeeAllClick = {})
                 }
             }
         }

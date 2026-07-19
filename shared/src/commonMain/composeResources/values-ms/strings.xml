@@ -169,4 +169,6 @@
 
     <string name="enter_amount">Masukkan Jumlah</string>
     <string name="operation_success">Operasi Berjaya</string>
+
+    <string name="spending_trend">Trend Perbelanjaan</string>
 </resources>

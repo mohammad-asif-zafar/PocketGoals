@@ -76,8 +76,8 @@ fun TransactionListItem(transaction: Transaction, onClick: () -> Unit) {
         Column(horizontalAlignment = Alignment.End) {
             Text(
                 text = when (transaction.type) {
-                    TransactionType.INCOME -> "+ ₹${transaction.amount.toInt()}"
-                    TransactionType.EXPENSE -> "- ₹${transaction.amount.toInt()}"
+                    TransactionType.INCOME -> "+ ${transaction.amount.toInt()}"
+                    TransactionType.EXPENSE -> "- ${transaction.amount.toInt()}"
                     TransactionType.GOAL_CREATED -> stringResource(Res.string.goal_created)
                 }, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Bold,
                 color = when (transaction.type) {

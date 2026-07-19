@@ -19,7 +19,9 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.compose.resources.stringResource
 import pocketgoals.shared.generated.resources.*
+import kotlin.time.ExperimentalTime
 
+@OptIn(ExperimentalTime::class)
 @Composable
 fun AddIncomeContent(
     onBackClick: () -> Unit,
@@ -36,8 +38,12 @@ fun AddIncomeContent(
     var note by remember { mutableStateOf("") }
 
     val dateText = remember(selectedDateMillis) {
-        if (selectedDateMillis == null) "15 May 2024"
-        else {
+        if (selectedDateMillis == null) {
+            // Fallback to the current system date
+            val currentInstant = Clock.System.now()
+            val dt = currentInstant.toLocalDateTime(TimeZone.currentSystemDefault())
+            "${dt.dayOfMonth} ${dt.month.name.lowercase().replaceFirstChar { it.uppercase() }} ${dt.year}"
+        } else {
             val instant = Instant.fromEpochMilliseconds(selectedDateMillis!!)
             val dt = instant.toLocalDateTime(TimeZone.currentSystemDefault())
             "${dt.dayOfMonth} ${dt.month.name.lowercase().replaceFirstChar { it.uppercase() }} ${dt.year}"
@@ -168,23 +174,55 @@ fun AddIncomeContent(
                         date = dateText,
                         method = selectedMethod!!,
                         note = note,
-                        onSave = { 
+                        onSave = {
+                            // 🔹 Extract and prepare all items safely up top to avoid compilation errors
+                            val generatedId = Clock.System.now().toEpochMilliseconds().toString()
+                            val transactionTitle = selectedType!!.name
+                            val parsedAmount = amount.toDoubleOrNull() ?: 0.0
+                            val transactionType = TransactionType.INCOME
+                            val transactionCategory = selectedType!!.name
+                            val transactionMethod = selectedMethod!!
+                            val transactionIcon = selectedType!!.icon
+                            val currentInstant = Clock.System.now()
+                            val localTime = currentInstant.toLocalDateTime(TimeZone.currentSystemDefault())
+                            val hour12 = if (localTime.hour % 12 == 0) 12 else localTime.hour % 12
+                            val amPm = if (localTime.hour < 12) "AM" else "PM"
+                            val timeText = "${hour12.toString().padStart(2, '0')}:${localTime.minute.toString().padStart(2, '0')} $amPm"
+
+                            // 🔹 Log all properties cleanly to the device console (Android Logcat & Xcode logs)
+                            println("--- Saving Transaction ---")
+                            println("ID: $generatedId")
+                            println("Title: $transactionTitle")
+                            println("Amount: $parsedAmount (Raw String Input: \"$amount\")")
+                            println("Type: $transactionType")
+                            println("Date: $dateText")
+                            println("Time: $timeText") // Updated to reflect the real system time string
+                            println("Category: $transactionCategory")
+                            println("Payment Method: $transactionMethod")
+                            println("Note: $note")
+                            println("Icon Code/Name: $transactionIcon")
+                            println("--------------------------")
+
+                            // 🔹 Pass the clean variables directly into the object builder
                             val transaction = Transaction(
-                                id = Clock.System.now().toEpochMilliseconds().toString(),
-                                title = selectedType!!.name,
-                                amount = amount.toDoubleOrNull() ?: 0.0,
-                                type = TransactionType.INCOME,
-                                date = dateText,
-                                time = "12:00 PM",
-                                category = selectedType!!.name,
-                                paymentMethod = selectedMethod!!,
+                                id = generatedId,
+                                title = transactionTitle,
+                                amount = parsedAmount,
+                                type = transactionType,
+                                date = dateText, // Uses your formatted string function value
+                                time = timeText,
+                                category = transactionCategory,
+                                paymentMethod = transactionMethod,
                                 note = note,
-                                icon = selectedType!!.icon
+                                icon = transactionIcon
                             )
+
                             onSaveTransaction(transaction)
-                            currentStep = AddIncomeStep.Success 
-                        },
-                        onCancel = { currentStep = AddIncomeStep.Form }
+                            currentStep = AddIncomeStep.Success
+                        }
+                        ,
+
+                                onCancel = { currentStep = AddIncomeStep.Form }
                     )
                 }
 

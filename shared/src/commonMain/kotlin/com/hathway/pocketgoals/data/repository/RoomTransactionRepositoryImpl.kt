@@ -23,7 +23,7 @@ class RoomTransactionRepositoryImpl(
             incomeDao.getAllIncomes()
         ) { expenses, incomes ->
             val all = expenses.map { it.toDomain() } + incomes.map { it.toDomain() }
-            all.sortedByDescending { it.id } // Temporary sort by ID
+            all.sortedByDescending { it.createdAt }
         }
     }
 
@@ -31,7 +31,7 @@ class RoomTransactionRepositoryImpl(
         when (transaction.type) {
             TransactionType.EXPENSE -> expenseDao.insertExpense(transaction.toExpenseEntity())
             TransactionType.INCOME -> incomeDao.insertIncome(transaction.toIncomeEntity())
-            TransactionType.GOAL_CREATED -> { /* Handle goal creation if needed */ }
+            TransactionType.GOAL_CREATED -> expenseDao.insertExpense(transaction.toExpenseEntity())
         }
     }
 
@@ -40,8 +40,18 @@ class RoomTransactionRepositoryImpl(
     }
 
     override suspend fun deleteTransaction(id: String) {
-        val longId = id.toLongOrNull() ?: return
-        expenseDao.deleteExpense(longId)
-        incomeDao.deleteIncome(longId)
+        when {
+            id.startsWith("exp_") -> {
+                id.removePrefix("exp_").toLongOrNull()?.let { expenseDao.deleteExpense(it) }
+            }
+            id.startsWith("inc_") -> {
+                id.removePrefix("inc_").toLongOrNull()?.let { incomeDao.deleteIncome(it) }
+            }
+            else -> {
+                val longId = id.toLongOrNull() ?: return
+                expenseDao.deleteExpense(longId)
+                incomeDao.deleteIncome(longId)
+            }
+        }
     }
 }

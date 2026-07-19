@@ -10,6 +10,6 @@ actual class DatabaseFactory(private val context: Context) {
         return Room.databaseBuilder<AppDatabase>(
             context = context,
             name = dbFile.absolutePath
-        )
+        ).fallbackToDestructiveMigration(true)
     }
 }

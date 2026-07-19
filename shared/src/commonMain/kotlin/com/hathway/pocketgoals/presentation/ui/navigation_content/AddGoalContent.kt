@@ -52,6 +52,16 @@ fun AddGoalContent(
     var customIcon by remember { mutableStateOf(GoalCategory.defaultCategories.first().icon) }
     var customColor by remember { mutableStateOf(GoalCategory.defaultCategories.first().color) }
 
+    var showKeypad by remember { mutableStateOf(false) }
+
+    if (showKeypad) {
+        CustomKeypadBottomSheet(
+            initialAmount = targetAmount,
+            onAmountConfirmed = { targetAmount = it },
+            onDismiss = { showKeypad = false }
+        )
+    }
+
     val defaultDate = "15 May 2024"
     val dateText = remember(selectedDateMillis) {
         if (selectedDateMillis == null) defaultDate
@@ -174,7 +184,7 @@ fun AddGoalContent(
                         amount = targetAmount,
                         onAmountChange = { targetAmount = it },
                         onNext = { currentStep = AddGoalStep.GoalTimeline },
-                        onOtherClick = {}, // Added handler to cleanly dispatch custom number keypad flows
+                        onOtherClick = { showKeypad = true },
                         modifier = Modifier.padding(2.dp)
                     )
 
@@ -224,8 +234,9 @@ fun AddGoalContent(
                         duration = duration,
                         onConfirm = {
                             val now = Clock.System.now()
+                            val generatedId = now.toEpochMilliseconds().toString()
                             val newGoal = Goal(
-                                id = now.toEpochMilliseconds().toString(),
+                                id = generatedId,
                                 name = goalName,
                                 icon = if (isCustomFlow) customIcon else selectedCategory?.icon
                                     ?: GoalCategory.defaultCategories.first().icon,
@@ -239,7 +250,7 @@ fun AddGoalContent(
 
                             // Activity Log
                             val transaction = Transaction(
-                                id = (now.toEpochMilliseconds() + 1).toString(),
+                                id = "goal_$generatedId",
                                 title = "Created Goal: $goalName",
                                 amount = 0.0,
                                 type = TransactionType.GOAL_CREATED,
@@ -247,7 +258,8 @@ fun AddGoalContent(
                                 time = "12:00 PM",
                                 category = "Goals",
                                 paymentMethod = "System",
-                                icon = newGoal.icon
+                                icon = newGoal.icon,
+                                createdAt = now.toEpochMilliseconds()
                             )
                             onSaveTransaction(transaction)
 

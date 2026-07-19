@@ -23,6 +23,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.hathway.pocketgoals.domain.model.ThemeMode
+import com.hathway.pocketgoals.domain.model.TransactionType
 import com.hathway.pocketgoals.presentation.ui.theme.Danger
 import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
 import com.hathway.pocketgoals.presentation.ui.theme.Success
@@ -46,6 +47,10 @@ fun AnalyticsTimelineHub(
     barData: List<BarChartDataPoint>,
     donutData: List<DonutPieDataPoint>,
     timelineTransactions: List<TimelineTransaction>,
+    selectedType: TransactionType,
+    onTypeChange: (TransactionType) -> Unit,
+    selectedPeriod: String,
+    onPeriodChange: (String) -> Unit,
     onExportPdfClick: () -> Unit,
     onTransactionClick: (String) -> Unit,
     modifier: Modifier = Modifier
@@ -76,7 +81,14 @@ fun AnalyticsTimelineHub(
 
             // Nested Analytics Components
             item {
-                FullAnalyticsDashboard(barData = barData, donutData = donutData)
+                FullAnalyticsDashboard(
+                    barData = barData,
+                    donutData = donutData,
+                    selectedType = selectedType,
+                    onTypeChange = onTypeChange,
+                    selectedPeriod = selectedPeriod,
+                    onPeriodChange = onPeriodChange
+                )
             }
 
             item {
@@ -208,6 +220,10 @@ private fun TimelineHubLightPreview() {
                 barData = previewBars,
                 donutData = previewDonut,
                 timelineTransactions = mockTimelineItems,
+                selectedType = TransactionType.EXPENSE,
+                onTypeChange = {},
+                selectedPeriod = "This Month",
+                onPeriodChange = {},
                 onExportPdfClick = {},
                 onTransactionClick = {})
         }
@@ -223,6 +239,10 @@ private fun TimelineHubDarkPreview() {
                 barData = previewBars,
                 donutData = previewDonut,
                 timelineTransactions = mockTimelineItems,
+                selectedType = TransactionType.EXPENSE,
+                onTypeChange = {},
+                selectedPeriod = "This Month",
+                onPeriodChange = {},
                 onExportPdfClick = {},
                 onTransactionClick = {})
         }
