@@ -92,7 +92,7 @@ fun HomeCategoryRow(
                     color = MaterialTheme.colorScheme.onBackground
                 )
                 Text(
-                    text = "₹$amount",
+                    text = "$amount",
                     style = MaterialTheme.typography.bodyMedium,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onBackground

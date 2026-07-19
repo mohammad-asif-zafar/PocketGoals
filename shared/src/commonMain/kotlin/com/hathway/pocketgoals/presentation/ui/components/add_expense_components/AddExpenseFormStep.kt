@@ -72,7 +72,7 @@ fun AddExpenseFormStep(
                     onClick = onAmountClick,
                     icon = Icons.Rounded.Payments,
                     iconColor = MaterialTheme.colorScheme.primary,
-                    text = if (amount == "0") stringResource(Res.string.hint_enter_amount) else "₹ $amount",
+                    text = if (amount == "0") stringResource(Res.string.hint_enter_amount) else " $amount",
                     isPlaceholder = amount == "0",
                     borderColor = borderColor
                 )

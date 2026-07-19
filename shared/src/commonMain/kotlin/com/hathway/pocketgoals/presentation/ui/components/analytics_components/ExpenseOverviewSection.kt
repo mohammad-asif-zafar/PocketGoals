@@ -28,7 +28,7 @@ import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
 
 @Composable
 fun ExpenseOverviewSection(
-    totalAmount: String = "₹0",
+    totalAmount: String = "0",
     categories: List<AnalyticsCategoryData> = emptyList()
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {

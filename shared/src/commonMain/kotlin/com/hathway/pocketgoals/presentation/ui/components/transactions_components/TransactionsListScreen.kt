@@ -30,6 +30,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.hathway.pocketgoals.domain.model.Transaction
 import com.hathway.pocketgoals.domain.model.TransactionType
+import com.hathway.pocketgoals.presentation.ui.localization.CurrencyConfig
 import com.hathway.pocketgoals.presentation.ui.viewmodel.TransactionsViewModel
 import org.jetbrains.compose.resources.stringResource
 import pocketgoals.shared.generated.resources.*
@@ -37,7 +38,8 @@ import pocketgoals.shared.generated.resources.*
 @Composable
 fun TransactionsListScreen(
     viewModel: TransactionsViewModel,
-    onTransactionClick: (Transaction) -> Unit
+    onTransactionClick: (Transaction) -> Unit,
+    currencyConfig: CurrencyConfig = CurrencyConfig.fromSystemLocale()
 ) {
     val tabAll = stringResource(Res.string.home)
     val tabIncome = stringResource(Res.string.income)
@@ -128,9 +130,9 @@ fun TransactionsListScreen(
                 val totalSavings = totalIncome - totalExpense
 
                 TransactionsSummaryBar(
-                    income = "₹ ${totalIncome.toInt()}",
-                    expense = "₹ ${totalExpense.toInt()}",
-                    savings = "₹ ${totalSavings.toInt()}"
+                    income = "${totalIncome.toInt()}",
+                    expense = "${totalExpense.toInt()}",
+                    savings = "${totalSavings.toInt()}"
                 )
             }
         }

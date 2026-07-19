@@ -163,4 +163,6 @@
     <string name="note_input_placeholder">اس لین دین کے بارے میں تفصیلات درج کریں...</string>
     <string name="done_action">ہو گیا</string>
 
+    <string name="enter_amount">رقم درج کریں</string>
+    <string name="operation_success">عمل کامیاب رہا</string>
 </resources>

@@ -155,4 +155,7 @@
     <string name="add_note_title">नोट जोड़ें</string>
     <string name="note_input_placeholder">इस लेनदेन के बारे में विवरण दर्ज करें...</string>
     <string name="done_action">हो गया</string>
+
+    <string name="enter_amount">राशि दर्ज करें</string>
+    <string name="operation_success">ऑपरेशन सफल रहा</string>
 </resources>

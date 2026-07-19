@@ -73,7 +73,7 @@ fun GoalReviewStep(
             SummaryItemRow(Icons.Rounded.Category, stringResource(Res.string.category), categoryName, categoryColor)
             HorizontalDivider(color = dividerColor)
 
-            SummaryItemRow(Icons.Rounded.Payments, stringResource(Res.string.target_amount_label), "₹ $targetAmount")
+            SummaryItemRow(Icons.Rounded.Payments, stringResource(Res.string.target_amount_label), "$targetAmount")
             HorizontalDivider(color = dividerColor)
 
             SummaryItemRow(Icons.Rounded.CalendarToday, stringResource(Res.string.target_date_label), targetDate)

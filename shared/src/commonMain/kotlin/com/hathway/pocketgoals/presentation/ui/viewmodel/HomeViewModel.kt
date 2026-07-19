@@ -51,7 +51,7 @@ class HomeViewModel(
                         val percentage = if (totalExpense > 0) (amount / totalExpense * 100).toInt() else 0
                         AnalyticsCategoryData(
                             name = category,
-                            value = "₹${amount.toInt()} ($percentage%)",
+                            value = "${amount.toInt()} ($percentage%)",
                             color = Color(0xFF3B82F6), // Should come from category
                             icon = txs.first().icon
                         )

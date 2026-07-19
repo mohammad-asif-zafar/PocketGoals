@@ -74,7 +74,7 @@ fun TransactionDetailsScreen(transaction: Transaction, onBack: () -> Unit, onEdi
             Spacer(modifier = Modifier.height(16.dp))
             Text(transaction.title, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
             Text(
-                text = "${if (transaction.type == TransactionType.INCOME) "+" else "-"} ₹${transaction.amount.toInt()}",
+                text = "${if (transaction.type == TransactionType.INCOME) "+" else "-"} ${transaction.amount.toInt()}",
                 style = MaterialTheme.typography.displaySmall,
                 fontWeight = FontWeight.Bold,
                 color = if (transaction.type == TransactionType.INCOME) Color(0xFF10B981) else Color(0xFFEF4444)

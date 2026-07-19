@@ -35,6 +35,7 @@ import com.hathway.pocketgoals.presentation.ui.localization.CurrencyConfig
 import com.hathway.pocketgoals.presentation.ui.state.HomeUiState
 import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
 
+private  val TAG = "HomeContent"
 @Composable
 fun HomeContent(
     uiState: HomeUiState,
@@ -69,7 +70,6 @@ fun HomeContent(
                 income = uiState.income,
                 expenses = uiState.expenses,
                 // Automatically determines currency layout configurations dynamically from device local settings
-                currencyConfig = CurrencyConfig.fromSystemLocale(),
                 onStatsClick = {
                     // Trigger your navigation route engine call action block here
                     // e.g., navController.navigate(Screen.AnalyticsDashboard.route)

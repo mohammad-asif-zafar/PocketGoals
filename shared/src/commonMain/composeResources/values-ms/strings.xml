@@ -166,4 +166,7 @@
     <string name="add_note_title">Tambah Nota</string>
     <string name="note_input_placeholder">Masukkan butiran mengenai transaksi ini...</string>
     <string name="done_action">Selesai</string>
+
+    <string name="enter_amount">Masukkan Jumlah</string>
+    <string name="operation_success">Operasi Berjaya</string>
 </resources>

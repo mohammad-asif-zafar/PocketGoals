@@ -56,7 +56,7 @@ fun HomeOverviewItem(
             }
 
             Text(
-                text = "₹$amount",
+                text = amount,
                 style = MaterialTheme.typography.titleSmall,
                 fontWeight = FontWeight.Bold,
                 color = color

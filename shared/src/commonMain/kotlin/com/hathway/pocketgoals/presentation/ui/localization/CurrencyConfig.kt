@@ -9,7 +9,7 @@ enum class CurrencyConfig(
     MYR("MYR", "RM", true),
     AED("AED", "د.إ", false),
     USD("USD", "$", true),
-    PAK("PNR", "RE", true);
+    PAK("PNR", "Rs", false);
 
     companion object {
         /**
@@ -22,10 +22,10 @@ enum class CurrencyConfig(
         fun fromLanguageCode(code: String): CurrencyConfig {
             return when (code.lowercase()) {
                 "hi" -> INR
-                "ur" -> INR
                 "ms" -> MYR
                 "ar" -> AED
-                else -> USD // Default fallback
+                "ur" -> PAK
+                else -> MYR // Default fallback
             }
         }
     }

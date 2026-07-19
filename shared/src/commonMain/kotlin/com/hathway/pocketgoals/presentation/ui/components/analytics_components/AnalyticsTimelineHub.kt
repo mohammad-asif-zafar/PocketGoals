@@ -182,7 +182,7 @@ private fun TimelineItemNode(
             }
 
             Text(
-                text = "$sign ₹${transaction.amount.toInt()}",
+                text = "$sign ${transaction.amount.toInt()}",
                 style = MaterialTheme.typography.bodyLarge,
                 fontWeight = FontWeight.Bold,
                 color = nodeColor,

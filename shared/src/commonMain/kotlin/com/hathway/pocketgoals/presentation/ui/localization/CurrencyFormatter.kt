@@ -6,7 +6,7 @@ object CurrencyFormatter {
      */
     fun formatAmount(amount: String, config: CurrencyConfig): String {
         val cleanAmount = amount.replace(Regex("[^0-9.]"), "")
-        if (cleanAmount.isEmpty()) return "${config.symbol}0"
+        if (cleanAmount.isEmpty()) return "${config.symbol} 0"
 
         // Custom simple regex formatter for standard thousands grouping separation splits
         val parts = cleanAmount.split(".")
@@ -15,7 +15,7 @@ object CurrencyFormatter {
         val formattedNumber = integerPart + decimalPart
 
         return if (config.isSymbolPrefix) {
-            "${config.symbol}$formattedNumber"
+            "${config.symbol} $formattedNumber"
         } else {
             "$formattedNumber ${config.symbol}"
         }

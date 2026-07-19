@@ -162,4 +162,6 @@
     <string name="add_note_title">إضافة ملاحظة</string>
     <string name="note_input_placeholder">أدخل تفاصيل حول هذه المعاملة...</string>
     <string name="done_action">تم</string>
+    <string name="enter_amount">أدخل المبلغ</string>
+    <string name="operation_success">تمت العملية بنجاح</string>
 </resources>

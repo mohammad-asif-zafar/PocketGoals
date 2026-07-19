@@ -28,7 +28,7 @@ fun TransactionSummaryItem(label: String, amount: String, color: Color) {
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
         Text(
-            "₹$amount",
+            amount,
             style = MaterialTheme.typography.titleSmall,
             fontWeight = FontWeight.Bold,
             color = color

@@ -253,4 +253,7 @@
     <string name="note_input_placeholder">Enter details about this transaction...</string>
     <string name="done_action">Done</string>
 
+    <string name="enter_amount">Enter Amount</string>
+    <string name="operation_success">Operation Successful</string>
+
 </resources>

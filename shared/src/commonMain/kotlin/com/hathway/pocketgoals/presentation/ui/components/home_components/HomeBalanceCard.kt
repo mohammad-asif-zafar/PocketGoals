@@ -217,8 +217,7 @@ private fun BalanceCardIndiaLightPreview() {
                 income = "125000",
                 expenses = "42300",
                 currencyConfig = CurrencyConfig.INR,
-                onStatsClick = {}
-            )
+                onStatsClick = {})
         }
     }
 }
@@ -233,8 +232,7 @@ private fun BalanceCardMalaysiaDarkPreview() {
                 income = "85000",
                 expenses = "61000",
                 currencyConfig = CurrencyConfig.MYR,
-                onStatsClick = {}
-            )
+                onStatsClick = {})
         }
     }
 }
@@ -245,14 +243,15 @@ private fun BalanceCardArabicRtlPreview() {
     PocketGoalsTheme(themeMode = ThemeMode.DARK) {
         // Forces Right-To-Left direction pass to test the layout with the postfix currency symbol rule
         CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
-            Surface(color = MaterialTheme.colorScheme.background, modifier = Modifier.padding(16.dp)) {
+            Surface(
+                color = MaterialTheme.colorScheme.background, modifier = Modifier.padding(16.dp)
+            ) {
                 HomeBalanceCard(
                     totalBalance = "53400",
                     income = "90000",
                     expenses = "36600",
                     currencyConfig = CurrencyConfig.AED,
-                    onStatsClick = {}
-                )
+                    onStatsClick = {})
             }
         }
     }

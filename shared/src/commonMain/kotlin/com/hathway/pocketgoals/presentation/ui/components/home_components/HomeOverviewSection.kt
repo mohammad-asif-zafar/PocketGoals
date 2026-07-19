@@ -16,6 +16,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.hathway.pocketgoals.domain.model.ThemeMode
+import com.hathway.pocketgoals.presentation.ui.localization.CurrencyConfig
+import com.hathway.pocketgoals.presentation.ui.localization.CurrencyFormatter
 import com.hathway.pocketgoals.presentation.ui.theme.Danger
 import com.hathway.pocketgoals.presentation.ui.theme.Info
 import com.hathway.pocketgoals.presentation.ui.theme.PocketGoalsTheme
@@ -25,7 +27,11 @@ import pocketgoals.shared.generated.resources.*
 
 @Composable
 fun HomeOverviewSection(
-    income: String, expenses: String, savings: String, modifier: Modifier = Modifier
+    income: String,
+    expenses: String,
+    savings: String,
+    modifier: Modifier = Modifier,
+    currencyConfig: CurrencyConfig = CurrencyConfig.fromSystemLocale()
 ) {
     Column(modifier = modifier) {
         Text(
@@ -41,7 +47,6 @@ fun HomeOverviewSection(
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(16.dp),
             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-            // FIX: Safely initialized explicit BorderStroke call wrapper prevents multiplatform compiler bugs
             border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
         ) {
             Row(
@@ -52,7 +57,7 @@ fun HomeOverviewSection(
                 // FIX: Swapped hardcoded hex values with the designated semantic brand color tokens
                 HomeOverviewItem(
                     stringResource(Res.string.income),
-                    income,
+                    CurrencyFormatter.formatAmount(income, currencyConfig),
                     Success,
                     modifier = Modifier.weight(1f)
                 )
@@ -60,7 +65,7 @@ fun HomeOverviewSection(
 
                 HomeOverviewItem(
                     stringResource(Res.string.expense),
-                    expenses,
+                    CurrencyFormatter.formatAmount(expenses, currencyConfig),
                     Danger,
                     modifier = Modifier.weight(1f)
                 )
@@ -68,7 +73,7 @@ fun HomeOverviewSection(
 
                 HomeOverviewItem(
                     stringResource(Res.string.savings),
-                    savings,
+                    CurrencyFormatter.formatAmount(savings, currencyConfig),
                     Info,
                     modifier = Modifier.weight(1f)
                 )

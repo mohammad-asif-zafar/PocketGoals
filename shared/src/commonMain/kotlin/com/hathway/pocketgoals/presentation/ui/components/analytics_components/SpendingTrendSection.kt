@@ -51,7 +51,7 @@ fun SpendingTrendSection() {
 
     val points = listOf(0.1f, 0.4f, 0.6f, 0.5f, 0.65f, 0.55f, 0.9f)
     val maxPointIndex = points.indexOfMax() ?: -1
-    val peakValueLabel = "₹12,450" // Sample value for the highest spending day
+    val peakValueLabel = "12,450" // Sample value for the highest spending day
 
     Column(
         modifier = Modifier.fillMaxWidth().padding(top = 24.dp)

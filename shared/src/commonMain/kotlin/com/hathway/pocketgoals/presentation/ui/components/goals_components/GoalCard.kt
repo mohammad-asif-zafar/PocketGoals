@@ -110,7 +110,7 @@ fun GoalCard(
                                     color = labelTextColor
                                 )
                                 Text(
-                                    text = "₹ ${goal.targetAmount.toInt()}",
+                                    text = " ${goal.targetAmount.toInt()}",
                                     style = MaterialTheme.typography.bodyMedium,
                                     fontWeight = FontWeight.Bold,
                                     color = goal.color
@@ -124,7 +124,7 @@ fun GoalCard(
                                     color = labelTextColor
                                 )
                                 Text(
-                                    text = "₹ ${goal.savedAmount.toInt()}",
+                                    text = " ${goal.savedAmount.toInt()}",
                                     style = MaterialTheme.typography.bodyMedium,
                                     fontWeight = FontWeight.Bold,
                                     color = goal.color
@@ -153,8 +153,8 @@ fun GoalCard(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    GoalStatItem("Need", "₹ ${goal.remainingAmount.toInt()}", goal.color)
-                    GoalStatItem("Save", "₹ ${goal.monthlySavingNeeded.toInt()} /mo", goal.color)
+                    GoalStatItem("Need", "${goal.remainingAmount.toInt()}", goal.color)
+                    GoalStatItem("Save", "${goal.monthlySavingNeeded.toInt()} /mo", goal.color)
                     GoalStatItem("Deadline", goal.deadline, bodyTextColor, modifier= Modifier)
                 }
             }

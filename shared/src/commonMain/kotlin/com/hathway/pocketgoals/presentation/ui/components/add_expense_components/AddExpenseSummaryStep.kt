@@ -52,7 +52,7 @@ fun AddExpenseSummaryStep(
             SummaryItemRow(category.icon, stringResource(Res.string.category), category.name, category.color)
             HorizontalDivider(color = MaterialTheme.colorScheme.outline.copy(alpha = 0.2f))
 
-            SummaryItemRow(Icons.Rounded.Payments, stringResource(Res.string.amount), "₹ $amount")
+            SummaryItemRow(Icons.Rounded.Payments, stringResource(Res.string.amount), " $amount")
             HorizontalDivider(color = MaterialTheme.colorScheme.outline.copy(alpha = 0.2f))
 
             SummaryItemRow(Icons.Rounded.CalendarToday, stringResource(Res.string.label_date), date)
